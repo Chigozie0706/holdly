@@ -87,8 +87,14 @@ Transaction confirmed
 
 **Deployed Contract:**
 
+### Testnet
+
 - Address: `ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K.holdlyv1`
 - Explorer: [View on Stacks Explorer](https://explorer.hiro.so/txid/ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K.holdlyv1?chain=testnet)
+
+### Mainnet
+
+- Address: `SP3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJB3SS99R.holdlyv1`
 
 ### Integration Testing with sBTC
 
