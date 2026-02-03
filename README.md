@@ -61,20 +61,6 @@ Holdly allows users to:
 - [Clarinet](https://github.com/hirosystems/clarinet) installed
 - Node.js and npm (for testing)
 
-### Setup
-
-```bash
-# Clone the repository
-git clone <your-repo-url>
-cd holdly
-
-# Check contract syntax
-clarinet check
-
-# Run tests
-clarinet test
-```
-
 ### Testnet Deployment ✅
 
 The contract has been successfully deployed to Stacks Testnet:
