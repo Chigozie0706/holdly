@@ -11,12 +11,14 @@ interface BookCardProps {
   };
   depositAmount: number;
   onBorrow: (id: number) => void;
+  connected: boolean;
 }
 
 export default function BookCard({
   book,
   depositAmount,
   onBorrow,
+  connected,
 }: BookCardProps) {
   return (
     <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-200 overflow-hidden">
@@ -49,9 +51,10 @@ export default function BookCard({
         {book["is-available"] ? (
           <button
             onClick={() => onBorrow(book.id)}
-            className="w-full px-4 py-2 bg-gradient-to-r from-orange-500 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all font-medium"
+            disabled={!connected}
+            className="w-full px-4 py-2 bg-gradient-to-r from-orange-500 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Borrow Book
+            {connected ? "Borrow Book" : "Connect Wallet to Borrow"}
           </button>
         ) : (
           <button

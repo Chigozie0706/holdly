@@ -6,12 +6,14 @@ interface BrowseBooksProps {
   books: any[];
   depositAmount: number;
   onBorrow: (id: number) => void;
+  connected: boolean;
 }
 
 export default function BrowseBooks({
   books,
   depositAmount,
   onBorrow,
+  connected,
 }: BrowseBooksProps) {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -23,6 +25,14 @@ export default function BrowseBooks({
 
   return (
     <div>
+      {!connected && (
+        <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+          <p className="text-sm text-yellow-800 text-center">
+            Connect your wallet to borrow books
+          </p>
+        </div>
+      )}
+
       <div className="mb-6">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -51,6 +61,7 @@ export default function BrowseBooks({
               book={book}
               depositAmount={depositAmount}
               onBorrow={onBorrow}
+              connected={connected}
             />
           ))
         )}

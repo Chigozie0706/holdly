@@ -4,15 +4,28 @@ import { Unlock, BookOpen } from "lucide-react";
 interface MyBorrowsProps {
   borrowedBooks: any[];
   onReturn: (id: number) => void;
+  connected: boolean;
 }
 
-export default function MyBorrows({ borrowedBooks, onReturn }: MyBorrowsProps) {
+export default function MyBorrows({
+  borrowedBooks,
+  onReturn,
+  connected,
+}: MyBorrowsProps) {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">
           My Borrowed Books
         </h2>
+
+        {!connected && (
+          <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <p className="text-sm text-yellow-800">
+              Please connect your wallet to view your borrowed books
+            </p>
+          </div>
+        )}
 
         {borrowedBooks.length === 0 ? (
           <div className="text-center py-12">
@@ -39,7 +52,8 @@ export default function MyBorrows({ borrowedBooks, onReturn }: MyBorrowsProps) {
                 </div>
                 <button
                   onClick={() => onReturn(book.id)}
-                  className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-medium"
+                  disabled={!connected}
+                  className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Return & Get Deposit
                 </button>
