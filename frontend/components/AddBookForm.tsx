@@ -6,6 +6,8 @@ interface AddBookFormProps {
   onAdd: (title: string, author: string, coverPage: string) => void;
 }
 
+const DEPOSIT_AMOUNT = 1000000; // 1 STX in microSTX
+
 export default function AddBookForm({ onAdd }: AddBookFormProps) {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
@@ -93,8 +95,8 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
             <p className="text-sm text-blue-800">
               <strong>Note:</strong> Adding a book is free. Anyone can borrow it
-              by depositing 100,000 satoshis in sBTC, which they'll get back
-              when they return the book.
+              by depositing {(DEPOSIT_AMOUNT / 1000000).toFixed(2)} STX, which
+              they'll get back when they return the book.
             </p>
           </div>
 

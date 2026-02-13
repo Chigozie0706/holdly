@@ -1,5 +1,7 @@
-;; Book Lending Contract with sBTC Deposits
-;; Users can borrow books by depositing sBTC, which is returned when the book is returned
+;; Book Lending Contract with STX Deposits
+
+;; Contract Address
+(define-constant CONTRACT_ADDRESS 'ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K.holdlyv4)
 
 ;; Define error codes
 (define-constant ERR_BOOK_NOT_FOUND (err u101))
@@ -10,11 +12,10 @@
 (define-constant ERR_INVALID_DEPOSIT_AMOUNT (err u108))
 (define-constant ERR_NOT_BOOK_OWNER (err u109))
 (define-constant ERR_INVALID_STRING (err u110))
-(define-constant CONTRACT_ADDRESS 'ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K.holdlyv1)
 
 ;; Data structure for books
 (define-map books
-    uint ;; book-id
+    uint
     {
         title: (string-utf8 200),
         author: (string-utf8 100),
@@ -28,7 +29,7 @@
 
 ;; Data structure for active borrows
 (define-map borrows
-    uint ;; book-id
+    uint
     {
         borrower: principal,
         borrowed-at: uint,
@@ -39,11 +40,15 @@
 ;; Counter for book IDs
 (define-data-var book-id-counter uint u0)
 
-;; ===============================
-;; ADMIN FUNCTIONS
-;; ===============================
+;; Helper function to transfer STX from contract
+(define-private (send-stx-from-contract
+        (amount uint)
+        (recipient principal)
+    )
+    (as-contract (stx-transfer? amount tx-sender recipient))
+)
 
-;; Add a new book to the library with custom deposit amount
+;; Add a new book
 (define-public (add-book
         (title (string-utf8 200))
         (author (string-utf8 100))
@@ -51,35 +56,31 @@
         (deposit-amount uint)
     )
     (begin
-        ;; Validate inputs
         (asserts! (> (len title) u0) ERR_INVALID_STRING)
         (asserts! (> (len author) u0) ERR_INVALID_STRING)
         (asserts! (> (len cover-page) u0) ERR_INVALID_STRING)
         (asserts! (> deposit-amount u0) ERR_INVALID_DEPOSIT_AMOUNT)
 
         (let ((book-id (+ (var-get book-id-counter) u1)))
-            ;; Add book to the map
             (map-set books book-id {
                 title: title,
                 author: author,
                 cover-page: cover-page,
-                owner: contract-caller,
+                owner: tx-sender,
                 is-available: true,
                 total-borrows: u0,
                 deposit-amount: deposit-amount,
             })
 
-            ;; Increment counter
             (var-set book-id-counter book-id)
 
-            ;; Emit event
             (print {
                 event: "book-added",
                 book-id: book-id,
                 title: title,
                 author: author,
                 cover-page: cover-page,
-                owner: contract-caller,
+                owner: tx-sender,
                 deposit-amount: deposit-amount,
             })
 
@@ -88,63 +89,17 @@
     )
 )
 
-;; Update deposit amount for a book (only book owner can do this)
-(define-public (update-deposit-amount
-        (book-id uint)
-        (new-deposit-amount uint)
-    )
-    (let ((book (unwrap! (map-get? books book-id) ERR_BOOK_NOT_FOUND)))
-        ;; Only the book owner can update the deposit amount
-        (asserts! (is-eq contract-caller (get owner book)) ERR_NOT_BOOK_OWNER)
-
-        ;; Book must be available (not currently borrowed)
-        (asserts! (get is-available book) ERR_BOOK_NOT_AVAILABLE)
-
-        ;; Ensure new deposit amount is greater than 0
-        (asserts! (> new-deposit-amount u0) ERR_INVALID_DEPOSIT_AMOUNT)
-
-        ;; Update the book's deposit amount
-        (map-set books book-id
-            (merge book { deposit-amount: new-deposit-amount })
-        )
-
-        ;; Emit event
-        (print {
-            event: "deposit-amount-updated",
-            book-id: book-id,
-            old-deposit: (get deposit-amount book),
-            new-deposit: new-deposit-amount,
-        })
-
-        (ok true)
-    )
-)
-
-;; ===============================
-;; USER FUNCTIONS
-;; ===============================
-
-;; Borrow a book by depositing sBTC
+;; Borrow a book with STX deposit
 (define-public (borrow-book (book-id uint))
     (let ((book (unwrap! (map-get? books book-id) ERR_BOOK_NOT_FOUND)))
-        ;;          Check if book is available
         (asserts! (get is-available book) ERR_BOOK_NOT_AVAILABLE)
 
-        ;;          Transfer deposit from borrower to contract with restrict-assets
-        (try! (restrict-assets? contract-caller ((with-ft 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token
-            "sbtc-token" (get deposit-amount book)
-        ))
-            (unwrap!
-                (contract-call?
-                    'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token
-                    transfer (get deposit-amount book) contract-caller
-                    current-contract none
-                )
-                ERR_TRANSFER_FAILED
-            )
-        ))
+        ;; Transfer STX from borrower to contract
+        (unwrap!
+            (stx-transfer? (get deposit-amount book) tx-sender CONTRACT_ADDRESS)
+            ERR_TRANSFER_FAILED
+        )
 
-        ;;          Update book status
         (map-set books book-id
             (merge book {
                 is-available: false,
@@ -152,18 +107,16 @@
             })
         )
 
-        ;;          Record the borrow
         (map-set borrows book-id {
-            borrower: contract-caller,
+            borrower: tx-sender,
             borrowed-at: burn-block-height,
             deposit-amount: (get deposit-amount book),
         })
 
-        ;;          Emit event
         (print {
             event: "book-borrowed",
             book-id: book-id,
-            borrower: contract-caller,
+            borrower: tx-sender,
             deposit: (get deposit-amount book),
             borrowed-at: burn-block-height,
         })
@@ -172,32 +125,29 @@
     )
 )
 
-;; Return a book and get deposit back
+;; Return a book and get STX back
 (define-public (return-book (book-id uint))
     (let (
             (book (unwrap! (map-get? books book-id) ERR_BOOK_NOT_FOUND))
             (borrow (unwrap! (map-get? borrows book-id) ERR_BOOK_ALREADY_RETURNED))
         )
-        ;; Verify caller is the borrower
-        (asserts! (is-eq contract-caller (get borrower borrow)) ERR_NOT_BORROWER)
+        (asserts! (is-eq tx-sender (get borrower borrow)) ERR_NOT_BORROWER)
 
-        ;; Return deposit to borrower from contract
-        (try! (contract-call? 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token
-            transfer (get deposit-amount borrow) current-contract
-            (get borrower borrow) none
-        ))
+        ;; Return STX from contract to borrower using helper
+        (unwrap!
+            (send-stx-from-contract (get deposit-amount borrow)
+                (get borrower borrow)
+            )
+            ERR_TRANSFER_FAILED
+        )
 
-        ;; Update book status
         (map-set books book-id (merge book { is-available: true }))
-
-        ;; Remove borrow record
         (map-delete borrows book-id)
 
-        ;; Emit event
         (print {
             event: "book-returned",
             book-id: book-id,
-            borrower: contract-caller,
+            borrower: tx-sender,
             returned-at: burn-block-height,
         })
 
@@ -205,44 +155,33 @@
     )
 )
 
-;; ===============================
-;; READ-ONLY FUNCTIONS
-;; ===============================
-
-;; Get book details
+;; Read-only functions
 (define-read-only (get-book (book-id uint))
     (map-get? books book-id)
 )
 
-;; Get borrow details for a book
 (define-read-only (get-borrow (book-id uint))
     (map-get? borrows book-id)
 )
 
-;; Get total number of books
 (define-read-only (get-book-count)
     (ok (var-get book-id-counter))
 )
 
-;; Check if a book is available
 (define-read-only (is-book-available (book-id uint))
     (match (map-get? books book-id)
         book (ok (get is-available book))
-        (err ERR_BOOK_NOT_FOUND)
+        ERR_BOOK_NOT_FOUND
     )
 )
 
-;; Get deposit amount for a specific book
 (define-read-only (get-book-deposit-amount (book-id uint))
     (match (map-get? books book-id)
         book (ok (get deposit-amount book))
-        (err ERR_BOOK_NOT_FOUND)
+        ERR_BOOK_NOT_FOUND
     )
 )
 
-;; Get contract balance
-(define-read-only (get-contract-balance)
-    (contract-call? 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token
-        get-balance current-contract
-    )
+(define-read-only (get-contract-stx-balance)
+    (ok (stx-get-balance CONTRACT_ADDRESS))
 )

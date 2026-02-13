@@ -7,12 +7,16 @@ cache_dir = './.cache'
 
 [[project.requirements]]
 contract_id = 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-deposit'
-[contracts.holdlyv1]
-path = 'contracts/holdlyv1.clar'
-clarity_version = 4
+
+[[project.requirements]]
+contract_id = 'ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT.sbtc-deposit'
+
+[[project.requirements]]
+contract_id = 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token'
+[contracts.holdlyv5]
+path = 'contracts/holdlyv5.clar'
+clarity_version = 2
 epoch = 'latest'
-
-
 [repl.analysis]
 passes = [
     'call_checker',

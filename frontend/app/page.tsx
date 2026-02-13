@@ -9,13 +9,13 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { useStacks } from "@/providers/stacks-provider";
 import { request } from "@stacks/connect";
-import { Cl, cvToJSON } from "@stacks/transactions";
+import { Cl, cvToJSON, PostConditionMode } from "@stacks/transactions"; // ✅ Added PostConditionMode
 import { fetchCallReadOnlyFunction } from "@stacks/transactions";
 import { STACKS_TESTNET } from "@stacks/network";
 
-const DEPOSIT_AMOUNT = 100000;
+const DEPOSIT_AMOUNT = 1000000;
 const CONTRACT_ADDRESS = "ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K";
-const CONTRACT_NAME = "holdlyv1";
+const CONTRACT_NAME = "holdlyv4";
 
 interface Book {
   id: number;
@@ -34,6 +34,8 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState("browse");
   const [isProcessing, setIsProcessing] = useState(false);
   const [isFetchingBooks, setIsFetchingBooks] = useState(true);
+  // Add new state for user's borrowed books
+  const [userBorrowedBooks, setUserBorrowedBooks] = useState<Book[]>([]);
 
   const fetchAllBooks = async () => {
     try {
@@ -95,10 +97,77 @@ export default function Home() {
     }
   };
 
+  // Add this new function to fetch borrowed books for the connected user
+  const fetchUserBorrowedBooks = async () => {
+    if (!connected || !address) {
+      return [];
+    }
+
+    try {
+      const userBorrowed: Book[] = [];
+
+      for (const book of books) {
+        // Only check books that are not available
+        if (!book["is-available"]) {
+          try {
+            const borrowResult = await fetchCallReadOnlyFunction({
+              contractAddress: CONTRACT_ADDRESS,
+              contractName: CONTRACT_NAME,
+              functionName: "get-borrow",
+              functionArgs: [Cl.uint(book.id)],
+              network: STACKS_TESTNET,
+              senderAddress: CONTRACT_ADDRESS,
+            });
+
+            const borrowJson = cvToJSON(borrowResult);
+
+            if (borrowJson.value) {
+              const borrowData = borrowJson.value.value;
+              const borrowerAddress = borrowData.borrower.value;
+
+              // Check if current user is the borrower
+              if (borrowerAddress === address) {
+                userBorrowed.push({
+                  ...book,
+                  borrowedAt: Number(borrowData["borrowed-at"].value),
+                  depositAmount: Number(borrowData["deposit-amount"].value),
+                } as any);
+              }
+            }
+          } catch (error) {
+            console.error(
+              `Error fetching borrow info for book ${book.id}:`,
+              error,
+            );
+          }
+        }
+      }
+
+      return userBorrowed;
+    } catch (error) {
+      console.error("Error fetching user borrowed books:", error);
+      return [];
+    }
+  };
+
   // Fetch books on component mount
   useEffect(() => {
     fetchAllBooks();
   }, []);
+
+  // Update the useEffect to fetch user borrowed books when connected
+  useEffect(() => {
+    const fetchUserBooks = async () => {
+      if (connected && address && books.length > 0) {
+        const borrowed = await fetchUserBorrowedBooks();
+        setUserBorrowedBooks(borrowed);
+      } else {
+        setUserBorrowedBooks([]);
+      }
+    };
+
+    fetchUserBooks();
+  }, [connected, address, books]);
 
   const handleAddBook = async (
     title: string,
@@ -154,7 +223,7 @@ export default function Home() {
   };
 
   const handleBorrowBook = async (bookId: number) => {
-    if (!connected) {
+    if (!connected || !address) {
       alert("Please connect your wallet first");
       return;
     }
@@ -162,6 +231,17 @@ export default function Home() {
     const book = books.find((b) => b.id === bookId);
     if (!book || !book["is-available"]) {
       alert("Book is not available");
+      return;
+    }
+
+    const confirmBorrow = window.confirm(
+      `You are about to borrow "${book.title}" by ${book.author}.\n\n` +
+        `Deposit required: ${(book["deposit-amount"] / 1000000).toFixed(2)} STX\n\n` +
+        `This deposit will be returned when you return the book.\n\n` +
+        `Do you want to proceed?`,
+    );
+
+    if (!confirmBorrow) {
       return;
     }
 
@@ -173,41 +253,45 @@ export default function Home() {
         contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
         functionName: "borrow-book",
         functionArgs,
+        postConditions: [],
+        postConditionMode: "allow" as any, // ✅ Use string with type assertion
       });
 
       if (response.txid) {
         console.log("Book borrowed! Transaction ID:", response.txid);
 
-        // Update UI
-        setBooks(
-          books.map((b) =>
-            b.id === bookId
-              ? {
-                  ...b,
-                  "is-available": false,
-                  "total-borrows": b["total-borrows"] + 1,
-                }
-              : b,
-          ),
+        alert(
+          `Book borrow request submitted!\n\n` +
+            `Transaction ID: ${response.txid}\n\n` +
+            `Deposit: ${(book["deposit-amount"] / 1000000).toFixed(2)} STX\n\n` +
+            `Please wait 10-30 seconds for the transaction to confirm.`,
         );
 
-        alert(
-          `Book borrowed successfully! You've deposited ${DEPOSIT_AMOUNT.toLocaleString()} sats. TX ID: ${response.txid}`,
-        );
+        setTimeout(async () => {
+          console.log("Refreshing book data...");
+          await fetchAllBooks();
+          setIsProcessing(false);
+          alert("Transaction confirmed! Check 'My Borrows' tab.");
+        }, 10000);
       }
     } catch (error) {
       console.error("Error borrowing book:", error);
       alert(
         `Failed to borrow book: ${error instanceof Error ? error.message : "Unknown error"}`,
       );
-    } finally {
       setIsProcessing(false);
     }
   };
 
   const handleReturnBook = async (bookId: number) => {
-    if (!connected) {
+    if (!connected || !address) {
       alert("Please connect your wallet first");
+      return;
+    }
+
+    const book = userBorrowedBooks.find((b) => b.id === bookId);
+    if (!book) {
+      alert("Book not found in your borrowed books");
       return;
     }
 
@@ -219,33 +303,31 @@ export default function Home() {
         contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
         functionName: "return-book",
         functionArgs,
+        postConditions: [],
+        postConditionMode: "allow" as any, // ✅ Use string with type assertion
       });
 
       if (response.txid) {
         console.log("Book returned! Transaction ID:", response.txid);
 
-        // Update UI
-        setBooks(
-          books.map((b) =>
-            b.id === bookId ? { ...b, "is-available": true } : b,
-          ),
+        alert(
+          `Book returned successfully! TX ID: ${response.txid}\n\n` +
+            `Your deposit of ${(book["deposit-amount"] / 1000000).toFixed(2)} STX will be refunded.`,
         );
 
-        alert(
-          `Book returned successfully! Your ${DEPOSIT_AMOUNT.toLocaleString()} sats deposit has been refunded. TX ID: ${response.txid}`,
-        );
+        setTimeout(async () => {
+          await fetchAllBooks();
+          setIsProcessing(false);
+        }, 10000);
       }
     } catch (error) {
       console.error("Error returning book:", error);
       alert(
         `Failed to return book: ${error instanceof Error ? error.message : "Unknown error"}`,
       );
-    } finally {
       setIsProcessing(false);
     }
   };
-
-  const borrowedBooks = books.filter((book) => !book["is-available"]);
 
   if (isLoading) {
     return (
@@ -291,7 +373,7 @@ export default function Home() {
 
         {activeTab === "myborrow" && (
           <MyBorrows
-            borrowedBooks={borrowedBooks}
+            borrowedBooks={userBorrowedBooks}
             onReturn={handleReturnBook}
             connected={connected}
           />
