@@ -10,7 +10,9 @@
 (define-constant ERR_INVALID_DEPOSIT_AMOUNT (err u108))
 (define-constant ERR_NOT_BOOK_OWNER (err u109))
 (define-constant ERR_INVALID_STRING (err u110))
-(define-constant CONTRACT_ADDRESS 'ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K.holdlyv1)
+(define-constant CONTRACT_ADDRESS 'ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K.holdlyv2)
+(define-constant SBTC_TOKEN 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token)
+
 
 ;; Data structure for books
 (define-map books
@@ -126,48 +128,45 @@
 
 ;; Borrow a book by depositing sBTC
 (define-public (borrow-book (book-id uint))
-    (let ((book (unwrap! (map-get? books book-id) ERR_BOOK_NOT_FOUND)))
-        ;;          Check if book is available
+    (let (
+        (book (unwrap! (map-get? books book-id) ERR_BOOK_NOT_FOUND))
+    )
+        ;; Check if book is available
         (asserts! (get is-available book) ERR_BOOK_NOT_AVAILABLE)
-
-        ;;          Transfer deposit from borrower to contract with restrict-assets
-        (try! (restrict-assets? contract-caller ((with-ft 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token
-            "sbtc-token" (get deposit-amount book)
-        ))
-            (unwrap!
-                (contract-call?
-                    'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token
-                    transfer (get deposit-amount book) contract-caller
-                    current-contract none
-                )
-                ERR_TRANSFER_FAILED
+        ;; Transfer deposit from borrower to contract
+        (unwrap!
+            (contract-call? 
+                'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token
+                transfer 
+                (get deposit-amount book) 
+                tx-sender
+                CONTRACT_ADDRESS
+                none
             )
-        ))
-
-        ;;          Update book status
+            ERR_TRANSFER_FAILED
+        )
+        ;; Rest of the code stays the same...
+        ;; Update book status
         (map-set books book-id
             (merge book {
                 is-available: false,
                 total-borrows: (+ (get total-borrows book) u1),
             })
         )
-
-        ;;          Record the borrow
+        ;; Record the borrow
         (map-set borrows book-id {
-            borrower: contract-caller,
+            borrower: tx-sender,
             borrowed-at: burn-block-height,
             deposit-amount: (get deposit-amount book),
         })
-
-        ;;          Emit event
+        ;; Emit event
         (print {
             event: "book-borrowed",
             book-id: book-id,
-            borrower: contract-caller,
+            borrower: tx-sender,
             deposit: (get deposit-amount book),
             borrowed-at: burn-block-height,
         })
-
         (ok true)
     )
 )

@@ -35,18 +35,38 @@ plan:
       epoch: "3.0"
     - id: 1
       transactions:
+        - requirement-publish:
+            contract-id: ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT.sbtc-registry
+            remap-sender: ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K
+            remap-principals:
+              ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT: ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K
+            cost: 112090
+            path: "./.cache/requirements/ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT.sbtc-registry.clar"
+            clarity-version: 3
+        - requirement-publish:
+            contract-id: ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT.sbtc-token
+            remap-sender: ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K
+            remap-principals:
+              ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT: ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K
+            cost: 47600
+            path: "./.cache/requirements/ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT.sbtc-token.clar"
+            clarity-version: 3
+        - requirement-publish:
+            contract-id: ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT.sbtc-deposit
+            remap-sender: ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K
+            remap-principals:
+              ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT: ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K
+            cost: 41510
+            path: "./.cache/requirements/ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT.sbtc-deposit.clar"
+            clarity-version: 3
+      epoch: "3.1"
+    - id: 2
+      transactions:
         - contract-publish:
-            contract-name: holdlyv1
+            contract-name: holdlyv6
             expected-sender: ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K
-            cost: 72670
-            path: contracts/holdlyv1.clar
+            cost: 50840
+            path: contracts/holdlyv6.clar
             anchor-block-only: true
-            clarity-version: 4
-        - contract-publish:
-            contract-name: message-boardv5
-            expected-sender: ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K
-            cost: 29230
-            path: contracts/message-boardv5.clar
-            anchor-block-only: true
-            clarity-version: 4
+            clarity-version: 2
       epoch: "3.3"
