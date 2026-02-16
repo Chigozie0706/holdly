@@ -63,10 +63,10 @@ plan:
     - id: 2
       transactions:
         - contract-publish:
-            contract-name: holdlyv4
+            contract-name: holdlyv6
             expected-sender: ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K
-            cost: 50050
-            path: contracts/holdlyv4.clar
+            cost: 50840
+            path: contracts/holdlyv6.clar
             anchor-block-only: true
             clarity-version: 2
       epoch: "3.3"

@@ -15,7 +15,7 @@ import { STACKS_TESTNET } from "@stacks/network";
 
 const DEPOSIT_AMOUNT = 1000000;
 const CONTRACT_ADDRESS = "ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K";
-const CONTRACT_NAME = "holdlyv4";
+const CONTRACT_NAME = "holdlyv6";
 
 interface Book {
   id: number;

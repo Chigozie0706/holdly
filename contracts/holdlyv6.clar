@@ -1,7 +1,7 @@
 ;; Book Lending Contract with STX Deposits
 
 ;; Contract Address
-(define-constant CONTRACT_ADDRESS 'ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K.holdlyv5)
+(define-constant CONTRACT_ADDRESS 'ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K.holdlyv6)
 
 ;; Define error codes
 (define-constant ERR_BOOK_NOT_FOUND (err u101))
