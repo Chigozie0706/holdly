@@ -9,7 +9,6 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { useStacks } from "@/providers/stacks-provider";
 import { request } from "@stacks/connect";
-import { Cl, PostConditionMode } from "@stacks/transactions";
 import { fetchCallReadOnlyFunction } from "@stacks/transactions";
 import { STACKS_TESTNET } from "@stacks/network";
 import { uintCV, stringUtf8CV, cvToJSON } from "@stacks/transactions";
