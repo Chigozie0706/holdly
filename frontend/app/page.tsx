@@ -9,9 +9,10 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { useStacks } from "@/providers/stacks-provider";
 import { request } from "@stacks/connect";
-import { Cl, cvToJSON, PostConditionMode } from "@stacks/transactions";
+import { Cl, PostConditionMode } from "@stacks/transactions";
 import { fetchCallReadOnlyFunction } from "@stacks/transactions";
 import { STACKS_TESTNET } from "@stacks/network";
+import { uintCV, stringUtf8CV, cvToJSON } from "@stacks/transactions";
 
 const DEPOSIT_AMOUNT = 1000000;
 const CONTRACT_ADDRESS = "ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K";
@@ -61,7 +62,7 @@ export default function Home() {
             contractAddress: CONTRACT_ADDRESS,
             contractName: CONTRACT_NAME,
             functionName: "get-book",
-            functionArgs: [Cl.uint(i)],
+            functionArgs: [uintCV(i)],
             network: STACKS_TESTNET,
             senderAddress: CONTRACT_ADDRESS,
           });
@@ -114,7 +115,7 @@ export default function Home() {
               contractAddress: CONTRACT_ADDRESS,
               contractName: CONTRACT_NAME,
               functionName: "get-borrow",
-              functionArgs: [Cl.uint(book.id)],
+              functionArgs: [uintCV(book.id)],
               network: STACKS_TESTNET,
               senderAddress: CONTRACT_ADDRESS,
             });
@@ -182,10 +183,10 @@ export default function Home() {
     setIsProcessing(true);
     try {
       const functionArgs = [
-        Cl.stringUtf8(title),
-        Cl.stringUtf8(author),
-        Cl.stringUtf8(coverPage || "https://via.placeholder.com/150"),
-        Cl.uint(DEPOSIT_AMOUNT),
+        stringUtf8CV(title),
+        stringUtf8CV(author),
+        stringUtf8CV(coverPage || "https://via.placeholder.com/150"),
+        uintCV(DEPOSIT_AMOUNT),
       ];
 
       const response = await request("stx_callContract", {
@@ -247,7 +248,8 @@ export default function Home() {
 
     setIsProcessing(true);
     try {
-      const functionArgs = [Cl.uint(bookId)];
+      // const functionArgs = [uintCV(bookId)];
+      const functionArgs = [uintCV(bookId)];
 
       const response = await request("stx_callContract", {
         contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
@@ -297,7 +299,7 @@ export default function Home() {
 
     setIsProcessing(true);
     try {
-      const functionArgs = [Cl.uint(bookId)];
+      const functionArgs = [uintCV(bookId)];
 
       const response = await request("stx_callContract", {
         contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
