@@ -11,7 +11,8 @@ import { useStacks } from "@/providers/stacks-provider";
 import { request } from "@stacks/connect";
 import { fetchCallReadOnlyFunction } from "@stacks/transactions";
 import { STACKS_TESTNET } from "@stacks/network";
-import { uintCV, stringUtf8CV, cvToJSON } from "@stacks/transactions";
+// import { uintCV, stringUtf8CV, cvToJSON } from "@stacks/transactions";
+import * as tx from "@stacks/transactions";
 
 const DEPOSIT_AMOUNT = 1000000;
 const CONTRACT_ADDRESS = "ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K";
@@ -36,6 +37,8 @@ export default function Home() {
   const [isFetchingBooks, setIsFetchingBooks] = useState(true);
   // Add new state for user's borrowed books
   const [userBorrowedBooks, setUserBorrowedBooks] = useState<Book[]>([]);
+
+  const { uintCV, stringUtf8CV, cvToJSON, fetchCallReadOnlyFunction } = tx;
 
   const fetchAllBooks = async () => {
     try {
