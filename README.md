@@ -94,44 +94,6 @@ _Track all borrowed books and manage returns_
 }
 ```
 
-## Smart Contract Functions
-
-### Public Functions
-
-#### `add-book`
-
-```clarity
-(add-book (title (string-utf8 200)) (author (string-utf8 100))
-          (cover-page (string-utf8 200)) (deposit-amount uint))
-```
-
-Add a new book to the platform. Free to call - anyone can list books.
-
-#### `borrow-book`
-
-```clarity
-(borrow-book (book-id uint))
-```
-
-Borrow an available book by depositing STX collateral.
-
-#### `return-book`
-
-```clarity
-(return-book (book-id uint))
-```
-
-Return a borrowed book and automatically receive your STX deposit back.
-
-### Read-Only Functions
-
-- `get-book(book-id)` - Get book details
-- `get-borrow(book-id)` - Get borrow information
-- `get-book-count()` - Get total number of books
-- `is-book-available(book-id)` - Check if book is available
-- `get-book-deposit-amount(book-id)` - Get deposit amount for a book
-- `get-contract-stx-balance()` - Get contract's STX balance
-
 ## 🛠️ Development Setup
 
 ### Prerequisites
@@ -145,7 +107,7 @@ Return a borrowed book and automatically receive your STX deposit back.
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/yourusername/holdly
+git clone https://github.com/Chigozie0706/holdly
 cd holdly
 ```
 
@@ -180,20 +142,14 @@ clarinet deployments apply --testnet
 1. **Install dependencies**
 
 ```bash
-npm install
-```
-
-2. **Set environment variables**
-
-```bash
-cp .env.example .env.local
-# Edit .env.local with your contract address
+cd holdly
+pnpm install
 ```
 
 3. **Run development server**
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 4. **Open browser**
@@ -203,8 +159,8 @@ Navigate to http://localhost:3000
 5. **Build for production**
 
 ```bash
-npm run build
-npm start
+pnpm run build
+pnpm start
 ```
 
 ## 🧪 Testing
@@ -251,9 +207,9 @@ This project leverages the following Stacks libraries and meets all Code4STX req
 
 ### Stacks Libraries Used
 
-- **@stacks/connect** (v7.8.2) - Wallet connection and authentication
-- **@stacks/transactions** (v6.16.1) - Transaction construction and signing
-- **@stacks/network** (v6.16.0) - Network configuration (testnet/mainnet)
+- **@stacks/connect** (^8.2.4) - Wallet connection and authentication
+- **@stacks/transactions** (^7.3.1) - Transaction construction and signing
+- **@stacks/network** (^7.3.1) - Network configuration (testnet/mainnet)
 - **Clarity** - Smart contract language for secure on-chain logic
 
 ### Validation
@@ -270,7 +226,7 @@ holdly/
 │   ├── holdlyv6.clar           # Main lending contract (Clarity)
 │   └── tests/
 │       └── holdly_test.ts      # Contract test suite
-├── src/
+├── frontend/
 │   ├── app/
 │   │   ├── page.tsx            # Main app logic & state
 │   │   ├── layout.tsx          # Root layout
