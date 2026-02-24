@@ -9,10 +9,9 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { useStacks } from "@/providers/stacks-provider";
 import { request } from "@stacks/connect";
+import { Cl, cvToJSON, PostConditionMode } from "@stacks/transactions";
 import { fetchCallReadOnlyFunction } from "@stacks/transactions";
 import { STACKS_TESTNET } from "@stacks/network";
-// import { uintCV, stringUtf8CV, cvToJSON } from "@stacks/transactions";
-import * as tx from "@stacks/transactions";
 
 const DEPOSIT_AMOUNT = 1000000;
 const CONTRACT_ADDRESS = "ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K";
@@ -38,8 +37,6 @@ export default function Home() {
   // Add new state for user's borrowed books
   const [userBorrowedBooks, setUserBorrowedBooks] = useState<Book[]>([]);
 
-  const { uintCV, stringUtf8CV, cvToJSON, fetchCallReadOnlyFunction } = tx;
-
   const fetchAllBooks = async () => {
     try {
       setIsFetchingBooks(true);
@@ -64,7 +61,7 @@ export default function Home() {
             contractAddress: CONTRACT_ADDRESS,
             contractName: CONTRACT_NAME,
             functionName: "get-book",
-            functionArgs: [uintCV(i)],
+            functionArgs: [Cl.uint(i)],
             network: STACKS_TESTNET,
             senderAddress: CONTRACT_ADDRESS,
           });
@@ -117,7 +114,7 @@ export default function Home() {
               contractAddress: CONTRACT_ADDRESS,
               contractName: CONTRACT_NAME,
               functionName: "get-borrow",
-              functionArgs: [uintCV(book.id)],
+              functionArgs: [Cl.uint(book.id)],
               network: STACKS_TESTNET,
               senderAddress: CONTRACT_ADDRESS,
             });
@@ -185,10 +182,10 @@ export default function Home() {
     setIsProcessing(true);
     try {
       const functionArgs = [
-        stringUtf8CV(title),
-        stringUtf8CV(author),
-        stringUtf8CV(coverPage || "https://via.placeholder.com/150"),
-        uintCV(DEPOSIT_AMOUNT),
+        Cl.stringUtf8(title),
+        Cl.stringUtf8(author),
+        Cl.stringUtf8(coverPage || "https://via.placeholder.com/150"),
+        Cl.uint(DEPOSIT_AMOUNT),
       ];
 
       const response = await request("stx_callContract", {
@@ -250,8 +247,7 @@ export default function Home() {
 
     setIsProcessing(true);
     try {
-      // const functionArgs = [uintCV(bookId)];
-      const functionArgs = [uintCV(bookId)];
+      const functionArgs = [Cl.uint(bookId)];
 
       const response = await request("stx_callContract", {
         contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
@@ -301,7 +297,7 @@ export default function Home() {
 
     setIsProcessing(true);
     try {
-      const functionArgs = [uintCV(bookId)];
+      const functionArgs = [Cl.uint(bookId)];
 
       const response = await request("stx_callContract", {
         contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
