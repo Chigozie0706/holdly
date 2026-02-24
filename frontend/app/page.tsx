@@ -8,10 +8,12 @@ import MyBorrows from "@/components/MyBorrows";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { useStacks } from "@/providers/stacks-provider";
-import { request } from "@stacks/connect";
-import { Cl, cvToJSON, PostConditionMode } from "@stacks/transactions";
-import { fetchCallReadOnlyFunction } from "@stacks/transactions";
-import { STACKS_TESTNET } from "@stacks/network";
+
+// ❌ Remove these top-level imports
+// import { request } from "@stacks/connect";
+// import { Cl, cvToJSON, ... } from "@stacks/transactions";
+// import { fetchCallReadOnlyFunction } from "@stacks/transactions";
+// import { STACKS_TESTNET } from "@stacks/network";
 
 const DEPOSIT_AMOUNT = 1000000;
 const CONTRACT_ADDRESS = "ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K";
@@ -34,12 +36,17 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState("browse");
   const [isProcessing, setIsProcessing] = useState(false);
   const [isFetchingBooks, setIsFetchingBooks] = useState(true);
-  // Add new state for user's borrowed books
   const [userBorrowedBooks, setUserBorrowedBooks] = useState<Book[]>([]);
 
   const fetchAllBooks = async () => {
     try {
       setIsFetchingBooks(true);
+
+      // ✅ Dynamic import inside async function
+      const { fetchCallReadOnlyFunction, Cl, cvToJSON } =
+        await import("@stacks/transactions");
+      const { STACKS_TESTNET } = await import("@stacks/network");
+
       const bookCountResult = await fetchCallReadOnlyFunction({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
@@ -51,8 +58,6 @@ export default function Home() {
 
       const bookCountJson = cvToJSON(bookCountResult);
       const totalBooks = Number(bookCountJson.value.value);
-
-      console.log(`Total books in contract: ${totalBooks}`);
 
       const fetchedBooks: Book[] = [];
       for (let i = 1; i <= totalBooks; i++) {
@@ -67,8 +72,6 @@ export default function Home() {
           });
 
           const bookJson = cvToJSON(bookResult);
-
-          // Check if book exists (optional return)
           if (bookJson.value) {
             const bookData = bookJson.value.value;
             fetchedBooks.push({
@@ -87,27 +90,24 @@ export default function Home() {
       }
 
       setBooks(fetchedBooks);
-      console.log(`Fetched ${fetchedBooks.length} books`);
     } catch (error) {
       console.error("Error fetching books:", error);
-      // Fallback to empty array or show error to user
       setBooks([]);
     } finally {
       setIsFetchingBooks(false);
     }
   };
 
-  // Add this new function to fetch borrowed books for the connected user
   const fetchUserBorrowedBooks = async () => {
-    if (!connected || !address) {
-      return [];
-    }
+    if (!connected || !address) return [];
 
     try {
-      const userBorrowed: Book[] = [];
+      const { fetchCallReadOnlyFunction, Cl, cvToJSON } =
+        await import("@stacks/transactions");
+      const { STACKS_TESTNET } = await import("@stacks/network");
 
+      const userBorrowed: Book[] = [];
       for (const book of books) {
-        // Only check books that are not available
         if (!book["is-available"]) {
           try {
             const borrowResult = await fetchCallReadOnlyFunction({
@@ -120,13 +120,9 @@ export default function Home() {
             });
 
             const borrowJson = cvToJSON(borrowResult);
-
             if (borrowJson.value) {
               const borrowData = borrowJson.value.value;
-              const borrowerAddress = borrowData.borrower.value;
-
-              // Check if current user is the borrower
-              if (borrowerAddress === address) {
+              if (borrowData.borrower.value === address) {
                 userBorrowed.push({
                   ...book,
                   borrowedAt: Number(borrowData["borrowed-at"].value),
@@ -142,32 +138,12 @@ export default function Home() {
           }
         }
       }
-
       return userBorrowed;
     } catch (error) {
       console.error("Error fetching user borrowed books:", error);
       return [];
     }
   };
-
-  // Fetch books on component mount
-  useEffect(() => {
-    fetchAllBooks();
-  }, []);
-
-  // Update the useEffect to fetch user borrowed books when connected
-  useEffect(() => {
-    const fetchUserBooks = async () => {
-      if (connected && address && books.length > 0) {
-        const borrowed = await fetchUserBorrowedBooks();
-        setUserBorrowedBooks(borrowed);
-      } else {
-        setUserBorrowedBooks([]);
-      }
-    };
-
-    fetchUserBooks();
-  }, [connected, address, books]);
 
   const handleAddBook = async (
     title: string,
@@ -181,39 +157,37 @@ export default function Home() {
 
     setIsProcessing(true);
     try {
-      const functionArgs = [
-        Cl.stringUtf8(title),
-        Cl.stringUtf8(author),
-        Cl.stringUtf8(coverPage || "https://via.placeholder.com/150"),
-        Cl.uint(DEPOSIT_AMOUNT),
-      ];
+      const { request } = await import("@stacks/connect");
+      const { Cl } = await import("@stacks/transactions");
 
       const response = await request("stx_callContract", {
         contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
         functionName: "add-book",
-        functionArgs,
+        functionArgs: [
+          Cl.stringUtf8(title),
+          Cl.stringUtf8(author),
+          Cl.stringUtf8(coverPage || "https://via.placeholder.com/150"),
+          Cl.uint(DEPOSIT_AMOUNT),
+        ],
       });
 
       if (response.txid) {
-        console.log("Book added! Transaction ID:", response.txid);
-
-        // Optimistically update UI
-        const newBook: Book = {
-          id: books.length + 1,
-          title,
-          author,
-          coverPage,
-          "is-available": true,
-          "total-borrows": 0,
-          "deposit-amount": DEPOSIT_AMOUNT,
-        };
-        setBooks([...books, newBook]);
+        setBooks([
+          ...books,
+          {
+            id: books.length + 1,
+            title,
+            author,
+            coverPage,
+            "is-available": true,
+            "total-borrows": 0,
+            "deposit-amount": DEPOSIT_AMOUNT,
+          },
+        ]);
         setActiveTab("browse");
-
         alert(`Book added successfully! TX ID: ${response.txid}`);
       }
     } catch (error) {
-      console.error("Error adding book:", error);
       alert(
         `Failed to add book: ${error instanceof Error ? error.message : "Unknown error"}`,
       );
@@ -234,50 +208,39 @@ export default function Home() {
       return;
     }
 
-    const confirmBorrow = window.confirm(
-      `You are about to borrow "${book.title}" by ${book.author}.\n\n` +
-        `Deposit required: ${(book["deposit-amount"] / 1000000).toFixed(2)} STX\n\n` +
-        `This deposit will be returned when you return the book.\n\n` +
-        `Do you want to proceed?`,
-    );
-
-    if (!confirmBorrow) {
+    if (
+      !window.confirm(
+        `Borrow "${book.title}" by ${book.author}?\n\nDeposit: ${(book["deposit-amount"] / 1000000).toFixed(2)} STX (refunded on return)`,
+      )
+    )
       return;
-    }
 
     setIsProcessing(true);
     try {
-      const functionArgs = [Cl.uint(bookId)];
+      const { request } = await import("@stacks/connect");
+      const { Cl } = await import("@stacks/transactions");
 
       const response = await request("stx_callContract", {
         contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
         functionName: "borrow-book",
-        functionArgs,
+        functionArgs: [Cl.uint(bookId)],
         postConditions: [],
-        postConditionMode: "allow" as any, // ✅ Use string with type assertion
+        postConditionMode: "allow" as any,
       });
 
       if (response.txid) {
-        console.log("Book borrowed! Transaction ID:", response.txid);
-
         alert(
-          `Book borrow request submitted!\n\n` +
-            `Transaction ID: ${response.txid}\n\n` +
-            `Deposit: ${(book["deposit-amount"] / 1000000).toFixed(2)} STX\n\n` +
-            `Please wait 10-30 seconds for the transaction to confirm.`,
+          `Borrow submitted! TX: ${response.txid}\n\nWaiting for confirmation...`,
         );
-
         setTimeout(async () => {
-          console.log("Refreshing book data...");
           await fetchAllBooks();
           setIsProcessing(false);
-          alert("Transaction confirmed! Check 'My Borrows' tab.");
+          alert("Confirmed! Check 'My Borrows' tab.");
         }, 10000);
       }
     } catch (error) {
-      console.error("Error borrowing book:", error);
       alert(
-        `Failed to borrow book: ${error instanceof Error ? error.message : "Unknown error"}`,
+        `Failed to borrow: ${error instanceof Error ? error.message : "Unknown error"}`,
       );
       setIsProcessing(false);
     }
@@ -297,37 +260,48 @@ export default function Home() {
 
     setIsProcessing(true);
     try {
-      const functionArgs = [Cl.uint(bookId)];
+      const { request } = await import("@stacks/connect");
+      const { Cl } = await import("@stacks/transactions");
 
       const response = await request("stx_callContract", {
         contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
         functionName: "return-book",
-        functionArgs,
+        functionArgs: [Cl.uint(bookId)],
         postConditions: [],
-        postConditionMode: "allow" as any, // ✅ Use string with type assertion
+        postConditionMode: "allow" as any,
       });
 
       if (response.txid) {
-        console.log("Book returned! Transaction ID:", response.txid);
-
         alert(
-          `Book returned successfully! TX ID: ${response.txid}\n\n` +
-            `Your deposit of ${(book["deposit-amount"] / 1000000).toFixed(2)} STX will be refunded.`,
+          `Returned! TX: ${response.txid}\nDeposit of ${(book["deposit-amount"] / 1000000).toFixed(2)} STX will be refunded.`,
         );
-
         setTimeout(async () => {
           await fetchAllBooks();
           setIsProcessing(false);
         }, 10000);
       }
     } catch (error) {
-      console.error("Error returning book:", error);
       alert(
-        `Failed to return book: ${error instanceof Error ? error.message : "Unknown error"}`,
+        `Failed to return: ${error instanceof Error ? error.message : "Unknown error"}`,
       );
       setIsProcessing(false);
     }
   };
+
+  useEffect(() => {
+    fetchAllBooks();
+  }, []);
+
+  useEffect(() => {
+    const fetchUserBooks = async () => {
+      if (connected && address && books.length > 0) {
+        setUserBorrowedBooks(await fetchUserBorrowedBooks());
+      } else {
+        setUserBorrowedBooks([]);
+      }
+    };
+    fetchUserBooks();
+  }, [connected, address, books]);
 
   if (isLoading) {
     return (
@@ -348,7 +322,6 @@ export default function Home() {
         onConnect={connectWallet}
         onDisconnect={disconnectWallet}
       />
-
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {isProcessing && (
           <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
@@ -357,9 +330,7 @@ export default function Home() {
             </p>
           </div>
         )}
-
         <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
-
         {activeTab === "browse" && (
           <BrowseBooks
             books={books}
@@ -368,9 +339,7 @@ export default function Home() {
             connected={connected}
           />
         )}
-
         {activeTab === "add" && <AddBookForm onAdd={handleAddBook} />}
-
         {activeTab === "myborrow" && (
           <MyBorrows
             borrowedBooks={userBorrowedBooks}
@@ -379,7 +348,6 @@ export default function Home() {
           />
         )}
       </main>
-
       <Footer bookCount={books.length} />
     </div>
   );

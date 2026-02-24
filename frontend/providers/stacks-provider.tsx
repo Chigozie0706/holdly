@@ -7,12 +7,9 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import {
-  connect,
-  disconnect,
-  isConnected,
-  getLocalStorage,
-} from "@stacks/connect";
+
+// ❌ Remove top-level imports from @stacks/connect
+// import { connect, disconnect, isConnected, getLocalStorage } from "@stacks/connect";
 
 interface StacksContextType {
   address: string | null;
@@ -34,19 +31,14 @@ export function StacksProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(false);
 
   async function connectWallet() {
-    // Don't re-connect if already connected
-    if (connected && address) {
-      console.log("Already connected to:", address);
-      return;
-    }
+    if (connected && address) return;
 
     setIsLoading(true);
     try {
+      // ✅ Dynamically import only when called (guaranteed client-side)
+      const { connect } = await import("@stacks/connect");
       const response = await connect();
 
-      console.log("Full connect response:", response);
-
-      // addresses[2] = STX, addresses[0] = BTC
       const stxAccount = response.addresses[2];
       const btcAccount = response.addresses[0];
 
@@ -54,9 +46,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
         setAddress(stxAccount.address);
         setPublicKey(stxAccount.publicKey);
         setConnected(true);
-        console.log("✅ Connected to:", stxAccount.address);
       }
-
       if (btcAccount) {
         setBtcAddress(btcAccount.address);
       }
@@ -68,103 +58,68 @@ export function StacksProvider({ children }: { children: ReactNode }) {
   }
 
   function disconnectWallet() {
-    disconnect();
+    // ✅ Dynamic import here too
+    import("@stacks/connect").then(({ disconnect }) => disconnect());
     setAddress(null);
     setBtcAddress(null);
     setPublicKey(null);
     setConnected(false);
-    console.log("🔌 Disconnected");
   }
 
-  function loadUserData() {
-    try {
-      const userData = getLocalStorage();
-
-      console.log("📦 Raw localStorage data:", userData);
-
-      // Check various possible structures
-      if (!userData) {
-        console.log("No persisted data found");
-        return;
-      }
-
-      let stxAccount = null;
-      let btcAccount = null;
-
-      // Try different data structures
-      if (userData.addresses && Array.isArray(userData.addresses)) {
-        console.log("Found addresses array");
-        stxAccount = userData.addresses.find(
-          (acc: any) => acc.symbol === "STX",
-        );
-        btcAccount = userData.addresses.find(
-          (acc: any) => acc.symbol === "BTC",
-        );
-      } else if (userData.addresses) {
-        // Maybe it's an object structure
-        console.log("Addresses is not an array:", userData.addresses);
-      }
-
-      if (stxAccount && stxAccount.address) {
-        setAddress(stxAccount.address);
-        setPublicKey(stxAccount.publicKey);
-        setBtcAddress(btcAccount?.address || null);
-        setConnected(true);
-        console.log("🔄 Restored connection to:", stxAccount.address);
-      } else {
-        console.log("⚠️ No STX account found in persisted data");
-        // Force reconnect
-        connectWallet();
-      }
-    } catch (error) {
-      console.error("❌ Error loading persisted data:", error);
-      // If loading fails, try fresh connection
-      connectWallet();
-    }
-  }
-
-  // Check for existing connection on mount
   useEffect(() => {
-    console.log("🚀 StacksProvider mounted");
-
     const checkConnection = async () => {
-      if (isConnected()) {
-        console.log("📍 isConnected() returned true");
-        loadUserData();
-      } else {
-        console.log(
-          "📍 isConnected() returned false - no persisted connection",
-        );
+      // ✅ Safe — only runs in browser, after mount
+      const { isConnected, getLocalStorage } = await import("@stacks/connect");
+
+      if (!isConnected()) return;
+
+      try {
+        const userData = getLocalStorage();
+        if (!userData?.addresses) return;
+
+        const stxAccount = Array.isArray(userData.addresses)
+          ? userData.addresses.find((acc: any) => acc.symbol === "STX")
+          : null;
+        const btcAccount = Array.isArray(userData.addresses)
+          ? userData.addresses.find((acc: any) => acc.symbol === "BTC")
+          : null;
+
+        if (stxAccount?.address) {
+          setAddress(stxAccount.address);
+          setPublicKey(stxAccount.publicKey);
+          setBtcAddress(btcAccount?.address || null);
+          setConnected(true);
+        }
+        // ❌ Removed auto-reconnect on failure — don't pop wallet on page load
+      } catch (error) {
+        console.error("❌ Error loading persisted data:", error);
       }
     };
 
     checkConnection();
   }, []);
 
-  const value = {
-    address,
-    btcAddress,
-    publicKey,
-    connected,
-    connectWallet,
-    disconnectWallet,
-    isLoading,
-  };
-
   return (
-    <StacksContext.Provider value={value}>{children}</StacksContext.Provider>
+    <StacksContext.Provider
+      value={{
+        address,
+        btcAddress,
+        publicKey,
+        connected,
+        connectWallet,
+        disconnectWallet,
+        isLoading,
+      }}
+    >
+      {children}
+    </StacksContext.Provider>
   );
 }
 
 export function useStacks() {
   const context = useContext(StacksContext);
-
   if (context === undefined) {
-    throw new Error(
-      "useStacks must be used within a StacksProvider. " +
-        "Make sure your component is wrapped with <StacksProvider>.",
-    );
+    throw new Error("useStacks must be used within a StacksProvider.");
   }
-
   return context;
 }
