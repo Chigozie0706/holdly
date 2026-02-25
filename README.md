@@ -6,7 +6,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A Clarity smart contract that enables peer-to-peer book lending with STX collateral deposits on the Stacks blockchain.
+Holdly is a decentralized peer-to-peer christian book rental marketplace built on Stacks where lenders set rental prices in STX and earn when others borrow their books. Borrowers pay the rental fee upfront in STX, and if they return the book within the specified timeframe, they receive a full or partial refund; if they fail to return on time, the lender automatically keeps the payment as compensation. The platform serves book owners who want to monetize their collections through trustless rentals, and readers who want temporary access to books with clear financial incentives to return them promptly.
 
 ## 🏆 Code4STX Eligible
 
