@@ -9,12 +9,6 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { useStacks } from "@/providers/stacks-provider";
 
-// ❌ Remove these top-level imports
-// import { request } from "@stacks/connect";
-// import { Cl, cvToJSON, ... } from "@stacks/transactions";
-// import { fetchCallReadOnlyFunction } from "@stacks/transactions";
-// import { STACKS_TESTNET } from "@stacks/network";
-
 const DEPOSIT_AMOUNT = 1000000;
 const CONTRACT_ADDRESS = "ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K";
 const CONTRACT_NAME = "holdlyv6";
