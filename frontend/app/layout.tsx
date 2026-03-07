@@ -1,16 +1,21 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Playfair_Display, DM_Sans } from "next/font/google";
 import { Providers } from "./providers";
 import "./globals.css";
+import { Toaster } from "sonner";
+import HeaderWrapper from "@/components/HeaderWrapper";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
+  weight: ["400", "600", "700", "900"],
+  style: ["normal", "italic"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
+  weight: ["300", "400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -29,10 +34,24 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Providers>{children}</Providers>
+      <body className={`${playfair.variable} ${dmSans.variable}`}>
+        <Toaster
+          richColors
+          position="top-right"
+          toastOptions={{
+            style: {
+              background: "rgba(15, 15, 25, 0.95)",
+              border: "1px solid rgba(212, 163, 82, 0.2)",
+              color: "rgba(255,255,255,0.85)",
+              fontFamily: "var(--font-dm-sans)",
+              backdropFilter: "blur(12px)",
+            },
+          }}
+        />
+        <Providers>
+          <HeaderWrapper />
+          <main className="app-main">{children}</main>
+        </Providers>
       </body>
     </html>
   );
