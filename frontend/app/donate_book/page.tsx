@@ -39,7 +39,7 @@ export default function DonateBook() {
 
       if (response.txid) {
         alert(`Book added successfully! TX: ${response.txid}`);
-        router.push("/browse");
+        router.push("/library");
       }
     } catch (error) {
       alert(

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Search, BookOpen } from "lucide-react";
+import { Search, Library } from "lucide-react";
 import BookCard from "./BookCard";
 
 interface BrowseBooksProps {
@@ -7,6 +7,7 @@ interface BrowseBooksProps {
   depositAmount: number;
   onBorrow: (id: number) => void;
   connected: boolean;
+  isLoading?: boolean;
 }
 
 export default function BrowseBooks({
@@ -14,58 +15,274 @@ export default function BrowseBooks({
   depositAmount,
   onBorrow,
   connected,
+  isLoading = false,
 }: BrowseBooksProps) {
   const [searchQuery, setSearchQuery] = useState("");
+  const [filter, setFilter] = useState<"all" | "available" | "borrowed">("all");
 
-  const filteredBooks = books.filter(
-    (book) =>
+  const filteredBooks = books.filter((book) => {
+    const matchesSearch =
       book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      book.author.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
+      book.author.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesFilter =
+      filter === "all" ||
+      (filter === "available" && book["is-available"]) ||
+      (filter === "borrowed" && !book["is-available"]);
+    return matchesSearch && matchesFilter;
+  });
+
+  const availableCount = books.filter((b) => b["is-available"]).length;
 
   return (
-    <div>
-      {!connected && (
-        <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-          <p className="text-sm text-yellow-800 text-center">
-            Connect your wallet to borrow books
-          </p>
-        </div>
-      )}
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap');
 
-      <div className="mb-6">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-          <input
-            type="text"
-            placeholder="Search books by title or author..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-          />
-        </div>
-      </div>
+        .browse-wrap { font-family: 'DM Sans', sans-serif; }
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredBooks.length === 0 ? (
-          <div className="col-span-full text-center py-12">
-            <BookOpen className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-600">
-              No books found. Try a different search.
+        .browse-header {
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          margin-bottom: 1.75rem;
+          flex-wrap: wrap;
+          gap: 1rem;
+        }
+        .browse-title {
+          font-family: 'Playfair Display', serif;
+          font-size: 1.75rem;
+          font-weight: 700;
+          color: rgba(255,255,255,0.9);
+          margin: 0 0 0.25rem;
+        }
+        .browse-sub {
+          font-size: 0.82rem;
+          color: rgba(255,255,255,0.3);
+          margin: 0;
+        }
+        .browse-stats { display: flex; gap: 1.5rem; flex-shrink: 0; }
+        .bstat { text-align: right; }
+        .bstat-num {
+          font-family: 'Playfair Display', serif;
+          font-size: 1.6rem; font-weight: 700; color: #D4A352;
+          display: block; line-height: 1;
+        }
+        .bstat-lbl {
+          font-size: 0.65rem; text-transform: uppercase;
+          letter-spacing: 0.1em; color: rgba(255,255,255,0.22);
+        }
+
+        .browse-wallet-notice {
+          margin-bottom: 1.5rem;
+          padding: 0.8rem 1.15rem;
+          background: rgba(234,179,8,0.05);
+          border: 1px solid rgba(234,179,8,0.18);
+          border-left: 3px solid rgba(234,179,8,0.45);
+          border-radius: 2px;
+          font-size: 0.82rem;
+          color: rgba(234,179,8,0.75);
+        }
+
+        .browse-controls {
+          display: flex; gap: 0.75rem;
+          margin-bottom: 2rem; flex-wrap: wrap; align-items: center;
+        }
+        .browse-search-wrap { flex: 1; min-width: 200px; position: relative; }
+        .browse-search-icon {
+          position: absolute; left: 0.85rem; top: 50%;
+          transform: translateY(-50%); pointer-events: none;
+        }
+        .browse-search-input {
+          width: 100%;
+          padding: 0.65rem 1rem 0.65rem 2.4rem;
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 2px;
+          color: rgba(255,255,255,0.85);
+          font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
+          outline: none;
+          transition: background 0.18s, border-color 0.18s, box-shadow 0.18s;
+          box-sizing: border-box;
+        }
+        .browse-search-input::placeholder { color: rgba(255,255,255,0.18); }
+        .browse-search-input:focus {
+          background: rgba(255,255,255,0.06);
+          border-color: rgba(212,163,82,0.4);
+          box-shadow: 0 0 0 3px rgba(212,163,82,0.07);
+        }
+
+        .browse-filters {
+          display: flex; gap: 0.3rem;
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.07);
+          border-radius: 2px; padding: 0.22rem;
+        }
+        .browse-filter-btn {
+          padding: 0.38rem 0.85rem;
+          background: transparent; border: none; border-radius: 2px;
+          color: rgba(255,255,255,0.3);
+          font-family: 'DM Sans', sans-serif; font-size: 0.75rem;
+          letter-spacing: 0.03em; cursor: pointer;
+          transition: color 0.15s, background 0.15s;
+        }
+        .browse-filter-btn:hover { color: rgba(255,255,255,0.65); }
+        .browse-filter-btn.active {
+          background: rgba(212,163,82,0.1);
+          color: #D4A352;
+          border: 1px solid rgba(212,163,82,0.2);
+        }
+
+        .books-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+          gap: 1.25rem;
+        }
+
+        /* Loading skeletons */
+        .books-skeleton-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+          gap: 1.25rem;
+        }
+        .book-skeleton {
+          background: rgba(255,255,255,0.025);
+          border: 1px solid rgba(255,255,255,0.05);
+          border-radius: 4px; overflow: hidden;
+          animation: skshimmer 1.6s ease-in-out infinite;
+        }
+        .skel-cover { height: 200px; background: rgba(255,255,255,0.04); }
+        .skel-body { padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem; }
+        .skel-line {
+          height: 11px; border-radius: 2px;
+          background: rgba(255,255,255,0.05);
+        }
+        .skel-line.w80 { width: 80%; }
+        .skel-line.w55 { width: 55%; }
+        .skel-line.w70 { width: 70%; }
+        @keyframes skshimmer {
+          0%,100% { opacity: 1; }
+          50%      { opacity: 0.5; }
+        }
+
+        /* Empty state */
+        .books-empty {
+          grid-column: 1 / -1;
+          display: flex; flex-direction: column;
+          align-items: center; justify-content: center;
+          padding: 5rem 2rem;
+          border: 1px dashed rgba(255,255,255,0.07);
+          border-radius: 4px; text-align: center; gap: 0.85rem;
+        }
+        .books-empty-icon {
+          width: 60px; height: 60px; border-radius: 50%;
+          background: rgba(255,255,255,0.03);
+          display: flex; align-items: center; justify-content: center;
+        }
+        .books-empty-title {
+          font-family: 'Playfair Display', serif;
+          font-size: 1.05rem; color: rgba(255,255,255,0.45); margin: 0;
+        }
+        .books-empty-sub {
+          font-size: 0.78rem; color: rgba(255,255,255,0.2); margin: 0;
+        }
+      `}</style>
+
+      <div className="browse-wrap">
+        {!connected && (
+          <div className="browse-wallet-notice">
+            Connect your wallet to borrow books from the library.
+          </div>
+        )}
+
+        <div className="browse-header">
+          <div>
+            <h2 className="browse-title">The Collection</h2>
+            <p className="browse-sub">
+              Browse and borrow from the decentralized library
             </p>
           </div>
-        ) : (
-          filteredBooks.map((book) => (
-            <BookCard
-              key={book.id}
-              book={book}
-              depositAmount={depositAmount}
-              onBorrow={onBorrow}
-              connected={connected}
+          <div className="browse-stats">
+            <div className="bstat">
+              <span className="bstat-num">{books.length}</span>
+              <span className="bstat-lbl">Total</span>
+            </div>
+            <div className="bstat">
+              <span className="bstat-num">{availableCount}</span>
+              <span className="bstat-lbl">Available</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="browse-controls">
+          <div className="browse-search-wrap">
+            <Search
+              size={15}
+              color="rgba(255,255,255,0.22)"
+              className="browse-search-icon"
             />
-          ))
+            <input
+              className="browse-search-input"
+              type="text"
+              placeholder="Search by title or author…"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+          <div className="browse-filters">
+            {(["all", "available", "borrowed"] as const).map((f) => (
+              <button
+                key={f}
+                className={`browse-filter-btn ${filter === f ? "active" : ""}`}
+                onClick={() => setFilter(f)}
+              >
+                {f.charAt(0).toUpperCase() + f.slice(1)}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {isLoading ? (
+          <div className="books-skeleton-grid">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="book-skeleton">
+                <div className="skel-cover" />
+                <div className="skel-body">
+                  <div className="skel-line w80" />
+                  <div className="skel-line w55" />
+                  <div className="skel-line w70" />
+                  <div className="skel-line w55" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="books-grid">
+            {filteredBooks.length === 0 ? (
+              <div className="books-empty">
+                <div className="books-empty-icon">
+                  <Library size={26} color="rgba(255,255,255,0.18)" />
+                </div>
+                <p className="books-empty-title">No books found</p>
+                <p className="books-empty-sub">
+                  {searchQuery
+                    ? "Try a different search term."
+                    : "The library is empty. Be the first to donate a book!"}
+                </p>
+              </div>
+            ) : (
+              filteredBooks.map((book) => (
+                <BookCard
+                  key={book.id}
+                  book={book}
+                  depositAmount={depositAmount}
+                  onBorrow={onBorrow}
+                  connected={connected}
+                />
+              ))
+            )}
+          </div>
         )}
       </div>
-    </div>
+    </>
   );
 }

@@ -71,6 +71,8 @@ export default function Library() {
         }
       }
       setBooks(fetched);
+
+      console.log("fetched", fetched);
     } catch (e) {
       console.error("Error fetching books:", e);
     } finally {
@@ -164,7 +166,7 @@ export default function Library() {
         depositAmount={DEPOSIT_AMOUNT}
         onBorrow={handleBorrow}
         connected={connected}
-        // isLoading={isFetching}
+        isLoading={isFetching}
       />
     </>
   );

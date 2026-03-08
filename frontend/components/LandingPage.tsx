@@ -25,10 +25,10 @@ export default function LandingPage() {
     return () => clearTimeout(t);
   }, []);
 
-  const goToLibrary = () => router.push("/browse");
+  const goToLibrary = () => router.push("/library");
   const handleConnect = async () => {
     await connectWallet();
-    router.push("/browse");
+    router.push("/library");
   };
 
   return (
