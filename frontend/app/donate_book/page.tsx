@@ -5,8 +5,8 @@ import { useStacks } from "@/providers/stacks-provider";
 import { useRouter } from "next/navigation";
 
 const DEPOSIT_AMOUNT = 1000000;
-const CONTRACT_ADDRESS = "ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K";
-const CONTRACT_NAME = "holdlyv6";
+const CONTRACT_ADDRESS = "SP3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJB3SS99R";
+const CONTRACT_NAME = "holdlyv7";
 
 export default function DonateBook() {
   const { connected } = useStacks();

@@ -5,8 +5,8 @@ import BrowseBooks from "@/components/BrowseBooks";
 import { useStacks } from "@/providers/stacks-provider";
 
 const DEPOSIT_AMOUNT = 1000000;
-const CONTRACT_ADDRESS = "ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K";
-const CONTRACT_NAME = "holdlyv6";
+const CONTRACT_ADDRESS = "SP3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJB3SS99R";
+const CONTRACT_NAME = "holdlyv7";
 
 interface Book {
   id: number;
@@ -29,14 +29,14 @@ export default function Library() {
       setIsFetching(true);
       const { fetchCallReadOnlyFunction, Cl, cvToJSON } =
         await import("@stacks/transactions");
-      const { STACKS_TESTNET } = await import("@stacks/network");
+      const { STACKS_MAINNET } = await import("@stacks/network");
 
       const countResult = await fetchCallReadOnlyFunction({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
         functionName: "get-book-count",
         functionArgs: [],
-        network: STACKS_TESTNET,
+        network: STACKS_MAINNET,
         senderAddress: CONTRACT_ADDRESS,
       });
 
@@ -50,7 +50,7 @@ export default function Library() {
             contractName: CONTRACT_NAME,
             functionName: "get-book",
             functionArgs: [Cl.uint(i)],
-            network: STACKS_TESTNET,
+            network: STACKS_MAINNET,
             senderAddress: CONTRACT_ADDRESS,
           });
           const bookJson = cvToJSON(bookResult);
@@ -71,8 +71,6 @@ export default function Library() {
         }
       }
       setBooks(fetched);
-
-      console.log("fetched", fetched);
     } catch (e) {
       console.error("Error fetching books:", e);
     } finally {
@@ -104,14 +102,18 @@ export default function Library() {
     setIsProcessing(true);
     try {
       const { request } = await import("@stacks/connect");
-      const { Cl } = await import("@stacks/transactions");
+      const { Cl, Pc } = await import("@stacks/transactions");
+
       const response = await request("stx_callContract", {
         contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
         functionName: "borrow-book",
         functionArgs: [Cl.uint(bookId)],
-        postConditions: [],
-        postConditionMode: "allow" as any,
+        postConditions: [
+          // Borrower sends deposit to the contract
+          Pc.principal(address).willSendEq(book["deposit-amount"]).ustx(),
+        ],
       });
+
       if (response.txid) {
         alert(
           `Borrow submitted! TX: ${response.txid}\n\nWaiting for confirmation…`,
@@ -119,9 +121,10 @@ export default function Library() {
         setTimeout(async () => {
           await fetchAllBooks();
           setIsProcessing(false);
-        }, 10000);
+        }, 60000);
       }
     } catch (e) {
+      console.error("Borrow error:", e);
       alert(
         `Failed to borrow: ${e instanceof Error ? e.message : "Unknown error"}`,
       );

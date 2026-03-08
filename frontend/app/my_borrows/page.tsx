@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import MyBorrows from "@/components/MyBorrows";
 import { useStacks } from "@/providers/stacks-provider";
 
-const CONTRACT_ADDRESS = "ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K";
-const CONTRACT_NAME = "holdlyv6";
+const CONTRACT_ADDRESS = "SP3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJB3SS99R";
+const CONTRACT_NAME = "holdlyv7";
 
 interface Book {
   id: number;
@@ -34,15 +34,14 @@ export default function MyBorrowsPage() {
     try {
       const { fetchCallReadOnlyFunction, Cl, cvToJSON } =
         await import("@stacks/transactions");
-      const { STACKS_TESTNET } = await import("@stacks/network");
+      const { STACKS_MAINNET } = await import("@stacks/network");
 
-      // Get total book count first
       const countResult = await fetchCallReadOnlyFunction({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
         functionName: "get-book-count",
         functionArgs: [],
-        network: STACKS_TESTNET,
+        network: STACKS_MAINNET,
         senderAddress: CONTRACT_ADDRESS,
       });
       const totalBooks = Number(cvToJSON(countResult).value.value);
@@ -50,26 +49,24 @@ export default function MyBorrowsPage() {
       const userBorrowed: Book[] = [];
       for (let i = 1; i <= totalBooks; i++) {
         try {
-          // Check if there's an active borrow for this book
           const borrowResult = await fetchCallReadOnlyFunction({
             contractAddress: CONTRACT_ADDRESS,
             contractName: CONTRACT_NAME,
             functionName: "get-borrow",
             functionArgs: [Cl.uint(i)],
-            network: STACKS_TESTNET,
+            network: STACKS_MAINNET,
             senderAddress: CONTRACT_ADDRESS,
           });
           const borrowJson = cvToJSON(borrowResult);
           if (borrowJson.value) {
             const borrowData = borrowJson.value.value;
             if (borrowData.borrower.value === address) {
-              // Fetch book details
               const bookResult = await fetchCallReadOnlyFunction({
                 contractAddress: CONTRACT_ADDRESS,
                 contractName: CONTRACT_NAME,
                 functionName: "get-book",
                 functionArgs: [Cl.uint(i)],
-                network: STACKS_TESTNET,
+                network: STACKS_MAINNET,
                 senderAddress: CONTRACT_ADDRESS,
               });
               const bookJson = cvToJSON(bookResult);
@@ -118,14 +115,20 @@ export default function MyBorrowsPage() {
     setIsProcessing(true);
     try {
       const { request } = await import("@stacks/connect");
-      const { Cl } = await import("@stacks/transactions");
+      const { Cl, Pc } = await import("@stacks/transactions");
+
       const response = await request("stx_callContract", {
         contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
         functionName: "return-book",
         functionArgs: [Cl.uint(bookId)],
-        postConditions: [],
-        postConditionMode: "allow" as any,
+        postConditions: [
+          // Contract sends the deposit back to the borrower
+          Pc.principal(`${CONTRACT_ADDRESS}.${CONTRACT_NAME}`)
+            .willSendEq(book["deposit-amount"])
+            .ustx(),
+        ],
       });
+
       if (response.txid) {
         alert(
           `Returned! TX: ${response.txid}\nDeposit of ${(book["deposit-amount"] / 1_000_000).toFixed(2)} STX will be refunded.`,
@@ -133,9 +136,10 @@ export default function MyBorrowsPage() {
         setTimeout(async () => {
           await fetchBorrowedBooks();
           setIsProcessing(false);
-        }, 10000);
+        }, 60000);
       }
     } catch (e) {
+      console.error("Return error:", e);
       alert(
         `Failed to return: ${e instanceof Error ? e.message : "Unknown error"}`,
       );
