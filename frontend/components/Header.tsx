@@ -1,5 +1,16 @@
-import React from "react";
-import { BookOpen, Wallet } from "lucide-react";
+"use client";
+
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+  Wallet,
+  LogOut,
+  BookMarked,
+  Library,
+  PlusCircle,
+  BookOpen,
+} from "lucide-react";
 
 interface HeaderProps {
   connected: boolean;
@@ -8,61 +19,415 @@ interface HeaderProps {
   onDisconnect: () => void;
 }
 
+const NAV_LINKS = [
+  { href: "/library", label: "Library", icon: Library },
+  { href: "/donate_book", label: "Donate Book", icon: PlusCircle },
+  { href: "/my_borrows", label: "My Borrows", icon: BookOpen },
+];
+
 export default function Header({
   connected,
   address,
   onConnect,
   onDisconnect,
 }: HeaderProps) {
-  const truncateAddress = (addr: string) => {
-    return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
-  };
+  const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 16);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Close drawer whenever the route changes
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  const truncate = (addr: string) => `${addr.slice(0, 6)}…${addr.slice(-4)}`;
 
   return (
-    <header className="bg-white border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="bg-gradient-to-br from-orange-500 to-purple-600 p-2 rounded-lg">
-              <BookOpen className="h-6 w-6 text-white" />
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap');
+
+        /* ── Shell ── */
+        .hdr {
+          position: sticky;
+          top: 0;
+          z-index: 100;
+          height: 64px;
+          display: flex;
+          align-items: center;
+          font-family: 'DM Sans', sans-serif;
+          transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+          border-bottom: 1px solid transparent;
+        }
+        .hdr.scrolled {
+          background: rgba(8, 8, 16, 0.88);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+          border-bottom-color: rgba(212, 163, 82, 0.12);
+          box-shadow: 0 4px 32px rgba(0, 0, 0, 0.45);
+        }
+
+        .hdr-inner {
+          max-width: 1280px;
+          width: 100%;
+          margin: 0 auto;
+          padding: 0 2rem;
+          display: flex;
+          align-items: center;
+          gap: 2rem;
+        }
+
+        /* ── Brand ── */
+        .hdr-brand {
+          display: flex;
+          align-items: center;
+          gap: 0.65rem;
+          text-decoration: none;
+          flex-shrink: 0;
+          margin-right: auto; /* pushes nav to center on desktop */
+        }
+        .hdr-brand-icon {
+          width: 34px;
+          height: 34px;
+          background: rgba(212, 163, 82, 0.08);
+          border: 1px solid rgba(212, 163, 82, 0.25);
+          border-radius: 2px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 0.18s;
+        }
+        .hdr-brand:hover .hdr-brand-icon { background: rgba(212, 163, 82, 0.14); }
+        .hdr-wordmark {
+          font-family: 'Playfair Display', serif;
+          font-size: 1.35rem;
+          font-weight: 700;
+          background: linear-gradient(135deg, #D4A352 0%, #F0C878 55%, #D4A352 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          line-height: 1;
+        }
+        .hdr-tagline {
+          font-size: 0.6rem;
+          font-weight: 300;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          color: rgba(212, 163, 82, 0.4);
+          display: block;
+          margin-top: 2px;
+        }
+
+        /* ── Nav links (desktop) ── */
+        .hdr-nav {
+          display: flex;
+          align-items: center;
+          gap: 0.1rem;
+        }
+        .hdr-nav-link {
+          display: flex;
+          align-items: center;
+          gap: 0.42rem;
+          padding: 0.42rem 0.9rem;
+          border-radius: 2px;
+          font-size: 0.82rem;
+          font-weight: 400;
+          letter-spacing: 0.03em;
+          color: rgba(255, 255, 255, 0.32);
+          text-decoration: none;
+          white-space: nowrap;
+          transition: color 0.15s, background 0.15s;
+          position: relative;
+        }
+        /* Animated underline */
+        .hdr-nav-link::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 12px;
+          right: 12px;
+          height: 1px;
+          background: #D4A352;
+          transform: scaleX(0);
+          transform-origin: center;
+          transition: transform 0.2s ease;
+        }
+        .hdr-nav-link:hover {
+          color: rgba(255, 255, 255, 0.65);
+          background: rgba(255, 255, 255, 0.04);
+        }
+        .hdr-nav-link.active {
+          color: #D4A352;
+          background: rgba(212, 163, 82, 0.07);
+          font-weight: 500;
+        }
+        .hdr-nav-link.active::after { transform: scaleX(1); }
+        .hdr-nav-icon {
+          opacity: 0.55;
+          transition: opacity 0.15s;
+          flex-shrink: 0;
+        }
+        .hdr-nav-link:hover .hdr-nav-icon,
+        .hdr-nav-link.active .hdr-nav-icon { opacity: 1; }
+
+        /* ── Wallet area ── */
+        .hdr-wallet {
+          display: flex;
+          align-items: center;
+          gap: 0.55rem;
+          flex-shrink: 0;
+          margin-left: auto;
+        }
+        .wallet-addr {
+          display: flex;
+          align-items: center;
+          gap: 0.48rem;
+          padding: 0.38rem 0.85rem;
+          background: rgba(212, 163, 82, 0.06);
+          border: 1px solid rgba(212, 163, 82, 0.18);
+          border-radius: 2px;
+          font-family: 'DM Mono', 'Courier New', monospace;
+          font-size: 0.76rem;
+          color: rgba(212, 163, 82, 0.8);
+          letter-spacing: 0.02em;
+        }
+        .wallet-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #4ade80;
+          box-shadow: 0 0 6px rgba(74, 222, 128, 0.65);
+          animation: blink-dot 2.2s ease-in-out infinite;
+          flex-shrink: 0;
+        }
+        @keyframes blink-dot {
+          0%, 100% { opacity: 1; }
+          50%       { opacity: 0.45; }
+        }
+        .btn-disconnect {
+          display: flex;
+          align-items: center;
+          gap: 0.35rem;
+          padding: 0.38rem 0.85rem;
+          background: transparent;
+          border: 1px solid rgba(239, 68, 68, 0.22);
+          border-radius: 2px;
+          color: rgba(239, 68, 68, 0.55);
+          font-family: 'DM Sans', sans-serif;
+          font-size: 0.76rem;
+          cursor: pointer;
+          transition: all 0.15s;
+        }
+        .btn-disconnect:hover {
+          background: rgba(239, 68, 68, 0.07);
+          border-color: rgba(239, 68, 68, 0.45);
+          color: #ef4444;
+        }
+        .btn-connect {
+          display: flex;
+          align-items: center;
+          gap: 0.45rem;
+          padding: 0.48rem 1.1rem;
+          background: linear-gradient(135deg, #D4A352, #C8903A);
+          border: none;
+          border-radius: 2px;
+          color: #080810;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 0.82rem;
+          font-weight: 500;
+          letter-spacing: 0.03em;
+          cursor: pointer;
+          transition: all 0.18s;
+        }
+        .btn-connect:hover {
+          box-shadow: 0 6px 20px rgba(212, 163, 82, 0.28);
+          transform: translateY(-1px);
+        }
+
+        /* ── Mobile hamburger ── */
+        .hdr-hamburger {
+          display: none;
+          flex-direction: column;
+          gap: 4px;
+          cursor: pointer;
+          padding: 6px;
+          background: none;
+          border: none;
+          margin-left: 0.5rem;
+        }
+        .hdr-hamburger span {
+          display: block;
+          width: 20px;
+          height: 1.5px;
+          background: rgba(255, 255, 255, 0.45);
+          border-radius: 2px;
+          transition: all 0.2s ease;
+        }
+        .hdr-hamburger.open span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+        .hdr-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .hdr-hamburger.open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+        /* ── Mobile drawer ── */
+        .hdr-drawer {
+          position: fixed;
+          top: 64px;
+          left: 0;
+          right: 0;
+          z-index: 99;
+          background: rgba(8, 8, 16, 0.97);
+          backdrop-filter: blur(20px);
+          border-bottom: 1px solid rgba(212, 163, 82, 0.1);
+          padding: 0.75rem 1.5rem 1.25rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.25rem;
+          transform: translateY(-110%);
+          opacity: 0;
+          pointer-events: none;
+          transition: transform 0.25s ease, opacity 0.25s ease;
+        }
+        .hdr-drawer.open {
+          transform: translateY(0);
+          opacity: 1;
+          pointer-events: all;
+        }
+        .drawer-link {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.7rem 0.75rem;
+          border-radius: 2px;
+          font-size: 0.88rem;
+          color: rgba(255, 255, 255, 0.38);
+          text-decoration: none;
+          border-left: 2px solid transparent;
+          transition: all 0.15s;
+        }
+        .drawer-link.active {
+          color: #D4A352;
+          border-left-color: #D4A352;
+          background: rgba(212, 163, 82, 0.05);
+        }
+        .drawer-link:hover:not(.active) { color: rgba(255, 255, 255, 0.7); }
+        .drawer-sep {
+          height: 1px;
+          background: rgba(255, 255, 255, 0.05);
+          margin: 0.4rem 0;
+        }
+        .drawer-wallet-btn {
+          width: 100%;
+          justify-content: center;
+          padding: 0.7rem !important;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+          .hdr-nav        { display: none; }
+          .hdr-hamburger  { display: flex; }
+          .hdr-tagline    { display: none; }
+          .wallet-addr    { display: none; }
+          .hdr-inner      { padding: 0 1.25rem; }
+        }
+      `}</style>
+
+      {/* ── Header bar ── */}
+      <header className={`hdr ${scrolled ? "scrolled" : ""}`}>
+        <div className="hdr-inner">
+          {/* Brand */}
+          <Link href="/" className="hdr-brand">
+            <div className="hdr-brand-icon">
+              <BookMarked size={16} color="rgba(212,163,82,0.8)" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-purple-600 bg-clip-text text-transparent">
-                Book Lending dApp
-              </h1>
-              <p className="text-sm text-gray-600">
-                Decentralized library with sBTC deposits
-              </p>
+              <span className="hdr-wordmark">Holdly</span>
+              <span className="hdr-tagline">Decentralized Library</span>
             </div>
-          </div>
+          </Link>
 
-          <div>
-            {connected ? (
-              <div className="flex items-center space-x-3">
-                <div className="bg-green-50 px-4 py-2 rounded-lg border border-green-200">
-                  <p className="text-sm font-medium text-green-700">
-                    {address && truncateAddress(address)}
-                  </p>
+          {/* Desktop nav */}
+          <nav className="hdr-nav">
+            {NAV_LINKS.map(({ href, label, icon: Icon }) => (
+              <Link
+                key={href}
+                href={href}
+                className={`hdr-nav-link ${pathname === href ? "active" : ""}`}
+              >
+                <Icon size={14} className="hdr-nav-icon" />
+                {label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Wallet */}
+          <div className="hdr-wallet">
+            {connected && address ? (
+              <>
+                <div className="wallet-addr">
+                  <span className="wallet-dot" />
+                  {truncate(address)}
                 </div>
-                <button
-                  onClick={onDisconnect}
-                  className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors font-medium"
-                >
+                <button className="btn-disconnect" onClick={onDisconnect}>
+                  <LogOut size={12} />
                   Disconnect
                 </button>
-              </div>
+              </>
             ) : (
-              <button
-                onClick={onConnect}
-                className="flex items-center space-x-2 px-6 py-2 bg-gradient-to-r from-orange-500 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all font-medium"
-              >
-                <Wallet className="h-5 w-5" />
-                <span>Connect Wallet</span>
+              <button className="btn-connect" onClick={onConnect}>
+                <Wallet size={14} />
+                Connect Wallet
               </button>
             )}
+
+            {/* Hamburger */}
+            <button
+              className={`hdr-hamburger ${mobileOpen ? "open" : ""}`}
+              onClick={() => setMobileOpen((v) => !v)}
+              aria-label="Toggle menu"
+            >
+              <span />
+              <span />
+              <span />
+            </button>
           </div>
         </div>
+      </header>
+
+      {/* ── Mobile drawer ── */}
+      <div className={`hdr-drawer ${mobileOpen ? "open" : ""}`}>
+        {NAV_LINKS.map(({ href, label, icon: Icon }) => (
+          <Link
+            key={href}
+            href={href}
+            className={`drawer-link ${pathname === href ? "active" : ""}`}
+          >
+            <Icon size={15} />
+            {label}
+          </Link>
+        ))}
+
+        <div className="drawer-sep" />
+
+        {connected && address ? (
+          <button
+            className="btn-disconnect drawer-wallet-btn"
+            onClick={onDisconnect}
+          >
+            <LogOut size={13} />
+            Disconnect wallet
+          </button>
+        ) : (
+          <button className="btn-connect drawer-wallet-btn" onClick={onConnect}>
+            <Wallet size={14} />
+            Connect Wallet
+          </button>
+        )}
       </div>
-    </header>
+    </>
   );
 }

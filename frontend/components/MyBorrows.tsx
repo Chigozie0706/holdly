@@ -1,5 +1,5 @@
 import React from "react";
-import { Unlock, BookOpen, Calendar, Coins, ArrowLeft } from "lucide-react";
+import { BookOpen, Coins, Hash, ArrowLeft, RotateCcw } from "lucide-react";
 
 interface BorrowedBook {
   id: number;
@@ -25,198 +25,424 @@ export default function MyBorrows({
   isLoading = false,
 }: MyBorrowsProps) {
   const totalDeposit = borrowedBooks.reduce(
-    (sum, book) => sum + book["deposit-amount"],
+    (sum, b) => sum + b["deposit-amount"],
     0,
   );
 
   return (
-    <div className="py-6">
-      {!connected && (
-        <div className="mb-6 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-lg">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <svg
-                className="h-5 w-5 text-yellow-400"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
-            <div className="ml-3">
-              <p className="text-sm text-yellow-700 font-medium">
-                Please connect your wallet to view your borrowed books
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap');
 
-      {/* Summary Card */}
-      {connected && borrowedBooks.length > 0 && (
-        <div className="mb-6 bg-gradient-to-br from-orange-50 to-purple-50 rounded-xl p-6 border border-orange-200">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <p className="text-sm text-gray-600 font-medium mb-1">
-                Books Borrowed
-              </p>
-              <p className="text-3xl font-bold text-gray-900">
-                {borrowedBooks.length}
-              </p>
-            </div>
-            <div>
-              <p className="text-sm text-gray-600 font-medium mb-1">
-                Total Deposit Locked
-              </p>
-              <p className="text-3xl font-bold text-orange-600">
-                {(totalDeposit / 1000000).toFixed(2)} STX
-              </p>
-              <p className="text-xs text-gray-500 mt-1">
-                ≈ ${((totalDeposit / 1000000) * 25).toFixed(2)} USD
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
+        .my-borrows { font-family: 'DM Sans', sans-serif; }
 
-      {/* Loading State */}
-      {isLoading ? (
-        <div className="text-center py-16">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading your borrowed books...</p>
-        </div>
-      ) : borrowedBooks.length === 0 ? (
-        /* Empty State */
-        <div className="text-center py-16 bg-white rounded-xl shadow-sm border border-gray-200">
-          <div className="bg-gray-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-            <BookOpen className="h-10 w-10 text-gray-400" />
+        .borrows-header {
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          margin-bottom: 1.75rem;
+          flex-wrap: wrap;
+          gap: 1rem;
+        }
+        .borrows-title {
+          font-family: 'Playfair Display', serif;
+          font-size: 1.75rem;
+          font-weight: 700;
+          color: rgba(255,255,255,0.9);
+          margin: 0 0 0.25rem;
+        }
+        .borrows-sub {
+          font-size: 0.82rem;
+          color: rgba(255,255,255,0.3);
+          margin: 0;
+        }
+
+        .summary-bar {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1px;
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(212, 163, 82, 0.15);
+          border-radius: 4px;
+          overflow: hidden;
+          margin-bottom: 2rem;
+        }
+        .summary-cell {
+          background: rgba(212, 163, 82, 0.04);
+          padding: 1.25rem 1.5rem;
+        }
+        .summary-label {
+          font-size: 0.68rem;
+          text-transform: uppercase;
+          letter-spacing: 0.12em;
+          color: rgba(255,255,255,0.25);
+          margin: 0 0 0.4rem;
+        }
+        .summary-value {
+          font-family: 'Playfair Display', serif;
+          font-size: 2rem;
+          font-weight: 700;
+          color: #D4A352;
+          margin: 0;
+          line-height: 1;
+        }
+        .summary-sub {
+          font-size: 0.72rem;
+          color: rgba(255,255,255,0.2);
+          margin: 0.3rem 0 0;
+        }
+
+        .wallet-notice-borrow {
+          padding: 0.85rem 1.25rem;
+          background: rgba(234, 179, 8, 0.06);
+          border: 1px solid rgba(234, 179, 8, 0.2);
+          border-left: 3px solid rgba(234, 179, 8, 0.5);
+          border-radius: 2px;
+          font-size: 0.82rem;
+          color: rgba(234, 179, 8, 0.8);
+          margin-bottom: 1.5rem;
+        }
+
+        .empty-state-borrow {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 5rem 2rem;
+          border: 1px dashed rgba(255,255,255,0.07);
+          border-radius: 4px;
+          text-align: center;
+          gap: 1rem;
+        }
+        .empty-icon-ring {
+          width: 72px; height: 72px;
+          border-radius: 50%;
+          border: 1px solid rgba(255,255,255,0.07);
+          display: flex; align-items: center; justify-content: center;
+        }
+        .empty-title-borrow {
+          font-family: 'Playfair Display', serif;
+          font-size: 1.15rem;
+          color: rgba(255,255,255,0.5);
+          margin: 0;
+        }
+        .empty-sub-borrow {
+          font-size: 0.8rem;
+          color: rgba(255,255,255,0.2);
+          margin: 0;
+          max-width: 280px;
+        }
+        .browse-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4rem;
+          padding: 0.55rem 1.1rem;
+          background: transparent;
+          border: 1px solid rgba(212, 163, 82, 0.3);
+          border-radius: 2px;
+          color: #D4A352;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 0.8rem;
+          cursor: pointer;
+          transition: all 0.2s;
+          margin-top: 0.25rem;
+        }
+        .browse-link:hover {
+          background: rgba(212, 163, 82, 0.07);
+          border-color: rgba(212, 163, 82, 0.5);
+        }
+
+        .borrow-list { display: flex; flex-direction: column; gap: 1rem; }
+
+        .borrow-row {
+          display: grid;
+          grid-template-columns: 140px 1fr;
+          background: rgba(255,255,255,0.025);
+          border: 1px solid rgba(255,255,255,0.06);
+          border-radius: 4px;
+          overflow: hidden;
+          transition: all 0.2s;
+        }
+        .borrow-row:hover {
+          border-color: rgba(212, 163, 82, 0.2);
+          background: rgba(255,255,255,0.035);
+        }
+
+        .borrow-cover {
+          height: 100%;
+          min-height: 160px;
+          background: linear-gradient(135deg, #1a1a2e, #16213e);
+          overflow: hidden;
+        }
+        .borrow-cover img {
+          width: 100%; height: 100%;
+          object-fit: cover;
+        }
+        .borrow-cover-placeholder {
+          width: 100%; height: 100%;
+          display: flex; align-items: center; justify-content: center;
+          background: rgba(212, 163, 82, 0.04);
+        }
+
+        .borrow-details {
+          padding: 1.25rem 1.5rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          gap: 1rem;
+        }
+
+        .borrow-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.3rem;
+          padding: 0.2rem 0.6rem;
+          background: rgba(212, 163, 82, 0.1);
+          border: 1px solid rgba(212, 163, 82, 0.25);
+          border-radius: 2px;
+          font-size: 0.65rem;
+          font-weight: 500;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: #D4A352;
+          width: fit-content;
+        }
+        .borrow-badge::before {
+          content: '';
+          width: 5px; height: 5px;
+          border-radius: 50%;
+          background: #D4A352;
+        }
+
+        .borrow-book-title {
+          font-family: 'Playfair Display', serif;
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: rgba(255,255,255,0.9);
+          margin: 0 0 0.2rem;
+        }
+        .borrow-book-author {
+          font-family: 'Playfair Display', serif;
+          font-style: italic;
+          font-size: 0.82rem;
+          color: rgba(255,255,255,0.35);
+          margin: 0;
+        }
+
+        .borrow-info-row {
+          display: flex;
+          gap: 1.5rem;
+          flex-wrap: wrap;
+        }
+        .borrow-info-item {
+          display: flex;
+          flex-direction: column;
+          gap: 0.2rem;
+        }
+        .borrow-info-label {
+          font-size: 0.65rem;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          color: rgba(255,255,255,0.2);
+          display: flex;
+          align-items: center;
+          gap: 0.3rem;
+        }
+        .borrow-info-value {
+          font-size: 0.9rem;
+          font-weight: 500;
+          color: rgba(255,255,255,0.75);
+        }
+        .borrow-info-value.gold { color: #D4A352; }
+        .borrow-info-value.mono {
+          font-family: 'DM Mono', monospace;
+          font-size: 0.8rem;
+        }
+
+        .return-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.6rem 1.25rem;
+          background: transparent;
+          border: 1px solid rgba(74, 222, 128, 0.35);
+          border-radius: 2px;
+          color: rgba(74, 222, 128, 0.8);
+          font-family: 'DM Sans', sans-serif;
+          font-size: 0.82rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.2s;
+          width: fit-content;
+        }
+        .return-btn:hover:not(:disabled) {
+          background: rgba(74, 222, 128, 0.07);
+          border-color: rgba(74, 222, 128, 0.6);
+          color: #4ade80;
+          box-shadow: 0 4px 16px rgba(74, 222, 128, 0.12);
+        }
+        .return-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        .tip-bar {
+          margin-top: 1.5rem;
+          padding: 0.85rem 1.1rem;
+          background: rgba(59, 130, 246, 0.04);
+          border: 1px solid rgba(59, 130, 246, 0.12);
+          border-radius: 2px;
+          font-size: 0.78rem;
+          color: rgba(147, 197, 253, 0.55);
+          line-height: 1.5;
+        }
+
+        .loading-state {
+          display: flex; flex-direction: column; align-items: center;
+          padding: 5rem 2rem; gap: 1rem;
+        }
+        .spinner-gold {
+          width: 36px; height: 36px;
+          border: 2px solid rgba(212, 163, 82, 0.15);
+          border-top-color: #D4A352;
+          border-radius: 50%;
+          animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @media (max-width: 520px) {
+          .borrow-row { grid-template-columns: 1fr; }
+          .borrow-cover { min-height: 180px; }
+        }
+      `}</style>
+
+      <div className="my-borrows">
+        {!connected && (
+          <div className="wallet-notice-borrow">
+            Connect your wallet to view your borrowed books.
           </div>
-          <h3 className="text-xl font-semibold text-gray-800 mb-2">
-            No Borrowed Books
-          </h3>
-          <p className="text-gray-600 mb-6">
-            You haven't borrowed any books yet. Browse the library to get
-            started!
-          </p>
-          <button
-            onClick={() => {
-              const event = new CustomEvent("changeTab", { detail: "browse" });
-              window.dispatchEvent(event);
-            }}
-            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-orange-500 to-purple-600 text-white rounded-lg hover:from-orange-600 hover:to-purple-700 transition-all duration-300 font-semibold shadow-md hover:shadow-lg"
-          >
-            <ArrowLeft className="h-5 w-5 mr-2" />
-            Browse Books
-          </button>
+        )}
+
+        <div className="borrows-header">
+          <div>
+            <h2 className="borrows-title">My Borrows</h2>
+            <p className="borrows-sub">
+              Books currently checked out under your wallet
+            </p>
+          </div>
         </div>
-      ) : (
-        /* Books List */
-        <div className="space-y-4">
-          {borrowedBooks.map((book) => (
-            <div
-              key={book.id}
-              className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-200 overflow-hidden"
+
+        {connected && borrowedBooks.length > 0 && (
+          <div className="summary-bar">
+            <div className="summary-cell">
+              <p className="summary-label">Books Out</p>
+              <p className="summary-value">{borrowedBooks.length}</p>
+            </div>
+            <div className="summary-cell">
+              <p className="summary-label">Deposit Held</p>
+              <p className="summary-value">
+                {(totalDeposit / 1_000_000).toFixed(2)}
+              </p>
+              <p className="summary-sub">STX · refunded on return</p>
+            </div>
+          </div>
+        )}
+
+        {isLoading ? (
+          <div className="loading-state">
+            <div className="spinner-gold" />
+            <span
+              style={{ fontSize: "0.82rem", color: "rgba(255,255,255,0.25)" }}
             >
-              <div className="flex flex-col md:flex-row">
-                {/* Book Cover */}
-                <div className="md:w-48 h-48 md:h-auto bg-gradient-to-br from-orange-100 to-purple-100 flex-shrink-0">
-                  {book.coverPage ? (
-                    <img
-                      src={book.coverPage}
-                      alt={book.title}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <BookOpen className="h-16 w-16 text-orange-300" />
-                    </div>
-                  )}
-                </div>
+              Loading your borrowed books…
+            </span>
+          </div>
+        ) : borrowedBooks.length === 0 ? (
+          <div className="empty-state-borrow">
+            <div className="empty-icon-ring">
+              <BookOpen size={28} color="rgba(255,255,255,0.15)" />
+            </div>
+            <p className="empty-title-borrow">Nothing checked out</p>
+            <p className="empty-sub-borrow">
+              Head to the library and borrow your first book.
+            </p>
+            <button
+              className="browse-link"
+              onClick={() =>
+                window.dispatchEvent(
+                  new CustomEvent("changeTab", { detail: "browse" }),
+                )
+              }
+            >
+              <ArrowLeft size={13} />
+              Browse Library
+            </button>
+          </div>
+        ) : (
+          <>
+            <div className="borrow-list">
+              {borrowedBooks.map((book) => (
+                <div key={book.id} className="borrow-row">
+                  <div className="borrow-cover">
+                    {book.coverPage ? (
+                      <img src={book.coverPage} alt={book.title} />
+                    ) : (
+                      <div className="borrow-cover-placeholder">
+                        <BookOpen size={28} color="rgba(212,163,82,0.25)" />
+                      </div>
+                    )}
+                  </div>
 
-                {/* Book Details */}
-                <div className="flex-1 p-6">
-                  <div className="flex flex-col h-full">
-                    <div className="flex-1">
-                      <div className="flex items-start justify-between mb-3">
-                        <div>
-                          <h3 className="text-xl font-bold text-gray-900 mb-1">
-                            {book.title}
-                          </h3>
-                          <p className="text-gray-600">by {book.author}</p>
-                        </div>
-                        <span className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold">
-                          Borrowed
+                  <div className="borrow-details">
+                    <div>
+                      <span className="borrow-badge">On Loan</span>
+                      <h3
+                        className="borrow-book-title"
+                        style={{ marginTop: "0.65rem" }}
+                      >
+                        {book.title}
+                      </h3>
+                      <p className="borrow-book-author">by {book.author}</p>
+                    </div>
+
+                    <div className="borrow-info-row">
+                      <div className="borrow-info-item">
+                        <span className="borrow-info-label">
+                          <Coins size={11} /> Deposit
+                        </span>
+                        <span className="borrow-info-value gold">
+                          {(book["deposit-amount"] / 1_000_000).toFixed(2)} STX
                         </span>
                       </div>
-
-                      {/* Deposit Info */}
-                      <div className="bg-gray-50 rounded-lg p-4 space-y-2 mb-4">
-                        <div className="flex items-center justify-between text-sm">
-                          <div className="flex items-center text-gray-700">
-                            <Coins className="h-4 w-4 mr-2 text-orange-500" />
-                            <span className="font-semibold">
-                              Deposit Amount:
-                            </span>
-                          </div>
-                          <div className="text-right">
-                            <p className="font-bold text-gray-900">
-                              {(book["deposit-amount"] / 1000000).toFixed(2)}{" "}
-                              STX{" "}
-                            </p>
-                            <p className="text-xs text-gray-500">
-                              {book["deposit-amount"].toLocaleString()}{" "}
-                              microSTX{" "}
-                            </p>
-                          </div>
+                      {(book as any).borrowedAt && (
+                        <div className="borrow-info-item">
+                          <span className="borrow-info-label">
+                            <Hash size={11} /> Block
+                          </span>
+                          <span className="borrow-info-value mono">
+                            {(book as any).borrowedAt}
+                          </span>
                         </div>
-
-                        {book.borrowedAt && (
-                          <div className="flex items-center justify-between text-sm">
-                            <div className="flex items-center text-gray-700">
-                              <Calendar className="h-4 w-4 mr-2 text-purple-500" />
-                              <span className="font-semibold">
-                                Borrowed at Block:
-                              </span>
-                            </div>
-                            <span className="font-mono text-gray-900">
-                              {book.borrowedAt}
-                            </span>
-                          </div>
-                        )}
-                      </div>
+                      )}
                     </div>
 
-                    {/* Return Button */}
                     <button
+                      className="return-btn"
                       onClick={() => onReturn(book.id)}
                       disabled={!connected}
-                      className="w-full md:w-auto px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-300 font-semibold shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
                     >
-                      <Unlock className="h-5 w-5 mr-2" />
-                      Return Book & Get Deposit Back
+                      <RotateCcw size={13} />
+                      Return & Reclaim Deposit
                     </button>
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
-      )}
 
-      {/* Footer Info */}
-      {borrowedBooks.length > 0 && (
-        <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-          <p className="text-sm text-blue-800">
-            💡 <strong>Tip:</strong> Return books to get your deposit back
-            instantly. Your deposit will be refunded in full when you return the
-            book.
-          </p>
-        </div>
-      )}
-    </div>
+            <div className="tip-bar">
+              Deposits are returned in full the moment your return transaction
+              is confirmed on-chain.
+            </div>
+          </>
+        )}
+      </div>
+    </>
   );
 }
