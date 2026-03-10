@@ -136,7 +136,7 @@ export default function MyBorrowsPage() {
         setTimeout(async () => {
           await fetchBorrowedBooks();
           setIsProcessing(false);
-        }, 60000);
+        }, 10000);
       }
     } catch (e) {
       console.error("Return error:", e);

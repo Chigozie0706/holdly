@@ -121,7 +121,7 @@ export default function Library() {
         setTimeout(async () => {
           await fetchAllBooks();
           setIsProcessing(false);
-        }, 60000);
+        }, 10000);
       }
     } catch (e) {
       console.error("Borrow error:", e);
