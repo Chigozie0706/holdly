@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import BrowseBooks from "@/components/BrowseBooks";
 import { useStacks } from "@/providers/stacks-provider";
+import { toast } from "sonner";
 
 const DEPOSIT_AMOUNT = 1000000;
 const CONTRACT_ADDRESS = "SP3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJB3SS99R";
@@ -132,6 +133,93 @@ export default function Library() {
     }
   };
 
+  const handleUpdateBook = async (
+    bookId: number,
+    title: string,
+    author: string,
+    coverPage: string,
+  ) => {
+    if (!connected || !address) {
+      toast.error("Please connect your wallet first");
+      return;
+    }
+
+    setIsProcessing(true);
+    try {
+      const { request } = await import("@stacks/connect");
+      const { Cl } = await import("@stacks/transactions");
+
+      const response = await request("stx_callContract", {
+        contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
+        functionName: "update-book",
+        functionArgs: [
+          Cl.uint(bookId),
+          Cl.stringUtf8(title),
+          Cl.stringUtf8(author),
+          Cl.stringUtf8(coverPage || "https://via.placeholder.com/150"),
+          Cl.uint(DEPOSIT_AMOUNT),
+        ],
+      });
+
+      if (response.txid) {
+        toast.success(`Book updated! TX: ${response.txid}`);
+        // Optimistically update local state
+        setBooks((prev) =>
+          prev.map((b) =>
+            b.id === bookId ? { ...b, title, author, coverPage } : b,
+          ),
+        );
+      }
+    } catch (error) {
+      toast.error(
+        `Failed to update: ${error instanceof Error ? error.message : "Unknown error"}`,
+      );
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleDeleteBook = async (bookId: number) => {
+    if (!connected || !address) {
+      toast.error("Please connect your wallet first");
+      return;
+    }
+
+    const book = books.find((b) => b.id === bookId);
+    if (!book) return;
+
+    if (
+      !window.confirm(
+        `Are you sure you want to delete "${book.title}"? This cannot be undone.`,
+      )
+    )
+      return;
+
+    setIsProcessing(true);
+    try {
+      const { request } = await import("@stacks/connect");
+      const { Cl } = await import("@stacks/transactions");
+
+      const response = await request("stx_callContract", {
+        contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
+        functionName: "delete-book",
+        functionArgs: [Cl.uint(bookId)],
+      });
+
+      if (response.txid) {
+        toast.success(`Book deleted! TX: ${response.txid}`);
+        // Optimistically remove from local state
+        setBooks((prev) => prev.filter((b) => b.id !== bookId));
+      }
+    } catch (error) {
+      toast.error(
+        `Failed to delete: ${error instanceof Error ? error.message : "Unknown error"}`,
+      );
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
   return (
     <>
       {isProcessing && (
@@ -170,6 +258,9 @@ export default function Library() {
         onBorrow={handleBorrow}
         connected={connected}
         isLoading={isFetching}
+        onUpdate={handleUpdateBook}
+        onDelete={handleDeleteBook}
+        address={address}
       />
     </>
   );
