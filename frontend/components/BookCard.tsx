@@ -9,7 +9,9 @@ import {
   Trash2,
   X,
   Check,
+  Upload,
 } from "lucide-react";
+import { toast } from "sonner";
 
 interface BookCardProps {
   book: {
@@ -49,21 +51,100 @@ export default function BookCard({
   const [editTitle, setEditTitle] = useState(book.title);
   const [editAuthor, setEditAuthor] = useState(book.author);
   const [editCover, setEditCover] = useState(book.coverPage || "");
+  const [editFile, setEditFile] = useState<File | null>(null);
+  const [editPreview, setEditPreview] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
 
   const isAvailable = book["is-available"];
   const isOwner = connected && address && book.owner && address === book.owner;
   const canManage = isOwner && isAvailable;
 
-  const handleSave = () => {
-    if (!editTitle.trim() || !editAuthor.trim()) return;
-    onUpdate(book.id, editTitle, editAuthor, editCover);
-    setIsEditing(false);
+  const handleEditFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      toast.error("Only image files allowed");
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error("File must be under 10MB");
+      return;
+    }
+
+    setEditFile(file);
+    setEditCover(""); // clear manual URL
+    const reader = new FileReader();
+    reader.onload = () => setEditPreview(reader.result as string);
+    reader.readAsDataURL(file);
+    toast.success(`Image "${file.name}" selected`, { icon: "🖼️" });
+  };
+
+  const uploadToIPFS = async (file: File): Promise<string> => {
+    const toastId = toast.loading("Uploading to IPFS…");
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append(
+        "pinataMetadata",
+        JSON.stringify({ name: `holdly-cover-${Date.now()}` }),
+      );
+
+      const res = await fetch(
+        "https://api.pinata.cloud/pinning/pinFileToIPFS",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_PINATA_JWT}`,
+          },
+          body: formData,
+        },
+      );
+
+      if (!res.ok) throw new Error("Upload failed");
+      const data = await res.json();
+      // const url = `https://${process.env.NEXT_PUBLIC_PINATA_GATEWAY}/ipfs/${data.IpfsHash}`;
+      const url = `https://gateway.pinata.cloud/ipfs/${data.IpfsHash}`;
+
+      toast.success("Image uploaded to IPFS!", { id: toastId });
+      return url;
+    } catch (err) {
+      toast.error("Failed to upload image", { id: toastId });
+      throw err;
+    }
+  };
+
+  const handleSave = async () => {
+    if (!editTitle.trim() || !editAuthor.trim()) {
+      toast.error("Title and author are required");
+      return;
+    }
+
+    setIsUploading(true);
+    try {
+      let finalCover = editCover;
+
+      if (editFile) {
+        finalCover = await uploadToIPFS(editFile);
+      }
+
+      onUpdate(book.id, editTitle, editAuthor, finalCover);
+      setIsEditing(false);
+      setEditFile(null);
+      setEditPreview(null);
+    } catch {
+      // toast already shown in uploadToIPFS
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleCancel = () => {
     setEditTitle(book.title);
     setEditAuthor(book.author);
     setEditCover(book.coverPage || "");
+    setEditFile(null);
+    setEditPreview(null);
     setIsEditing(false);
   };
 
@@ -200,8 +281,9 @@ export default function BookCard({
           cursor: not-allowed;
           border: 1px solid rgba(255,255,255,0.06);
         }
+
         .book-owner-actions {
-          display: flex; gap: 0.4rem; margin-top: 0.5rem;
+          display: flex; gap: 0.4rem;
         }
         .book-action-btn {
           flex: 1; padding: 0.45rem 0.6rem;
@@ -240,6 +322,9 @@ export default function BookCard({
           color: rgba(255,255,255,0.35);
         }
         .book-action-btn.cancel:hover { background: rgba(255,255,255,0.07); }
+        .book-action-btn:disabled {
+          opacity: 0.5; cursor: not-allowed;
+        }
 
         .book-edit-input {
           width: 100%; padding: 0.45rem 0.65rem;
@@ -261,12 +346,49 @@ export default function BookCard({
           display: flex; flex-direction: column; gap: 0.4rem;
           margin-bottom: 0.5rem;
         }
+
+        .book-edit-img-preview {
+          position: relative; height: 80px;
+          border-radius: 2px; overflow: hidden;
+        }
+        .book-edit-img-preview img {
+          width: 100%; height: 100%; object-fit: cover;
+        }
+        .book-edit-img-remove {
+          position: absolute; top: 4px; right: 4px;
+          background: rgba(0,0,0,0.65); border: none; border-radius: 2px;
+          color: white; cursor: pointer; padding: 2px 6px;
+          font-size: 0.68rem; display: flex; align-items: center; gap: 3px;
+        }
+        .book-edit-upload-label {
+          display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+          padding: 0.45rem;
+          border: 1px dashed rgba(212,163,82,0.3);
+          border-radius: 2px; cursor: pointer;
+          font-size: 0.75rem; color: rgba(212,163,82,0.7);
+          transition: all 0.15s;
+        }
+        .book-edit-upload-label:hover {
+          border-color: rgba(212,163,82,0.6);
+          color: #D4A352;
+          background: rgba(212,163,82,0.05);
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .spin {
+          display: inline-block; width: 10px; height: 10px;
+          border: 2px solid #4ade80; border-top-color: transparent;
+          border-radius: 50%; animation: spin 0.6s linear infinite;
+        }
       `}</style>
 
       <div className="book-card">
         {/* Cover */}
         <div className="book-cover">
-          {book.coverPage && !imgError ? (
+          {/* Show edit preview in cover if user selected a new image */}
+          {isEditing && editPreview ? (
+            <img src={editPreview} alt="New cover preview" />
+          ) : book.coverPage && !imgError ? (
             <img
               src={book.coverPage}
               alt={book.title}
@@ -288,7 +410,6 @@ export default function BookCard({
         {/* Body */}
         <div className="book-body">
           {isEditing ? (
-            // ── Edit mode ──
             <>
               <div className="book-edit-inputs">
                 <input
@@ -305,28 +426,71 @@ export default function BookCard({
                   placeholder="Author"
                   maxLength={100}
                 />
-                <input
-                  className="book-edit-input"
-                  value={editCover}
-                  onChange={(e) => setEditCover(e.target.value)}
-                  placeholder="Cover image URL"
-                  maxLength={200}
-                />
+
+                {/* Image upload */}
+                {editPreview ? (
+                  <div className="book-edit-img-preview">
+                    <img src={editPreview} alt="Preview" />
+                    <button
+                      className="book-edit-img-remove"
+                      onClick={() => {
+                        setEditFile(null);
+                        setEditPreview(null);
+                      }}
+                    >
+                      <X size={10} /> Remove
+                    </button>
+                  </div>
+                ) : (
+                  <label className="book-edit-upload-label">
+                    <Upload size={12} /> Upload new cover
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleEditFileChange}
+                      style={{ display: "none" }}
+                    />
+                  </label>
+                )}
+
+                {/* URL input — hidden when file is selected */}
+                {!editFile && (
+                  <input
+                    className="book-edit-input"
+                    value={editCover}
+                    onChange={(e) => setEditCover(e.target.value)}
+                    placeholder="Or paste image URL"
+                    maxLength={200}
+                  />
+                )}
               </div>
+
               <div className="book-owner-actions">
-                <button className="book-action-btn save" onClick={handleSave}>
-                  <Check size={12} /> Save
+                <button
+                  className="book-action-btn save"
+                  onClick={handleSave}
+                  disabled={isUploading}
+                >
+                  {isUploading ? (
+                    <>
+                      <span className="spin" /> Uploading
+                    </>
+                  ) : (
+                    <>
+                      <Check size={12} /> Save
+                    </>
+                  )}
                 </button>
                 <button
                   className="book-action-btn cancel"
                   onClick={handleCancel}
+                  disabled={isUploading}
                 >
                   <X size={12} /> Cancel
                 </button>
               </div>
             </>
           ) : (
-            // ── View mode ──
             <>
               <div className="book-body-top">
                 <h3 className="book-card-title">{book.title}</h3>
@@ -366,7 +530,6 @@ export default function BookCard({
                 </button>
               )}
 
-              {/* Edit / Delete — only shown to owner when available */}
               {canManage && (
                 <div className="book-owner-actions">
                   <button
