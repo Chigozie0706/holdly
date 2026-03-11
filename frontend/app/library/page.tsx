@@ -14,6 +14,7 @@ interface Book {
   title: string;
   author: string;
   coverPage?: string;
+  owner?: string;
   "is-available": boolean;
   "total-borrows": number;
   "deposit-amount": number;
@@ -62,6 +63,7 @@ export default function Library() {
               title: d.title.value,
               author: d.author.value,
               coverPage: d["cover-page"].value,
+              owner: d.owner.value,
               "is-available": d["is-available"].value,
               "total-borrows": Number(d["total-borrows"].value),
               "deposit-amount": Number(d["deposit-amount"].value),
