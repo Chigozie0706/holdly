@@ -6,7 +6,15 @@ interface BrowseBooksProps {
   books: any[];
   depositAmount: number;
   onBorrow: (id: number) => void;
+  onUpdate: (
+    id: number,
+    title: string,
+    author: string,
+    coverPage: string,
+  ) => void;
+  onDelete: (id: number) => void;
   connected: boolean;
+  address: string | null;
   isLoading?: boolean;
 }
 
@@ -14,7 +22,10 @@ export default function BrowseBooks({
   books,
   depositAmount,
   onBorrow,
+  onUpdate,
+  onDelete,
   connected,
+  address,
   isLoading = false,
 }: BrowseBooksProps) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -276,7 +287,10 @@ export default function BrowseBooks({
                   book={book}
                   depositAmount={depositAmount}
                   onBorrow={onBorrow}
+                  onUpdate={onUpdate}
+                  onDelete={onDelete}
                   connected={connected}
+                  address={address}
                 />
               ))
             )}
