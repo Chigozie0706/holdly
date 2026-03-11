@@ -192,6 +192,25 @@
     )
 )
 
+;; Delete a book (only owner, only when available)
+(define-public (delete-book (book-id uint))
+    (let ((book (unwrap! (map-get? books book-id) ERR_BOOK_NOT_FOUND)))
+        (asserts! (is-eq tx-sender (get owner book)) ERR_NOT_BOOK_OWNER)
+        (asserts! (get is-available book) ERR_BOOK_NOT_AVAILABLE)
+
+        (map-delete books book-id)
+
+        (print {
+            event: "book-deleted",
+            book-id: book-id,
+            owner: tx-sender,
+        })
+
+        (ok true)
+    )
+)
+
+
 ;; Read-only functions
 (define-read-only (get-book (book-id uint))
     (map-get? books book-id)
