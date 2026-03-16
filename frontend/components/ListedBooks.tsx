@@ -86,3 +86,27 @@ export default function Dashboard({
         </div>
       </div>
 
+      {/* Stats */}
+      <div className="dash-stats">
+        <div className="dash-stat-card">
+          <Library size={18} color="#D4A352" />
+          <span className="dash-stat-num">{myBooks.length}</span>
+          <span className="dash-stat-lbl">Total Listed</span>
+        </div>
+        <div className="dash-stat-card">
+          <BookOpen size={18} color="#4ade80" />
+          <span className="dash-stat-num">{availableCount}</span>
+          <span className="dash-stat-lbl">Available</span>
+        </div>
+        <div className="dash-stat-card">
+          <Users size={18} color="#f87171" />
+          <span className="dash-stat-num">{onLoanCount}</span>
+          <span className="dash-stat-lbl">On Loan</span>
+        </div>
+        <div className="dash-stat-card">
+          <TrendingUp size={18} color="#a78bfa" />
+          <span className="dash-stat-num">{totalBorrows}</span>
+          <span className="dash-stat-lbl">Total Borrows</span>
+        </div>
+      </div>
+
