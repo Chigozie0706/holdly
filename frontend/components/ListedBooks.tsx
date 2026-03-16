@@ -50,3 +50,14 @@ export default function Dashboard({
     myBooks
       .filter((b) => !b["is-available"])
       .reduce((sum, b) => sum + b["deposit-amount"], 0) / 1_000_000;
+  if (!connected) {
+    return (
+      <div className="dash-empty">
+        <div className="dash-empty-icon">
+          <Library size={28} color="rgba(212,163,82,0.3)" />
+        </div>
+        <p className="dash-empty-title">Connect your wallet</p>
+        <p className="dash-empty-sub">Connect to view your dashboard</p>
+      </div>
+    );
+  }
