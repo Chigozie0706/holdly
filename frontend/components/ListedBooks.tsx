@@ -75,3 +75,14 @@ export default function Dashboard({
       </div>
     );
   }
+
+  return (
+    <div className="dash-wrap">
+      {/* Header */}
+      <div className="dash-header">
+        <div>
+          <h2 className="dash-title">My Dashboard</h2>
+          <p className="dash-sub">Books you've added to the library</p>
+        </div>
+      </div>
+
