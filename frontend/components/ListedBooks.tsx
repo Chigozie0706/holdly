@@ -61,3 +61,17 @@ export default function Dashboard({
       </div>
     );
   }
+
+  if (myBooks.length === 0) {
+    return (
+      <div className="dash-empty">
+        <div className="dash-empty-icon">
+          <BookOpen size={28} color="rgba(212,163,82,0.3)" />
+        </div>
+        <p className="dash-empty-title">No books listed yet</p>
+        <p className="dash-empty-sub">
+          Books you add to the library will appear here
+        </p>
+      </div>
+    );
+  }
