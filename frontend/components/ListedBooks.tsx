@@ -21,3 +21,16 @@ interface Book {
   "total-borrows": number;
   "deposit-amount": number;
 }
+
+interface DashboardProps {
+  books: Book[];
+  address: string | null;
+  connected: boolean;
+  onUpdate: (
+    id: number,
+    title: string,
+    author: string,
+    coverPage: string,
+  ) => void;
+  onDelete: (id: number) => void;
+}
