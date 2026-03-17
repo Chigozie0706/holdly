@@ -150,3 +150,22 @@ export default function Dashboard({
                       </div>
                     )}
 
+<div>
+                      <p className="dash-book-title">{book.title}</p>
+                      <p className="dash-book-author">by {book.author}</p>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span className={`dash-status ${book["is-available"] ? "available" : "on-loan"}`}>
+                    {book["is-available"] ? "Available" : "On Loan"}
+                  </span>
+                </td>
+                <td>
+                  <span className="dash-deposit">
+                    {(book["deposit-amount"] / 1_000_000).toFixed(2)} STX
+                  </span>
+                </td>
+                <td>
+                  <span className="dash-borrows">{book["total-borrows"]}x</span>
+                </td>
