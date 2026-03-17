@@ -169,3 +169,35 @@ export default function Dashboard({
                 <td>
                   <span className="dash-borrows">{book["total-borrows"]}x</span>
                 </td>
+
+                <td>
+                  {book["is-available"] ? (
+                    <div className="dash-actions">
+                      <button
+                        className="dash-action-btn edit"
+                        onClick={() =>
+                          onUpdate(
+                            book.id,
+                            book.title,
+                            book.author,
+                            book.coverPage || "",
+                          )
+                        }
+                        title="Edit"
+                      >
+                        <Pencil size={13} />
+                      </button>
+                      <button
+                        className="dash-action-btn delete"
+                        onClick={() => onDelete(book.id)}
+                        title="Delete"
+                      >
+                        <Trash2 size={13} />
+                      </button>
+                    </div>
+                  ) : (
+                    <span className="dash-locked">Locked</span>
+                  )}
+                </td>
+                </tr>
+            ))}
