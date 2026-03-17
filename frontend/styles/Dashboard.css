@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap');
+
+.dash-wrap { font-family: 'DM Sans', sans-serif; }
+
+.dash-header {
+  display: flex; align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+}
+.dash-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.75rem; font-weight: 700;
+  color: rgba(255,255,255,0.9); margin: 0 0 0.25rem;
+}
