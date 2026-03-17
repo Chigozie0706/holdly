@@ -129,3 +129,24 @@ export default function Dashboard({
               <th>Actions</th>
             </tr>
           </thead>
+
+                    <tbody>
+            {myBooks.map((book) => (
+              <tr key={book.id}>
+                <td>
+                  <div className="dash-book-cell">
+                    {book.coverPage ? (
+                      <img
+                        src={book.coverPage}
+                        alt={book.title}
+                        className="dash-book-thumb"
+                        onError={(e) =>
+                          ((e.target as HTMLImageElement).style.display = "none")
+                        }
+                      />
+                    ) : (
+                      <div className="dash-book-thumb-placeholder">
+                        <BookOpen size={14} color="rgba(212,163,82,0.3)" />
+                      </div>
+                    )}
+
