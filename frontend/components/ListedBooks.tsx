@@ -110,10 +110,14 @@ export default function Dashboard({
         </div>
       </div>
 
-{totalDepositsLocked > 0 && (
+      {totalDepositsLocked > 0 && (
         <div className="dash-deposits-notice">
-          <span className="dash-deposits-label">STX currently locked in deposits</span>
-          <span className="dash-deposits-value">{totalDepositsLocked.toFixed(2)} STX</span>
+          <span className="dash-deposits-label">
+            STX currently locked in deposits
+          </span>
+          <span className="dash-deposits-value">
+            {totalDepositsLocked.toFixed(2)} STX
+          </span>
         </div>
       )}
 
@@ -130,7 +134,7 @@ export default function Dashboard({
             </tr>
           </thead>
 
-                    <tbody>
+          <tbody>
             {myBooks.map((book) => (
               <tr key={book.id}>
                 <td>
@@ -141,7 +145,8 @@ export default function Dashboard({
                         alt={book.title}
                         className="dash-book-thumb"
                         onError={(e) =>
-                          ((e.target as HTMLImageElement).style.display = "none")
+                          ((e.target as HTMLImageElement).style.display =
+                            "none")
                         }
                       />
                     ) : (
@@ -150,14 +155,16 @@ export default function Dashboard({
                       </div>
                     )}
 
-<div>
+                    <div>
                       <p className="dash-book-title">{book.title}</p>
                       <p className="dash-book-author">by {book.author}</p>
                     </div>
                   </div>
                 </td>
                 <td>
-                  <span className={`dash-status ${book["is-available"] ? "available" : "on-loan"}`}>
+                  <span
+                    className={`dash-status ${book["is-available"] ? "available" : "on-loan"}`}
+                  >
                     {book["is-available"] ? "Available" : "On Loan"}
                   </span>
                 </td>
@@ -199,5 +206,11 @@ export default function Dashboard({
                     <span className="dash-locked">Locked</span>
                   )}
                 </td>
-                </tr>
+              </tr>
             ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
