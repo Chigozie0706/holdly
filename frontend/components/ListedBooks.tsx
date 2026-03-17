@@ -110,3 +110,22 @@ export default function Dashboard({
         </div>
       </div>
 
+{totalDepositsLocked > 0 && (
+        <div className="dash-deposits-notice">
+          <span className="dash-deposits-label">STX currently locked in deposits</span>
+          <span className="dash-deposits-value">{totalDepositsLocked.toFixed(2)} STX</span>
+        </div>
+      )}
+
+      {/* Book list */}
+      <div className="dash-table-wrap">
+        <table className="dash-table">
+          <thead>
+            <tr>
+              <th>Book</th>
+              <th>Status</th>
+              <th>Deposit</th>
+              <th>Borrows</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
