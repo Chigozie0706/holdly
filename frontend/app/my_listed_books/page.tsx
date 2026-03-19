@@ -68,4 +68,11 @@ export default function MyListedBooksPage() {
       console.error("Error fetching books:", error);
     }
   };
+
+  const handleUpdateBook = async (
+    id: number,
+    title: string,
+    author: string,
+    coverPage: string,
+  ) => {};
 }
