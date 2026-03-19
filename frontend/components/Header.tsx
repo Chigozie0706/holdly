@@ -24,6 +24,7 @@ const NAV_LINKS = [
   { href: "/library", label: "Library", icon: Library },
   { href: "/donate_book", label: "Donate Book", icon: PlusCircle },
   { href: "/my_borrows", label: "My Borrows", icon: BookOpen },
+  { href: "/my_listed_books", label: "My Listed Books", icon: Wallet },
 ];
 
 export default function Header({
