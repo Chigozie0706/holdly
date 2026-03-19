@@ -9,7 +9,7 @@ import {
   Pencil,
   Trash2,
 } from "lucide-react";
-import "@/styles/Dashboard.css";
+import "@/styles/MyListedBooks.css";
 
 interface Book {
   id: number;
@@ -22,7 +22,7 @@ interface Book {
   "deposit-amount": number;
 }
 
-interface DashboardProps {
+interface MyListedBooksProps {
   books: Book[];
   address: string | null;
   connected: boolean;
@@ -35,13 +35,13 @@ interface DashboardProps {
   onDelete: (id: number) => void;
 }
 
-export default function Dashboard({
+export default function MyListedBooks({
   books,
   address,
   connected,
   onUpdate,
   onDelete,
-}: DashboardProps) {
+}: MyListedBooksProps) {
   const myBooks = books.filter((b) => b.owner === address);
   const availableCount = myBooks.filter((b) => b["is-available"]).length;
   const onLoanCount = myBooks.filter((b) => !b["is-available"]).length;
@@ -81,7 +81,7 @@ export default function Dashboard({
       {/* Header */}
       <div className="dash-header">
         <div>
-          <h2 className="dash-title">My Dashboard</h2>
+          <h2 className="dash-title">My MyListedBooks</h2>
           <p className="dash-sub">Books you've added to the library</p>
         </div>
       </div>

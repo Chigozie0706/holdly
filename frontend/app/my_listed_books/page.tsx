@@ -1,190 +1,216 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import MyBorrows from "@/components/MyBorrows";
-import { useStacks } from "@/providers/stacks-provider";
-
-const CONTRACT_ADDRESS = "SP3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJB3SS99R";
-const CONTRACT_NAME = "holdlyv8";
+import React, { useState } from "react";
+import {
+  BookOpen,
+  Users,
+  TrendingUp,
+  Library,
+  Pencil,
+  Trash2,
+} from "lucide-react";
+import "@/styles/MyListedBooks.css";
 
 interface Book {
   id: number;
   title: string;
   author: string;
   coverPage?: string;
+  owner?: string;
   "is-available": boolean;
   "total-borrows": number;
   "deposit-amount": number;
-  borrowedAt?: number;
 }
 
-export default function MyBorrowsPage() {
-  const { address, connected } = useStacks();
-  const [borrowedBooks, setBorrowedBooks] = useState<Book[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isProcessing, setIsProcessing] = useState(false);
+interface MyListedBooksProps {
+  books: Book[];
+  address: string | null;
+  connected: boolean;
+  onUpdate: (
+    id: number,
+    title: string,
+    author: string,
+    coverPage: string,
+  ) => void;
+  onDelete: (id: number) => void;
+}
 
-  const fetchBorrowedBooks = async () => {
-    if (!connected || !address) {
-      setIsLoading(false);
-      return;
-    }
-    setIsLoading(true);
+export default function MyListedBooks({
+  books,
+  address,
+  connected,
+  onUpdate,
+  onDelete,
+}: MyListedBooksProps) {
+  const myBooks = books.filter((b) => b.owner === address);
+  const availableCount = myBooks.filter((b) => b["is-available"]).length;
+  const onLoanCount = myBooks.filter((b) => !b["is-available"]).length;
+  const totalBorrows = myBooks.reduce((sum, b) => sum + b["total-borrows"], 0);
+  const totalDepositsLocked =
+    myBooks
+      .filter((b) => !b["is-available"])
+      .reduce((sum, b) => sum + b["deposit-amount"], 0) / 1_000_000;
+  if (!connected) {
+    return (
+      <div className="dash-empty">
+        <div className="dash-empty-icon">
+          <Library size={28} color="rgba(212,163,82,0.3)" />
+        </div>
+        <p className="dash-empty-title">Connect your wallet</p>
+        <p className="dash-empty-sub">Connect to view your dashboard</p>
+      </div>
+    );
+  }
 
-    try {
-      const { fetchCallReadOnlyFunction, Cl, cvToJSON } =
-        await import("@stacks/transactions");
-      const { STACKS_MAINNET } = await import("@stacks/network");
-
-      const countResult = await fetchCallReadOnlyFunction({
-        contractAddress: CONTRACT_ADDRESS,
-        contractName: CONTRACT_NAME,
-        functionName: "get-book-count",
-        functionArgs: [],
-        network: STACKS_MAINNET,
-        senderAddress: CONTRACT_ADDRESS,
-      });
-      const totalBooks = Number(cvToJSON(countResult).value.value);
-
-      const userBorrowed: Book[] = [];
-      for (let i = 1; i <= totalBooks; i++) {
-        try {
-          const borrowResult = await fetchCallReadOnlyFunction({
-            contractAddress: CONTRACT_ADDRESS,
-            contractName: CONTRACT_NAME,
-            functionName: "get-borrow",
-            functionArgs: [Cl.uint(i)],
-            network: STACKS_MAINNET,
-            senderAddress: CONTRACT_ADDRESS,
-          });
-          const borrowJson = cvToJSON(borrowResult);
-          if (borrowJson.value) {
-            const borrowData = borrowJson.value.value;
-            if (borrowData.borrower.value === address) {
-              const bookResult = await fetchCallReadOnlyFunction({
-                contractAddress: CONTRACT_ADDRESS,
-                contractName: CONTRACT_NAME,
-                functionName: "get-book",
-                functionArgs: [Cl.uint(i)],
-                network: STACKS_MAINNET,
-                senderAddress: CONTRACT_ADDRESS,
-              });
-              const bookJson = cvToJSON(bookResult);
-              if (bookJson.value) {
-                const d = bookJson.value.value;
-                userBorrowed.push({
-                  id: i,
-                  title: d.title.value,
-                  author: d.author.value,
-                  coverPage: d["cover-page"].value,
-                  "is-available": false,
-                  "total-borrows": Number(d["total-borrows"].value),
-                  "deposit-amount": Number(borrowData["deposit-amount"].value),
-                  borrowedAt: Number(borrowData["borrowed-at"].value),
-                });
-              }
-            }
-          }
-        } catch (e) {
-          /* no active borrow for this book */
-        }
-      }
-      setBorrowedBooks(userBorrowed);
-    } catch (e) {
-      console.error("Error fetching borrowed books:", e);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchBorrowedBooks();
-  }, [connected, address]);
-
-  const handleReturn = async (bookId: number) => {
-    if (!connected || !address) {
-      alert("Please connect your wallet first");
-      return;
-    }
-    const book = borrowedBooks.find((b) => b.id === bookId);
-    if (!book) {
-      alert("Book not found");
-      return;
-    }
-
-    setIsProcessing(true);
-    try {
-      const { request } = await import("@stacks/connect");
-      const { Cl, Pc } = await import("@stacks/transactions");
-
-      const response = await request("stx_callContract", {
-        contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
-        functionName: "return-book",
-        functionArgs: [Cl.uint(bookId)],
-        postConditions: [
-          // Contract sends the deposit back to the borrower
-          Pc.principal(`${CONTRACT_ADDRESS}.${CONTRACT_NAME}`)
-            .willSendEq(book["deposit-amount"])
-            .ustx(),
-        ],
-      });
-
-      if (response.txid) {
-        alert(
-          `Returned! TX: ${response.txid}\nDeposit of ${(book["deposit-amount"] / 1_000_000).toFixed(2)} STX will be refunded.`,
-        );
-        setTimeout(async () => {
-          await fetchBorrowedBooks();
-          setIsProcessing(false);
-        }, 10000);
-      }
-    } catch (e) {
-      console.error("Return error:", e);
-      alert(
-        `Failed to return: ${e instanceof Error ? e.message : "Unknown error"}`,
-      );
-      setIsProcessing(false);
-    }
-  };
+  if (myBooks.length === 0) {
+    return (
+      <div className="dash-empty">
+        <div className="dash-empty-icon">
+          <BookOpen size={28} color="rgba(212,163,82,0.3)" />
+        </div>
+        <p className="dash-empty-title">No books listed yet</p>
+        <p className="dash-empty-sub">
+          Books you add to the library will appear here
+        </p>
+      </div>
+    );
+  }
 
   return (
-    <>
-      {isProcessing && (
-        <div
-          style={{
-            marginBottom: "1.5rem",
-            padding: "0.7rem 1.25rem",
-            background: "rgba(59,130,246,0.06)",
-            border: "1px solid rgba(59,130,246,0.15)",
-            borderRadius: "2px",
-            display: "flex",
-            alignItems: "center",
-            gap: "0.6rem",
-            fontSize: "0.8rem",
-            color: "rgba(147,197,253,0.7)",
-          }}
-        >
-          <span
-            style={{
-              width: "14px",
-              height: "14px",
-              border: "1.5px solid rgba(147,197,253,0.2)",
-              borderTopColor: "rgba(147,197,253,0.7)",
-              borderRadius: "50%",
-              display: "inline-block",
-              animation: "spin 0.7s linear infinite",
-            }}
-          />
-          Processing return transaction… please wait.
-          <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+    <div className="dash-wrap">
+      {/* Header */}
+      <div className="dash-header">
+        <div>
+          <h2 className="dash-title">My MyListedBooks</h2>
+          <p className="dash-sub">Books you've added to the library</p>
+        </div>
+      </div>
+
+      {/* Stats */}
+      <div className="dash-stats">
+        <div className="dash-stat-card">
+          <Library size={18} color="#D4A352" />
+          <span className="dash-stat-num">{myBooks.length}</span>
+          <span className="dash-stat-lbl">Total Listed</span>
+        </div>
+        <div className="dash-stat-card">
+          <BookOpen size={18} color="#4ade80" />
+          <span className="dash-stat-num">{availableCount}</span>
+          <span className="dash-stat-lbl">Available</span>
+        </div>
+        <div className="dash-stat-card">
+          <Users size={18} color="#f87171" />
+          <span className="dash-stat-num">{onLoanCount}</span>
+          <span className="dash-stat-lbl">On Loan</span>
+        </div>
+        <div className="dash-stat-card">
+          <TrendingUp size={18} color="#a78bfa" />
+          <span className="dash-stat-num">{totalBorrows}</span>
+          <span className="dash-stat-lbl">Total Borrows</span>
+        </div>
+      </div>
+
+      {totalDepositsLocked > 0 && (
+        <div className="dash-deposits-notice">
+          <span className="dash-deposits-label">
+            STX currently locked in deposits
+          </span>
+          <span className="dash-deposits-value">
+            {totalDepositsLocked.toFixed(2)} STX
+          </span>
         </div>
       )}
-      <MyBorrows
-        borrowedBooks={borrowedBooks}
-        onReturn={handleReturn}
-        connected={connected}
-        isLoading={isLoading}
-      />
-    </>
+
+      {/* Book list */}
+      <div className="dash-table-wrap">
+        <table className="dash-table">
+          <thead>
+            <tr>
+              <th>Book</th>
+              <th>Status</th>
+              <th>Deposit</th>
+              <th>Borrows</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {myBooks.map((book) => (
+              <tr key={book.id}>
+                <td>
+                  <div className="dash-book-cell">
+                    {book.coverPage ? (
+                      <img
+                        src={book.coverPage}
+                        alt={book.title}
+                        className="dash-book-thumb"
+                        onError={(e) =>
+                          ((e.target as HTMLImageElement).style.display =
+                            "none")
+                        }
+                      />
+                    ) : (
+                      <div className="dash-book-thumb-placeholder">
+                        <BookOpen size={14} color="rgba(212,163,82,0.3)" />
+                      </div>
+                    )}
+
+                    <div>
+                      <p className="dash-book-title">{book.title}</p>
+                      <p className="dash-book-author">by {book.author}</p>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span
+                    className={`dash-status ${book["is-available"] ? "available" : "on-loan"}`}
+                  >
+                    {book["is-available"] ? "Available" : "On Loan"}
+                  </span>
+                </td>
+                <td>
+                  <span className="dash-deposit">
+                    {(book["deposit-amount"] / 1_000_000).toFixed(2)} STX
+                  </span>
+                </td>
+                <td>
+                  <span className="dash-borrows">{book["total-borrows"]}x</span>
+                </td>
+
+                <td>
+                  {book["is-available"] ? (
+                    <div className="dash-actions">
+                      <button
+                        className="dash-action-btn edit"
+                        onClick={() =>
+                          onUpdate(
+                            book.id,
+                            book.title,
+                            book.author,
+                            book.coverPage || "",
+                          )
+                        }
+                        title="Edit"
+                      >
+                        <Pencil size={13} />
+                      </button>
+                      <button
+                        className="dash-action-btn delete"
+                        onClick={() => onDelete(book.id)}
+                        title="Delete"
+                      >
+                        <Trash2 size={13} />
+                      </button>
+                    </div>
+                  ) : (
+                    <span className="dash-locked">Locked</span>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }
