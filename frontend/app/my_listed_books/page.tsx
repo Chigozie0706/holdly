@@ -12,3 +12,7 @@ const CONTRACT_NAME = "holdlyv8";
 const DEPOSIT_AMOUNT = 1000000;
 
 export default function MyListedBooksPage() {
+  const { address, connected } = useStacks();
+  const [books, setBooks] = useState<any[]>([]);
+  const [isProcessing, setIsProcessing] = useState(false);
+}
