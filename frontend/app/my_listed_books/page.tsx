@@ -81,6 +81,9 @@ export default function MyListedBooksPage() {
 const { request } = await import("@stacks/connect");
       const { Cl } = await import("@stacks/transactions");
       const response = await request("stx_callContract", {
+                contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
+        functionName: "update-book",
+
       }
   };
 }
