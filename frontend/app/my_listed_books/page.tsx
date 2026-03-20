@@ -97,6 +97,9 @@ const { request } = await import("@stacks/connect");
           prev.map((b) => b.id === id ? { ...b, title, author, coverPage } : b)
         );
       }
+      } catch (error) {
+      toast.error(`Failed to update: ${error instanceof Error ? error.message : "Unknown error"}`);
+    } 
       }
   };
 }
