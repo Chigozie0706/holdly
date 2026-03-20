@@ -78,6 +78,9 @@ export default function MyListedBooksPage() {
     if (!connected) return;
     setIsProcessing(true);
     try {
-
+const { request } = await import("@stacks/connect");
+      const { Cl } = await import("@stacks/transactions");
+      const response = await request("stx_callContract", {
+      }
   };
 }
