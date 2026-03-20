@@ -90,7 +90,13 @@ const { request } = await import("@stacks/connect");
           Cl.stringUtf8(coverPage || "https://via.placeholder.com/150"),
           Cl.uint(DEPOSIT_AMOUNT),
         ],
-
+});
+      if (response.txid) {
+        toast.success("Book updated!");
+        setBooks((prev) =>
+          prev.map((b) => b.id === id ? { ...b, title, author, coverPage } : b)
+        );
+      }
       }
   };
 }
