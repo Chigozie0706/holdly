@@ -83,6 +83,13 @@ const { request } = await import("@stacks/connect");
       const response = await request("stx_callContract", {
                 contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
         functionName: "update-book",
+        functionArgs: [
+          Cl.uint(id),
+          Cl.stringUtf8(title),
+          Cl.stringUtf8(author),
+          Cl.stringUtf8(coverPage || "https://via.placeholder.com/150"),
+          Cl.uint(DEPOSIT_AMOUNT),
+        ],
 
       }
   };
