@@ -113,5 +113,9 @@ export default function MyListedBooksPage() {
     const book = books.find((b) => b.id === id);
     if (!window.confirm(`Delete "${book?.title}"? This cannot be undone.`))
       return;
+        setIsProcessing(true);
+try {
+      const { request } = await import("@stacks/connect");
+
   };
 }
