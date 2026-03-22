@@ -99,7 +99,10 @@ const { request } = await import("@stacks/connect");
       }
       } catch (error) {
       toast.error(`Failed to update: ${error instanceof Error ? error.message : "Unknown error"}`);
-    } 
+        } finally {
+      setIsProcessing(false);
+    }
+
       }
   };
 }
