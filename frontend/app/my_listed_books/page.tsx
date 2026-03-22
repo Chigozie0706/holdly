@@ -122,6 +122,9 @@ const { Cl } = await import("@stacks/transactions");
                 functionName: "delete-book",
         functionArgs: [Cl.uint(id)],
       });
-
+if (response.txid) {
+        toast.success("Book deleted!");
+        setBooks((prev) => prev.filter((b) => b.id !== id));
+      }
   };
 }
