@@ -119,5 +119,9 @@ try {
 const { Cl } = await import("@stacks/transactions");
       const response = await request("stx_callContract", {
         contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
+                functionName: "delete-book",
+        functionArgs: [Cl.uint(id)],
+      });
+
   };
 }
