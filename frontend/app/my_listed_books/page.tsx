@@ -78,10 +78,10 @@ export default function MyListedBooksPage() {
     if (!connected) return;
     setIsProcessing(true);
     try {
-const { request } = await import("@stacks/connect");
+      const { request } = await import("@stacks/connect");
       const { Cl } = await import("@stacks/transactions");
       const response = await request("stx_callContract", {
-                contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
+        contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
         functionName: "update-book",
         functionArgs: [
           Cl.uint(id),
@@ -90,19 +90,28 @@ const { request } = await import("@stacks/connect");
           Cl.stringUtf8(coverPage || "https://via.placeholder.com/150"),
           Cl.uint(DEPOSIT_AMOUNT),
         ],
-});
+      });
       if (response.txid) {
         toast.success("Book updated!");
         setBooks((prev) =>
-          prev.map((b) => b.id === id ? { ...b, title, author, coverPage } : b)
+          prev.map((b) =>
+            b.id === id ? { ...b, title, author, coverPage } : b,
+          ),
         );
       }
-      } catch (error) {
-      toast.error(`Failed to update: ${error instanceof Error ? error.message : "Unknown error"}`);
-        } finally {
+    } catch (error) {
+      toast.error(
+        `Failed to update: ${error instanceof Error ? error.message : "Unknown error"}`,
+      );
+    } finally {
       setIsProcessing(false);
     }
+  };
 
-      }
+  const handleDeleteBook = async (id: number) => {
+    if (!connected) return;
+    const book = books.find((b) => b.id === id);
+    if (!window.confirm(`Delete "${book?.title}"? This cannot be undone.`))
+      return;
   };
 }
