@@ -131,4 +131,7 @@ if (response.txid) {
   catch (error) {
       toast.error(`Failed to delete: ${error instanceof Error ? error.message : "Unknown error"}`);
     }
+    finally {
+      setIsProcessing(false);
+    }
 }
