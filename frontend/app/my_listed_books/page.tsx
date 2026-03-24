@@ -113,25 +113,29 @@ export default function MyListedBooksPage() {
     const book = books.find((b) => b.id === id);
     if (!window.confirm(`Delete "${book?.title}"? This cannot be undone.`))
       return;
-        setIsProcessing(true);
-try {
+    setIsProcessing(true);
+    try {
       const { request } = await import("@stacks/connect");
-const { Cl } = await import("@stacks/transactions");
+      const { Cl } = await import("@stacks/transactions");
       const response = await request("stx_callContract", {
         contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
-                functionName: "delete-book",
+        functionName: "delete-book",
         functionArgs: [Cl.uint(id)],
       });
-if (response.txid) {
+      if (response.txid) {
         toast.success("Book deleted!");
         setBooks((prev) => prev.filter((b) => b.id !== id));
       }
-  }
-
-  catch (error) {
-      toast.error(`Failed to delete: ${error instanceof Error ? error.message : "Unknown error"}`);
-    }
-    finally {
+    } catch (error) {
+      toast.error(
+        `Failed to delete: ${error instanceof Error ? error.message : "Unknown error"}`,
+      );
+    } finally {
       setIsProcessing(false);
     }
+  };
+
+  useEffect(() => {
+    fetchAllBooks();
+  }, []);
 }
