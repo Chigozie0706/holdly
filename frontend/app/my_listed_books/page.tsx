@@ -126,5 +126,9 @@ if (response.txid) {
         toast.success("Book deleted!");
         setBooks((prev) => prev.filter((b) => b.id !== id));
       }
-  };
+  }
+
+  catch (error) {
+      toast.error(`Failed to delete: ${error instanceof Error ? error.message : "Unknown error"}`);
+    }
 }
