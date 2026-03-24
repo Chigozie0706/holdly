@@ -138,4 +138,9 @@ export default function MyListedBooksPage() {
   useEffect(() => {
     fetchAllBooks();
   }, []);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-purple-50">
+      <Header />
+      
 }
