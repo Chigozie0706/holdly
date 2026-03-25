@@ -87,7 +87,7 @@ export default function Library() {
 
   const handleBorrow = async (bookId: number) => {
     if (!connected || !address) {
-      alert("Please connect your wallet first");
+      toast.error("Please connect your wallet first");
       return;
     }
     const book = books.find((b) => b.id === bookId);
