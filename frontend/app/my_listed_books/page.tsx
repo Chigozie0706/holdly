@@ -151,13 +151,15 @@ export default function MyListedBooksPage() {
           </div>
         )}
 
-                <MyListedBooks
+        <MyListedBooks
           books={books}
           address={address}
           connected={connected}
           onUpdate={handleUpdateBook}
           onDelete={handleDeleteBook}
         />
-
-
+      </main>
+      <Footer bookCount={books.length} />
+    </div>
+  );
 }
