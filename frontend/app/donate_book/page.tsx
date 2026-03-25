@@ -3,6 +3,7 @@
 import AddBookForm from "@/components/AddBookForm";
 import { useStacks } from "@/providers/stacks-provider";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const DEPOSIT_AMOUNT = 1000000;
 const CONTRACT_ADDRESS = "SP3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJB3SS99R";
@@ -18,7 +19,7 @@ export default function DonateBook() {
     coverPage: string,
   ) => {
     if (!connected) {
-      alert("Please connect your wallet first");
+      toast.error("Please connect your wallet first");
       return;
     }
 
