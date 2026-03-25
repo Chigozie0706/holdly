@@ -118,7 +118,7 @@ export default function Library() {
       });
 
       if (response.txid) {
-        alert(
+        toast.error(
           `Borrow submitted! TX: ${response.txid}\n\nWaiting for confirmation…`,
         );
         setTimeout(async () => {
