@@ -151,4 +151,13 @@ export default function MyListedBooksPage() {
           </div>
         )}
 
+                <MyListedBooks
+          books={books}
+          address={address}
+          connected={connected}
+          onUpdate={handleUpdateBook}
+          onDelete={handleDeleteBook}
+        />
+
+
 }
