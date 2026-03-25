@@ -92,7 +92,7 @@ export default function Library() {
     }
     const book = books.find((b) => b.id === bookId);
     if (!book || !book["is-available"]) {
-      alert("Book is not available");
+      toast.error("Book is not available");
       return;
     }
     if (
