@@ -43,7 +43,7 @@ export default function DonateBook() {
         router.push("/library");
       }
     } catch (error) {
-      alert(
+      toast.error(
         `Failed to add book: ${error instanceof Error ? error.message : "Unknown error"}`,
       );
     }
