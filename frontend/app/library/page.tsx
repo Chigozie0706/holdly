@@ -128,7 +128,7 @@ export default function Library() {
       }
     } catch (e) {
       console.error("Borrow error:", e);
-      alert(
+      toast.error(
         `Failed to borrow: ${e instanceof Error ? e.message : "Unknown error"}`,
       );
       setIsProcessing(false);
