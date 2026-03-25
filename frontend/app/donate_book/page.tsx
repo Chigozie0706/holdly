@@ -39,7 +39,7 @@ export default function DonateBook() {
       });
 
       if (response.txid) {
-        alert(`Book added successfully! TX: ${response.txid}`);
+        toast.success(`Book added successfully! TX: ${response.txid}`);
         router.push("/library");
       }
     } catch (error) {
