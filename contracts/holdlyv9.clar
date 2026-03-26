@@ -271,3 +271,19 @@
 (define-read-only (get-owner-book-count (owner principal))
     (ok (default-to u0 (map-get? owner-book-count owner)))
 )
+
+;; Get active borrow for a borrower (single call, no looping)
+(define-read-only (get-active-borrow-by-borrower (borrower principal))
+    (match (map-get? borrower-active-borrow borrower)
+        book-id (match (map-get? borrows book-id)
+            borrow (ok (some {
+                book-id: book-id,
+                borrower: (get borrower borrow),
+                borrowed-at: (get borrowed-at borrow),
+                deposit-amount: (get deposit-amount borrow),
+            }))
+            (ok none)
+        )
+        (ok none)
+    )
+)
