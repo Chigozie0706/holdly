@@ -5,7 +5,7 @@ import MyBorrows from "@/components/MyBorrows";
 import { useStacks } from "@/providers/stacks-provider";
 
 const CONTRACT_ADDRESS = "SP3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJB3SS99R";
-const CONTRACT_NAME = "holdlyv8";
+const CONTRACT_NAME = "holdlyv9";
 
 interface Book {
   id: number;
@@ -36,60 +36,59 @@ export default function MyBorrowsPage() {
         await import("@stacks/transactions");
       const { STACKS_MAINNET } = await import("@stacks/network");
 
-      const countResult = await fetchCallReadOnlyFunction({
+      // Single call — no loop needed
+      const result = await fetchCallReadOnlyFunction({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
-        functionName: "get-book-count",
-        functionArgs: [],
+        functionName: "get-active-borrow-by-borrower",
+        functionArgs: [Cl.principal(address)],
         network: STACKS_MAINNET,
         senderAddress: CONTRACT_ADDRESS,
       });
-      const totalBooks = Number(cvToJSON(countResult).value.value);
 
-      const userBorrowed: Book[] = [];
-      for (let i = 1; i <= totalBooks; i++) {
-        try {
-          const borrowResult = await fetchCallReadOnlyFunction({
-            contractAddress: CONTRACT_ADDRESS,
-            contractName: CONTRACT_NAME,
-            functionName: "get-borrow",
-            functionArgs: [Cl.uint(i)],
-            network: STACKS_MAINNET,
-            senderAddress: CONTRACT_ADDRESS,
-          });
-          const borrowJson = cvToJSON(borrowResult);
-          if (borrowJson.value) {
-            const borrowData = borrowJson.value.value;
-            if (borrowData.borrower.value === address) {
-              const bookResult = await fetchCallReadOnlyFunction({
-                contractAddress: CONTRACT_ADDRESS,
-                contractName: CONTRACT_NAME,
-                functionName: "get-book",
-                functionArgs: [Cl.uint(i)],
-                network: STACKS_MAINNET,
-                senderAddress: CONTRACT_ADDRESS,
-              });
-              const bookJson = cvToJSON(bookResult);
-              if (bookJson.value) {
-                const d = bookJson.value.value;
-                userBorrowed.push({
-                  id: i,
-                  title: d.title.value,
-                  author: d.author.value,
-                  coverPage: d["cover-page"].value,
-                  "is-available": false,
-                  "total-borrows": Number(d["total-borrows"].value),
-                  "deposit-amount": Number(borrowData["deposit-amount"].value),
-                  borrowedAt: Number(borrowData["borrowed-at"].value),
-                });
-              }
-            }
-          }
-        } catch (e) {
-          /* no active borrow for this book */
-        }
+      const json = cvToJSON(result);
+
+      // Structure: { value: { value: { value: { book-id, borrower, borrowed-at, deposit-amount } } | null } }
+      const inner = json?.value?.value; // unwrap (ok ...)
+      if (!inner || inner.value === null) {
+        // (ok none) — user has no active borrow
+        setBorrowedBooks([]);
+        return;
       }
-      setBorrowedBooks(userBorrowed);
+
+      // (ok (some { book-id, borrower, borrowed-at, deposit-amount }))
+      const borrowData = inner.value;
+      const bookId = Number(borrowData["book-id"].value);
+
+      // Now fetch the book details with the known ID
+      const bookResult = await fetchCallReadOnlyFunction({
+        contractAddress: CONTRACT_ADDRESS,
+        contractName: CONTRACT_NAME,
+        functionName: "get-book",
+        functionArgs: [Cl.uint(bookId)],
+        network: STACKS_MAINNET,
+        senderAddress: CONTRACT_ADDRESS,
+      });
+
+      const bookJson = cvToJSON(bookResult);
+      if (!bookJson.value) {
+        setBorrowedBooks([]);
+        return;
+      }
+
+      const d = bookJson.value.value;
+      setBorrowedBooks([
+        {
+          id: bookId,
+          title: d.title.value,
+          author: d.author.value,
+          coverPage: d["cover-page"].value,
+          "is-available": false,
+          "total-borrows": Number(d["total-borrows"].value),
+          "deposit-amount": Number(borrowData["deposit-amount"].value),
+          borrowedAt: Number(borrowData["borrowed-at"].value),
+        },
+      ]);
     } catch (e) {
       console.error("Error fetching borrowed books:", e);
     } finally {
