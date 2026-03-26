@@ -87,12 +87,12 @@ export default function Library() {
 
   const handleBorrow = async (bookId: number) => {
     if (!connected || !address) {
-      alert("Please connect your wallet first");
+      toast.error("Please connect your wallet first");
       return;
     }
     const book = books.find((b) => b.id === bookId);
     if (!book || !book["is-available"]) {
-      alert("Book is not available");
+      toast.error("Book is not available");
       return;
     }
     if (
@@ -118,7 +118,7 @@ export default function Library() {
       });
 
       if (response.txid) {
-        alert(
+        toast.success(
           `Borrow submitted! TX: ${response.txid}\n\nWaiting for confirmation…`,
         );
         setTimeout(async () => {
@@ -128,7 +128,7 @@ export default function Library() {
       }
     } catch (e) {
       console.error("Borrow error:", e);
-      alert(
+      toast.error(
         `Failed to borrow: ${e instanceof Error ? e.message : "Unknown error"}`,
       );
       setIsProcessing(false);

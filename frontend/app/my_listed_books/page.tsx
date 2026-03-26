@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MyListedBooks from "@/components/MyListedBooks";
 import { useStacks } from "@/providers/stacks-provider";
@@ -141,7 +140,6 @@ export default function MyListedBooksPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-purple-50">
-      <Header />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {isProcessing && (
           <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
@@ -151,4 +149,15 @@ export default function MyListedBooksPage() {
           </div>
         )}
 
+        <MyListedBooks
+          books={books}
+          address={address}
+          connected={connected}
+          onUpdate={handleUpdateBook}
+          onDelete={handleDeleteBook}
+        />
+      </main>
+      <Footer bookCount={books.length} />
+    </div>
+  );
 }
