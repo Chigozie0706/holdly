@@ -37,6 +37,18 @@
     }
 )
 
+;; Track number of books per owner
+(define-map owner-book-count
+    principal
+    uint
+)
+
+;; Track active borrow per borrower (one borrow at a time)
+(define-map borrower-active-borrow
+    principal
+    uint
+)
+
 ;; Counter for book IDs
 (define-data-var book-id-counter uint u0)
 
@@ -74,6 +86,11 @@
 
             (var-set book-id-counter book-id)
 
+            ;; Update owner book count
+            (map-set owner-book-count tx-sender
+                (+ (default-to u0 (map-get? owner-book-count tx-sender)) u1)
+            )
+
             (print {
                 event: "book-added",
                 book-id: book-id,
@@ -94,7 +111,6 @@
     (let ((book (unwrap! (map-get? books book-id) ERR_BOOK_NOT_FOUND)))
         (asserts! (get is-available book) ERR_BOOK_NOT_AVAILABLE)
 
-        ;; Transfer STX from borrower to contract
         (unwrap!
             (stx-transfer? (get deposit-amount book) tx-sender CONTRACT_ADDRESS)
             ERR_TRANSFER_FAILED
@@ -112,6 +128,9 @@
             borrowed-at: burn-block-height,
             deposit-amount: (get deposit-amount book),
         })
+
+        ;; Track active borrow for borrower
+        (map-set borrower-active-borrow tx-sender book-id)
 
         (print {
             event: "book-borrowed",
@@ -133,7 +152,6 @@
         )
         (asserts! (is-eq tx-sender (get borrower borrow)) ERR_NOT_BORROWER)
 
-        ;; Return STX from contract to borrower using helper
         (unwrap!
             (send-stx-from-contract (get deposit-amount borrow)
                 (get borrower borrow)
@@ -143,6 +161,9 @@
 
         (map-set books book-id (merge book { is-available: true }))
         (map-delete borrows book-id)
+
+        ;; Clear active borrow for borrower
+        (map-delete borrower-active-borrow tx-sender)
 
         (print {
             event: "book-returned",
@@ -200,6 +221,11 @@
 
         (map-delete books book-id)
 
+        ;;  Decrement owner book count
+        (map-set owner-book-count tx-sender
+            (- (default-to u0 (map-get? owner-book-count tx-sender)) u1)
+        )
+
         (print {
             event: "book-deleted",
             book-id: book-id,
@@ -239,4 +265,25 @@
 
 (define-read-only (get-contract-stx-balance)
     (ok (stx-get-balance CONTRACT_ADDRESS))
+)
+
+;; Get number of books listed by an owner
+(define-read-only (get-owner-book-count (owner principal))
+    (ok (default-to u0 (map-get? owner-book-count owner)))
+)
+
+;; Get active borrow for a borrower (single call, no looping)
+(define-read-only (get-active-borrow-by-borrower (borrower principal))
+    (match (map-get? borrower-active-borrow borrower)
+        book-id (match (map-get? borrows book-id)
+            borrow (ok (some {
+                book-id: book-id,
+                borrower: (get borrower borrow),
+                borrowed-at: (get borrowed-at borrow),
+                deposit-amount: (get deposit-amount borrow),
+            }))
+            (ok none)
+        )
+        (ok none)
+    )
 )

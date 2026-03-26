@@ -7,7 +7,7 @@ import { useStacks } from "@/providers/stacks-provider";
 import { toast } from "sonner";
 
 const CONTRACT_ADDRESS = "SP3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJB3SS99R";
-const CONTRACT_NAME = "holdlyv8";
+const CONTRACT_NAME = "holdlyv9";
 const DEPOSIT_AMOUNT = 500000;
 
 export default function MyListedBooksPage() {
