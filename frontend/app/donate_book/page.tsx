@@ -5,7 +5,7 @@ import { useStacks } from "@/providers/stacks-provider";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-const DEPOSIT_AMOUNT = 1000000;
+const DEPOSIT_AMOUNT = 500000;
 const CONTRACT_ADDRESS = "SP3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJB3SS99R";
 const CONTRACT_NAME = "holdlyv8";
 

@@ -10,7 +10,7 @@ interface AddBookFormProps {
   onAdd: (title: string, author: string, coverPage: string) => void;
 }
 
-const DEPOSIT_AMOUNT = 1000000;
+const DEPOSIT_AMOUNT = 500000;
 
 export default function AddBookForm({ onAdd }: AddBookFormProps) {
   const [title, setTitle] = useState("");
