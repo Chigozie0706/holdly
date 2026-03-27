@@ -80,7 +80,7 @@ export default function MyListedBooks({
       {/* Header */}
       <div className="dash-header">
         <div>
-          <h2 className="dash-title">My MyListedBooks</h2>
+          <h2 className="dash-title">My Listed Books</h2>
           <p className="dash-sub">Books you've added to the library</p>
         </div>
       </div>
