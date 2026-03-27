@@ -19,14 +19,14 @@ export default function MyListedBooksPage() {
     try {
       const { fetchCallReadOnlyFunction, Cl, cvToJSON } =
         await import("@stacks/transactions");
-      const { STACKS_TESTNET } = await import("@stacks/network");
+      const { STACKS_MAINNET } = await import("@stacks/network");
 
       const bookCountResult = await fetchCallReadOnlyFunction({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
         functionName: "get-book-count",
         functionArgs: [],
-        network: STACKS_TESTNET,
+        network: STACKS_MAINNET,
         senderAddress: CONTRACT_ADDRESS,
       });
 
@@ -40,7 +40,7 @@ export default function MyListedBooksPage() {
             contractName: CONTRACT_NAME,
             functionName: "get-book",
             functionArgs: [Cl.uint(i)],
-            network: STACKS_TESTNET,
+            network: STACKS_MAINNET,
             senderAddress: CONTRACT_ADDRESS,
           });
 

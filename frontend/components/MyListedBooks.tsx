@@ -1,5 +1,6 @@
 "use client";
 
+import "@/styles/MyListedBooks.css";
 import React, { useState } from "react";
 import {
   BookOpen,
@@ -9,7 +10,6 @@ import {
   Pencil,
   Trash2,
 } from "lucide-react";
-import "@/styles/MyListedBooks.css";
 
 interface Book {
   id: number;
