@@ -106,3 +106,12 @@
   font-size: 0.68rem; text-transform: uppercase;
   letter-spacing: 0.1em; color: rgba(255,255,255,0.25);
 }
+
+.dash-deposits-notice {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.8rem 1.15rem;
+  background: rgba(167,139,250,0.05);
+  border: 1px solid rgba(167,139,250,0.15);
+  border-left: 3px solid rgba(167,139,250,0.4);
+  border-radius: 2px; margin-bottom: 1.5rem;
+}
