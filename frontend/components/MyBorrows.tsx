@@ -1,7 +1,6 @@
 "use client";
 
 import "@/styles/MyBorrows.css";
-import React from "react";
 import { BookOpen, Coins, Hash, ArrowLeft, RotateCcw } from "lucide-react";
 
 interface BorrowedBook {

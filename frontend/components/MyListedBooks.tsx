@@ -1,7 +1,6 @@
 "use client";
 
 import "@/styles/MyListedBooks.css";
-import React, { useState } from "react";
 import {
   BookOpen,
   Users,
