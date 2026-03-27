@@ -88,3 +88,10 @@
 .dash-empty-sub {
   font-size: 0.78rem; color: rgba(255,255,255,0.2); margin: 0;
 }
+
+.dash-stat-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 4px; padding: 1.1rem;
+  display: flex; flex-direction: column; gap: 0.4rem;
+}
