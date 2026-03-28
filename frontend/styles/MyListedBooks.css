@@ -133,3 +133,5 @@
 .dash-table {
   width: 100%; border-collapse: collapse;
 }
+
+.dash-table thead tr {
