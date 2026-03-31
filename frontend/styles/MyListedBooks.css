@@ -180,3 +180,5 @@ background: rgba(212,163,82,0.05);
 
 .dash-book-author {
   font-size: 0.72rem; font-style: italic;
+  color: rgba(255,255,255,0.3); margin: 0;
+}
