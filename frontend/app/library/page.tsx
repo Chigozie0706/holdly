@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import BrowseBooks from "@/components/BrowseBooks";
 import { useStacks } from "@/providers/stacks-provider";
 import { toast } from "sonner";
+import { DEPOSIT_AMOUNT } from "@/config/contract";
 
-const DEPOSIT_AMOUNT = 500000;
 const CONTRACT_ADDRESS = "SP3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJB3SS99R";
 const CONTRACT_NAME = "holdlyv9";
 
