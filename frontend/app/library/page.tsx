@@ -4,9 +4,11 @@ import React, { useState, useEffect } from "react";
 import BrowseBooks from "@/components/BrowseBooks";
 import { useStacks } from "@/providers/stacks-provider";
 import { toast } from "sonner";
-import { DEPOSIT_AMOUNT, CONTRACT_ADDRESS } from "@/config/contract";
-
-const CONTRACT_NAME = "holdlyv9";
+import {
+  DEPOSIT_AMOUNT,
+  CONTRACT_ADDRESS,
+  CONTRACT_NAME,
+} from "@/config/contract";
 
 interface Book {
   id: number;
