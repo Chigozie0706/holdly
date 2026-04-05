@@ -5,9 +5,8 @@ import Footer from "@/components/Footer";
 import MyListedBooks from "@/components/MyListedBooks";
 import { useStacks } from "@/providers/stacks-provider";
 import { toast } from "sonner";
-import { CONTRACT_ADDRESS } from "@/config/contract";
+import { CONTRACT_ADDRESS, CONTRACT_NAME } from "@/config/contract";
 
-const CONTRACT_NAME = "holdlyv9";
 const DEPOSIT_AMOUNT = 500000;
 
 export default function MyListedBooksPage() {
