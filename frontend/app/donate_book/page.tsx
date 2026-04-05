@@ -4,9 +4,11 @@ import AddBookForm from "@/components/AddBookForm";
 import { useStacks } from "@/providers/stacks-provider";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { DEPOSIT_AMOUNT, CONTRACT_ADDRESS } from "@/config/contract";
-
-const CONTRACT_NAME = "holdlyv9";
+import {
+  DEPOSIT_AMOUNT,
+  CONTRACT_ADDRESS,
+  CONTRACT_NAME,
+} from "@/config/contract";
 
 export default function DonateBook() {
   const { connected } = useStacks();
