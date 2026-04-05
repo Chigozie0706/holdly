@@ -4,9 +4,8 @@ import React, { useState, useEffect } from "react";
 import BrowseBooks from "@/components/BrowseBooks";
 import { useStacks } from "@/providers/stacks-provider";
 import { toast } from "sonner";
-import { DEPOSIT_AMOUNT } from "@/config/contract";
+import { DEPOSIT_AMOUNT, CONTRACT_ADDRESS } from "@/config/contract";
 
-const CONTRACT_ADDRESS = "SP3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJB3SS99R";
 const CONTRACT_NAME = "holdlyv9";
 
 interface Book {
