@@ -3,9 +3,7 @@
 import React, { useState, useEffect } from "react";
 import MyBorrows from "@/components/MyBorrows";
 import { useStacks } from "@/providers/stacks-provider";
-import { CONTRACT_ADDRESS } from "@/config/contract";
-
-const CONTRACT_NAME = "holdlyv9";
+import { CONTRACT_ADDRESS, CONTRACT_NAME } from "@/config/contract";
 
 interface Book {
   id: number;
