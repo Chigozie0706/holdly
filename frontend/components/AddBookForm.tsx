@@ -244,27 +244,46 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
             />
           </div>
 
-{/* Deposit Amount */}
-<div className="field-group">
-  <label className="field-label">
-    Deposit Amount <span>*</span>
-  </label>
-  <div style={{ position: "relative" }}>
-    <input
-      className="field-input"
-      type="number"
-      value={depositSTX}
-      onChange={(e) => setDepositSTX(e.target.value)}
-placeholder="0.50"
-      min="0.1"
-      step="0.1"
-    />
-        <span style={{
-      position: "absolute", right: "0.85rem", top: "50%",
-      transform: "translateY(-50%)",
-      fontSize: "0.78rem", color: "rgba(212,163,82,0.6)",
-      pointerEvents: "none"
-    }}>
+          {/* Deposit Amount */}
+          <div className="field-group">
+            <label className="field-label">
+              Deposit Amount <span>*</span>
+            </label>
+            <div style={{ position: "relative" }}>
+              <input
+                className="field-input"
+                type="number"
+                value={depositSTX}
+                onChange={(e) => setDepositSTX(e.target.value)}
+                placeholder="0.50"
+                min="0.1"
+                step="0.1"
+              />
+              <span
+                style={{
+                  position: "absolute",
+                  right: "0.85rem",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  fontSize: "0.78rem",
+                  color: "rgba(212,163,82,0.6)",
+                  pointerEvents: "none",
+                }}
+              >
+                {" "}
+                {depositToken}
+              </span>
+            </div>
+            <p
+              style={{
+                fontSize: "0.72rem",
+                color: "rgba(255,255,255,0.25)",
+                marginTop: "0.35rem",
+              }}
+            >
+              Minimum 0.1 {depositToken} · Refunded to borrower on return
+            </p>
+          </div>
 
           {/* Token Selector */}
           <div className="field-group">
