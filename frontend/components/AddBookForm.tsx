@@ -259,6 +259,13 @@ placeholder="0.50"
       min="0.1"
       step="0.1"
     />
+        <span style={{
+      position: "absolute", right: "0.85rem", top: "50%",
+      transform: "translateY(-50%)",
+      fontSize: "0.78rem", color: "rgba(212,163,82,0.6)",
+      pointerEvents: "none"
+    }}>
+
           {/* Token Selector */}
           <div className="field-group">
             <label className="field-label">Deposit Token</label>
