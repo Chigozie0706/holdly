@@ -19,6 +19,7 @@ interface Book {
   "is-available": boolean;
   "total-borrows": number;
   "deposit-amount": number;
+  "deposit-token": string;
 }
 
 export default function Library() {
@@ -68,6 +69,7 @@ export default function Library() {
               "is-available": d["is-available"].value,
               "total-borrows": Number(d["total-borrows"].value),
               "deposit-amount": Number(d["deposit-amount"].value),
+              "deposit-token": d["deposit-token"].value,
             });
           }
         } catch (e) {

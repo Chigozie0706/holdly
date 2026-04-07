@@ -55,6 +55,7 @@ export default function MyListedBooksPage() {
               "is-available": bookData["is-available"].value,
               "total-borrows": Number(bookData["total-borrows"].value),
               "deposit-amount": Number(bookData["deposit-amount"].value),
+              "deposit-token": bookData["deposit-token"].value,
             });
           }
         } catch (error) {
