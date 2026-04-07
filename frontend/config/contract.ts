@@ -1,4 +1,4 @@
 export const CONTRACT_ADDRESS = "SP3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJB3SS99R";
-export const CONTRACT_NAME = "holdlyv10";
+export const CONTRACT_NAME = "holdlyv11";
 export const NETWORK = "mainnet";
 export const DEPOSIT_AMOUNT = 300000;

@@ -60,7 +60,7 @@ _Track all borrowed books and manage returns_
 ## Contract Details
 
 - **Network**: Stacks Blockchain (Testnet)
-- **Contract Address**: `ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K.holdlyv6`
+- **Contract Address**: `ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K.holdlyv11`
 - **API Endpoint**: https://api.testnet.hiro.so
 - **Token**: STX (Native Stacks Token)
 - **Clarity Version**: 2
@@ -223,7 +223,7 @@ This project leverages the following Stacks libraries and meets all Code4STX req
 ```
 holdly/
 ├── contracts/
-│   ├── holdlyv6.clar           # Main lending contract (Clarity)
+│   ├── holdlyv11.clar           # Main lending contract (Clarity)
 │   └── tests/
 │       └── holdly_test.ts      # Contract test suite
 ├── frontend/
@@ -279,8 +279,8 @@ The contract has been successfully deployed to Stacks Testnet:
 
 **Deployed Contract:**
 
-- Address: `ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K.holdlyv6`
-- Explorer: [View on Stacks Explorer](https://explorer.hiro.so/address/ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K.holdlyv6?chain=testnet)
+- Address: `ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K.holdlyv11`
+- Explorer: [View on Stacks Explorer](https://explorer.hiro.so/address/ST3N8PR8ARF68BC45EDK4MWZ3WWDM74CFJAGZBY3K.holdlyv11?chain=testnet)
 - Verified: ✅ Passes clarinet check
 - Status: Active
 
