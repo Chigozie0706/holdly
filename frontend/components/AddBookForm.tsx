@@ -122,7 +122,7 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
       setIsUploading(false);
     }
 
-    onAdd(title, author, finalCoverUrl);
+    onAdd(title, author, finalCoverUrl, depositMicroSTX, depositToken);
     setTitle("");
     setAuthor("");
     setCoverPage("");
