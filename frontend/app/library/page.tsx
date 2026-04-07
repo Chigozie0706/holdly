@@ -100,7 +100,7 @@ export default function Library() {
     }
     if (
       !window.confirm(
-        `Borrow "${book.title}"?\n\nDeposit: ${(book["deposit-amount"] / 1_000_000).toFixed(2)} STX (refunded on return)`,
+        `Borrow "${book.title}"?\n\nDeposit: ${(book["deposit-amount"] / 1_000_000).toFixed(2)} ${book["deposit-token"] || "STX"} (refunded on return)`,
       )
     )
       return;
