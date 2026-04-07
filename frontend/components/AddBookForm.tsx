@@ -249,6 +249,8 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
       <button
         key={token}
         type="button"
+onClick={() => setDepositToken(token)}
+        className={`field-input`}
 
 
           <div className="deposit-notice">
