@@ -247,6 +247,8 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
 {/* Deposit Amount */}
 <div className="field-group">
   <label className="field-label">
+    Deposit Amount <span>*</span>
+  </label>
 
           {/* Token Selector */}
           <div className="field-group">
