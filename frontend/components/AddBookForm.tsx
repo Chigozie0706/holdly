@@ -253,6 +253,8 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
     <input
       className="field-input"
       type="number"
+      value={depositSTX}
+      onChange={(e) => setDepositSTX(e.target.value)}
 
           {/* Token Selector */}
           <div className="field-group">
