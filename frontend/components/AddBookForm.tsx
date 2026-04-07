@@ -251,6 +251,14 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
         type="button"
 onClick={() => setDepositToken(token)}
         className={`field-input`}
+        style={{
+          flex: 1, cursor: "pointer",
+          background: depositToken === token ? "rgba(212,163,82,0.15)" : "rgba(255,255,255,0.05)",
+          border: depositToken === token ? "1px solid rgba(212,163,82,0.4)" : "1px solid rgba(255,255,255,0.08)",
+          color: depositToken === token ? "#D4A352" : "rgba(255,255,255,0.4)",
+        }}
+      >
+        
 
 
           <div className="deposit-notice">
