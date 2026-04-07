@@ -18,6 +18,8 @@ export default function DonateBook() {
     title: string,
     author: string,
     coverPage: string,
+    depositAmount: number,
+    depositToken: "STX" | "sBTC",
   ) => {
     if (!connected) {
       toast.error("Please connect your wallet first");
@@ -35,13 +37,14 @@ export default function DonateBook() {
           Cl.stringUtf8(title),
           Cl.stringUtf8(author),
           Cl.stringUtf8(coverPage || "https://via.placeholder.com/150"),
-          Cl.uint(DEPOSIT_AMOUNT),
+          Cl.uint(depositAmount),
+          Cl.stringAscii(depositToken),
         ],
       });
 
       if (response.txid) {
-        toast.success(`Book added successfully! TX: ${response.txid}`);
-        router.push("/library");
+        toast.success("Book added successfully!");
+        router.push("/");
       }
     } catch (error) {
       toast.error(

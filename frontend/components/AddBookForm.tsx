@@ -7,7 +7,13 @@ import { toast } from "sonner";
 import { useStacks } from "@/providers/stacks-provider";
 
 interface AddBookFormProps {
-  onAdd: (title: string, author: string, coverPage: string) => void;
+  onAdd: (
+    title: string,
+    author: string,
+    coverPage: string,
+    depositAmount: number,
+    depositToken: "STX" | "sBTC",
+  ) => void;
 }
 
 const DEPOSIT_AMOUNT = 500000;
