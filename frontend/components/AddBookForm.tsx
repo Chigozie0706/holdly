@@ -249,6 +249,10 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
   <label className="field-label">
     Deposit Amount <span>*</span>
   </label>
+  <div style={{ position: "relative" }}>
+    <input
+      className="field-input"
+      type="number"
 
           {/* Token Selector */}
           <div className="field-group">
