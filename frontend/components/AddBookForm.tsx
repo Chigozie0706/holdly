@@ -243,25 +243,36 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
           </div>
 
           <div className="field-group">
-  <label className="field-label">Deposit Token</label>
-  <div style={{ display: "flex", gap: "0.5rem" }}>
-    {(["STX", "sBTC"] as const).map((token) => (
-      <button
-        key={token}
-        type="button"
-onClick={() => setDepositToken(token)}
-        className={`field-input`}
-        style={{
-          flex: 1, cursor: "pointer",
-          background: depositToken === token ? "rgba(212,163,82,0.15)" : "rgba(255,255,255,0.05)",
-          border: depositToken === token ? "1px solid rgba(212,163,82,0.4)" : "1px solid rgba(255,255,255,0.08)",
-          color: depositToken === token ? "#D4A352" : "rgba(255,255,255,0.4)",
-        }}
-      >
-                {token}
-      </button>
-
-
+            <label className="field-label">Deposit Token</label>
+            <div style={{ display: "flex", gap: "0.5rem" }}>
+              {(["STX", "sBTC"] as const).map((token) => (
+                <button
+                  key={token}
+                  type="button"
+                  onClick={() => setDepositToken(token)}
+                  className={`field-input`}
+                  style={{
+                    flex: 1,
+                    cursor: "pointer",
+                    background:
+                      depositToken === token
+                        ? "rgba(212,163,82,0.15)"
+                        : "rgba(255,255,255,0.05)",
+                    border:
+                      depositToken === token
+                        ? "1px solid rgba(212,163,82,0.4)"
+                        : "1px solid rgba(255,255,255,0.08)",
+                    color:
+                      depositToken === token
+                        ? "#D4A352"
+                        : "rgba(255,255,255,0.4)",
+                  }}
+                >
+                  {token}
+                </button>
+              ))}
+            </div>
+          </div>
 
           <div className="deposit-notice">
             <strong>Free to list.</strong> Borrowers put down a{" "}
