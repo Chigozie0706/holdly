@@ -255,7 +255,10 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
       type="number"
       value={depositSTX}
       onChange={(e) => setDepositSTX(e.target.value)}
-
+placeholder="0.50"
+      min="0.1"
+      step="0.1"
+    />
           {/* Token Selector */}
           <div className="field-group">
             <label className="field-label">Deposit Token</label>
