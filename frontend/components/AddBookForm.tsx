@@ -242,6 +242,10 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
             />
           </div>
 
+          <div className="field-group">
+  <label className="field-label">Deposit Token</label>
+
+
           <div className="deposit-notice">
             <strong>Free to list.</strong> Borrowers put down a{" "}
             {(DEPOSIT_AMOUNT / 1_000_000).toFixed(2)} STX deposit, fully
