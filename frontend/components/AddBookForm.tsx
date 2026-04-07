@@ -320,11 +320,10 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
               ))}
             </div>
           </div>
-
           <div className="deposit-notice">
-            <strong>Free to list.</strong> Borrowers put down a{" "}
-            {(DEPOSIT_AMOUNT / 1_000_000).toFixed(2)} STX deposit, fully
-            refunded when they return the book.
+            <strong>Free to list.</strong> Borrowers deposit{" "}
+            {parseFloat(depositSTX || "0").toFixed(2)} {depositToken}, fully
+            refunded on return.
           </div>
 
           <button
