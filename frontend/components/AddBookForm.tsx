@@ -258,7 +258,9 @@ onClick={() => setDepositToken(token)}
           color: depositToken === token ? "#D4A352" : "rgba(255,255,255,0.4)",
         }}
       >
-        
+                {token}
+      </button>
+
 
 
           <div className="deposit-notice">
