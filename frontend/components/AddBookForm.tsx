@@ -246,6 +246,9 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
   <label className="field-label">Deposit Token</label>
   <div style={{ display: "flex", gap: "0.5rem" }}>
     {(["STX", "sBTC"] as const).map((token) => (
+      <button
+        key={token}
+        type="button"
 
 
           <div className="deposit-notice">
