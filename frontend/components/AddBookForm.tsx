@@ -128,6 +128,8 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
     setCoverPage("");
     setImageFile(null);
     setImagePreview(null);
+    setDepositToken("STX");
+    setDepositSTX("0.50");
   };
 
   const depositMicroSTX = Math.floor(parseFloat(depositSTX || "0") * 1_000_000);
