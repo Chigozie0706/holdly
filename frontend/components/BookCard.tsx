@@ -24,6 +24,7 @@ interface BookCardProps {
     "is-available": boolean;
     "total-borrows": number;
     "deposit-amount": number;
+    "deposit-token": string;
   };
   depositAmount: number;
   onBorrow: (id: number) => void;
@@ -74,7 +75,7 @@ export default function BookCard({
     }
 
     setEditFile(file);
-    setEditCover(""); // clear manual URL
+    setEditCover("");
     const reader = new FileReader();
     reader.onload = () => setEditPreview(reader.result as string);
     reader.readAsDataURL(file);
@@ -269,8 +270,10 @@ export default function BookCard({
               <div className="book-card-meta">
                 <div>
                   <span className="book-meta-deposit-label">Deposit</span>
+                  // update the deposit display:
                   <span className="book-meta-deposit-value">
-                    {(book["deposit-amount"] / 1_000_000).toFixed(2)} STX
+                    {(book["deposit-amount"] / 1_000_000).toFixed(2)}{" "}
+                    {book["deposit-token"] || "STX"}
                   </span>
                 </div>
                 <div className="book-meta-borrows">
