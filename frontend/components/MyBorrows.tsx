@@ -11,6 +11,7 @@ interface BorrowedBook {
   "deposit-amount": number;
   "total-borrows"?: number;
   borrowedAt?: number;
+  "deposit-token": string;
 }
 
 interface MyBorrowsProps {
@@ -128,7 +129,8 @@ export default function MyBorrows({
                           <Coins size={11} /> Deposit
                         </span>
                         <span className="borrow-info-value gold">
-                          {(book["deposit-amount"] / 1_000_000).toFixed(2)} STX
+                          {(book["deposit-amount"] / 1_000_000).toFixed(2)}{" "}
+                          {book["deposit-token"] || "STX"}
                         </span>
                       </div>
                       {(book as any).borrowedAt && (
