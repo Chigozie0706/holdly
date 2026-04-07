@@ -19,6 +19,7 @@ interface Book {
   "is-available": boolean;
   "total-borrows": number;
   "deposit-amount": number;
+  "deposit-token": string;
 }
 
 interface MyListedBooksProps {
@@ -169,7 +170,8 @@ export default function MyListedBooks({
                 </td>
                 <td>
                   <span className="dash-deposit">
-                    {(book["deposit-amount"] / 1_000_000).toFixed(2)} STX
+                    {(book["deposit-amount"] / 1_000_000).toFixed(2)}{" "}
+                    {book["deposit-token"] || "STX"}
                   </span>
                 </td>
                 <td>
