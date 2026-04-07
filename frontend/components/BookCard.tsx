@@ -270,7 +270,6 @@ export default function BookCard({
               <div className="book-card-meta">
                 <div>
                   <span className="book-meta-deposit-label">Deposit</span>
-                  // update the deposit display:
                   <span className="book-meta-deposit-value">
                     {(book["deposit-amount"] / 1_000_000).toFixed(2)}{" "}
                     {book["deposit-token"] || "STX"}
