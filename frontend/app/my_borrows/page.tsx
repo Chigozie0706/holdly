@@ -14,6 +14,7 @@ interface Book {
   "total-borrows": number;
   "deposit-amount": number;
   borrowedAt?: number;
+  "deposit-token": string;
 }
 
 export default function MyBorrowsPage() {
@@ -85,6 +86,7 @@ export default function MyBorrowsPage() {
           "total-borrows": Number(d["total-borrows"].value),
           "deposit-amount": Number(borrowData["deposit-amount"].value),
           borrowedAt: Number(borrowData["borrowed-at"].value),
+          "deposit-token": borrowData["deposit-token"].value,
         },
       ]);
     } catch (e) {
