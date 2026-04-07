@@ -130,6 +130,7 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
     setImagePreview(null);
   };
 
+  const depositMicroSTX = Math.floor(parseFloat(depositSTX || "0") * 1_000_000);
   const canSubmit = title.trim() && author.trim() && connected && !isUploading;
 
   return (
