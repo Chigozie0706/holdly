@@ -33,6 +33,7 @@ interface MyListedBooksProps {
     author: string,
     coverPage: string,
     depositAmount: number,
+    depositToken: "STX" | "sBTC",
   ) => void;
   onDelete: (id: number) => void;
 }
