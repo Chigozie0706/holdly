@@ -38,6 +38,13 @@ interface MyListedBooksProps {
   onDelete: (id: number) => void;
 }
 
+
+function EditRow({
+  book,
+  onSave,
+  onCancel,
+
+  
 export default function MyListedBooks({
   books,
   address,
