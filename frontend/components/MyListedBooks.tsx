@@ -57,6 +57,7 @@ function EditRow({
 {
   const [title, setTitle] = useState(book.title);
   const [author, setAuthor] = useState(book.author);
+  const [coverPage, setCoverPage] = useState(book.coverPage || "");
 
 export default function MyListedBooks({
   books,
