@@ -38,13 +38,22 @@ interface MyListedBooksProps {
   onDelete: (id: number) => void;
 }
 
-
 function EditRow({
   book,
   onSave,
   onCancel,
+}: {
+  book: Book;
+  onSave: (
+    title: string,
+    author: string,
+    coverPage: string,
+    depositAmount: number,
+    depositToken: "STX" | "sBTC",
+  ) => void;
+  onCancel: () => void;
+});
 
-  
 export default function MyListedBooks({
   books,
   address,
