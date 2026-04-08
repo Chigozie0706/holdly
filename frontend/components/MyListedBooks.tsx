@@ -54,6 +54,9 @@ function EditRow({
   onCancel: () => void;
 });
 
+{
+  const [title, setTitle] = useState(book.title);
+
 export default function MyListedBooks({
   books,
   address,
