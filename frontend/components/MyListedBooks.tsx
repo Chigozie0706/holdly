@@ -32,6 +32,7 @@ interface MyListedBooksProps {
     title: string,
     author: string,
     coverPage: string,
+    depositAmount: number,
   ) => void;
   onDelete: (id: number) => void;
 }
