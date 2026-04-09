@@ -60,6 +60,8 @@ function EditRow({
   const [coverPage, setCoverPage] = useState(book.coverPage || "");
   const [depositSTX, setDepositSTX] = useState((book["deposit-amount"] / 1_000_000).toFixed(2));
   const [depositToken, setDepositToken] = useState<"STX" | "sBTC">(
+    (book["deposit-token"] as "STX" | "sBTC") || "STX"
+  );
 
 
 export default function MyListedBooks({
