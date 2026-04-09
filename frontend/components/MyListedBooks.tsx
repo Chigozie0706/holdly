@@ -58,7 +58,8 @@ function EditRow({
   const [title, setTitle] = useState(book.title);
   const [author, setAuthor] = useState(book.author);
   const [coverPage, setCoverPage] = useState(book.coverPage || "");
-  const [depositSTX, setDepositSTX] = useState(    (book["deposit-amount"] / 1_000_000).toFixed(2)
+  const [depositSTX, setDepositSTX] = useState((book["deposit-amount"] / 1_000_000).toFixed(2));
+  const [depositToken, setDepositToken] = useState<"STX" | "sBTC">(
 
 
 export default function MyListedBooks({
