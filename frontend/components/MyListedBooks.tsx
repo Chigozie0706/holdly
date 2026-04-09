@@ -58,11 +58,14 @@ function EditRow({
   const [title, setTitle] = useState(book.title);
   const [author, setAuthor] = useState(book.author);
   const [coverPage, setCoverPage] = useState(book.coverPage || "");
-  const [depositSTX, setDepositSTX] = useState((book["deposit-amount"] / 1_000_000).toFixed(2));
-  const [depositToken, setDepositToken] = useState<"STX" | "sBTC">(
-    (book["deposit-token"] as "STX" | "sBTC") || "STX"
+  const [depositSTX, setDepositSTX] = useState(
+    (book["deposit-amount"] / 1_000_000).toFixed(2),
   );
-
+  const [depositToken, setDepositToken] = useState<"STX" | "sBTC">(
+    (book["deposit-token"] as "STX" | "sBTC") || "STX",
+  );
+  const [imageFile, setImageFile] = useState<File | null>(null);
+}
 
 export default function MyListedBooks({
   books,
