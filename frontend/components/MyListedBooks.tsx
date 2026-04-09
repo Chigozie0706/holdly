@@ -66,6 +66,7 @@ function EditRow({
     (book["deposit-token"] as "STX" | "sBTC") || "STX",
   );
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 }
 
 export default function MyListedBooks({
