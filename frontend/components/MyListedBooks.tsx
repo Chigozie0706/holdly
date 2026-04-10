@@ -74,6 +74,7 @@ function EditRow({
     if (!file) return;
     if (!file.type.startsWith("image/")) { toast.error("Only image files allowed"); return; }
     if (file.size > 10 * 1024 * 1024) { toast.error("File must be under 10MB"); return; }
+    setImageFile(file);
 
 }
 
