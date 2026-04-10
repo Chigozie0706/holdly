@@ -90,6 +90,8 @@ function EditRow({
     const uploadToIPFS = async (file: File): Promise<string> => {
     const toastId = toast.loading("Uploading to IPFS…");
 try {
+        const formData = new FormData();
+
 }
 }
 
