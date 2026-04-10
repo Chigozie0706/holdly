@@ -86,6 +86,9 @@ function EditRow({
     reader.onload = () => setImagePreview(reader.result as string);
     reader.readAsDataURL(file);
   };
+
+    const uploadToIPFS = async (file: File): Promise<string> => {
+
 }
 
 export default function MyListedBooks({
