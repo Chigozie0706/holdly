@@ -98,6 +98,7 @@ try {
         headers: { Authorization: `Bearer ${process.env.NEXT_PUBLIC_PINATA_JWT}` },
         body: formData,
       });
+      if (!res.ok) throw new Error("Upload failed");
 
 }
 }
