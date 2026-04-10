@@ -92,6 +92,7 @@ function EditRow({
 try {
         const formData = new FormData();
       formData.append("file", file);
+      formData.append("pinataMetadata", JSON.stringify({ name: `holdly-cover-${Date.now()}` }));
 
 }
 }
