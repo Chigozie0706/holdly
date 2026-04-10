@@ -91,6 +91,7 @@ function EditRow({
     const toastId = toast.loading("Uploading to IPFS…");
 try {
         const formData = new FormData();
+      formData.append("file", file);
 
 }
 }
