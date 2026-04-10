@@ -76,6 +76,7 @@ function EditRow({
     if (file.size > 10 * 1024 * 1024) { toast.error("File must be under 10MB"); return; }
     setImageFile(file);
     setCoverPage("");
+    const reader = new FileReader();
 
 }
 
