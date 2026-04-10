@@ -88,6 +88,7 @@ function EditRow({
   };
 
     const uploadToIPFS = async (file: File): Promise<string> => {
+    const toastId = toast.loading("Uploading to IPFS…");
 
 }
 
