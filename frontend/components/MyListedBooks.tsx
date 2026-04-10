@@ -95,6 +95,7 @@ try {
       formData.append("pinataMetadata", JSON.stringify({ name: `holdly-cover-${Date.now()}` }));
       const res = await fetch("https://api.pinata.cloud/pinning/pinFileToIPFS", {
         method: "POST",
+        headers: { Authorization: `Bearer ${process.env.NEXT_PUBLIC_PINATA_JWT}` },
 
 }
 }
