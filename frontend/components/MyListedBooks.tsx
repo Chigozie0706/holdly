@@ -77,6 +77,7 @@ function EditRow({
     setImageFile(file);
     setCoverPage("");
     const reader = new FileReader();
+    reader.onload = () => setImagePreview(reader.result as string);
 
 }
 
