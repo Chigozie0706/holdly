@@ -69,16 +69,23 @@ function EditRow({
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (!file.type.startsWith("image/")) { toast.error("Only image files allowed"); return; }
-    if (file.size > 10 * 1024 * 1024) { toast.error("File must be under 10MB"); return; }
+    if (!file.type.startsWith("image/")) {
+      toast.error("Only image files allowed");
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error("File must be under 10MB");
+      return;
+    }
     setImageFile(file);
     setCoverPage("");
     const reader = new FileReader();
     reader.onload = () => setImagePreview(reader.result as string);
-
+    reader.readAsDataURL(file);
+  };
 }
 
 export default function MyListedBooks({
