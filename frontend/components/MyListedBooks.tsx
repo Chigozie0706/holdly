@@ -102,6 +102,7 @@ try {
       const data = await res.json();
       const url = `https://gateway.pinata.cloud/ipfs/${data.IpfsHash}`;
       toast.success("Uploaded to IPFS!", { id: toastId });
+      return url;
 
 }
 }
