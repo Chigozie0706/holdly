@@ -107,6 +107,7 @@ try {
 
      catch {
             toast.error("Failed to upload image", { id: toastId });
+      throw new Error("Upload failed");
 
      }
 
