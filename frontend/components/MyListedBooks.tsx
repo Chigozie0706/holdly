@@ -103,8 +103,13 @@ try {
       const url = `https://gateway.pinata.cloud/ipfs/${data.IpfsHash}`;
       toast.success("Uploaded to IPFS!", { id: toastId });
       return url;
-
 }
+
+     catch {
+            toast.error("Failed to upload image", { id: toastId });
+
+     }
+
 }
 
 export default function MyListedBooks({
