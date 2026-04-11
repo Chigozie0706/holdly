@@ -117,11 +117,12 @@ function EditRow({
     }
   };
 
-    const handleSave = async () => {
-          if (!title.trim() || !author.trim()) {
+  const handleSave = async () => {
+    if (!title.trim() || !author.trim()) {
       toast.error("Title and author are required");
-
+      return;
     }
+  };
 }
 
 export default function MyListedBooks({
