@@ -87,29 +87,37 @@ function EditRow({
     reader.readAsDataURL(file);
   };
 
-    const uploadToIPFS = async (file: File): Promise<string> => {
+  const uploadToIPFS = async (file: File): Promise<string> => {
     const toastId = toast.loading("Uploading to IPFS…");
-try {
-        const formData = new FormData();
+    try {
+      const formData = new FormData();
       formData.append("file", file);
-      formData.append("pinataMetadata", JSON.stringify({ name: `holdly-cover-${Date.now()}` }));
-      const res = await fetch("https://api.pinata.cloud/pinning/pinFileToIPFS", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${process.env.NEXT_PUBLIC_PINATA_JWT}` },
-        body: formData,
-      });
+      formData.append(
+        "pinataMetadata",
+        JSON.stringify({ name: `holdly-cover-${Date.now()}` }),
+      );
+      const res = await fetch(
+        "https://api.pinata.cloud/pinning/pinFileToIPFS",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_PINATA_JWT}`,
+          },
+          body: formData,
+        },
+      );
       if (!res.ok) throw new Error("Upload failed");
       const data = await res.json();
       const url = `https://gateway.pinata.cloud/ipfs/${data.IpfsHash}`;
       toast.success("Uploaded to IPFS!", { id: toastId });
       return url;
-}
-
-     catch {
-            toast.error("Failed to upload image", { id: toastId });
+    } catch {
+      toast.error("Failed to upload image", { id: toastId });
       throw new Error("Upload failed");
+    }
+  };
 
-     }
+    const handleSave = async () => {
 
 }
 
