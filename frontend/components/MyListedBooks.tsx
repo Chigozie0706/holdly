@@ -101,6 +101,7 @@ try {
       if (!res.ok) throw new Error("Upload failed");
       const data = await res.json();
       const url = `https://gateway.pinata.cloud/ipfs/${data.IpfsHash}`;
+      toast.success("Uploaded to IPFS!", { id: toastId });
 
 }
 }
