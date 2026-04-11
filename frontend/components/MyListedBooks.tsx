@@ -118,7 +118,9 @@ function EditRow({
   };
 
     const handleSave = async () => {
+          if (!title.trim() || !author.trim()) {
 
+    }
 }
 
 export default function MyListedBooks({
