@@ -122,6 +122,8 @@ function EditRow({
       toast.error("Title and author are required");
       return;
     }
+
+    const depositMicro = Math.floor(parseFloat(depositSTX || "0") * 1_000_000);
   };
 }
 
