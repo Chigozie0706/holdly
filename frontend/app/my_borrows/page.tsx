@@ -23,6 +23,79 @@ export default function MyBorrowsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
 
+  // const fetchBorrowedBooks = async () => {
+  //   if (!connected || !address) {
+  //     setIsLoading(false);
+  //     return;
+  //   }
+  //   setIsLoading(true);
+
+  //   try {
+  //     const { fetchCallReadOnlyFunction, Cl, cvToJSON } =
+  //       await import("@stacks/transactions");
+  //     const { STACKS_MAINNET } = await import("@stacks/network");
+
+  //     // Single call — no loop needed
+  //     const result = await fetchCallReadOnlyFunction({
+  //       contractAddress: CONTRACT_ADDRESS,
+  //       contractName: CONTRACT_NAME,
+  //       functionName: "get-active-borrow-by-borrower",
+  //       functionArgs: [Cl.principal(address)],
+  //       network: STACKS_MAINNET,
+  //       senderAddress: CONTRACT_ADDRESS,
+  //     });
+
+  //     const json = cvToJSON(result);
+
+  //     // Structure: { value: { value: { value: { book-id, borrower, borrowed-at, deposit-amount } } | null } }
+  //     const inner = json?.value?.value; // unwrap (ok ...)
+  //     if (!inner || inner.value === null) {
+  //       // (ok none) — user has no active borrow
+  //       setBorrowedBooks([]);
+  //       return;
+  //     }
+
+  //     // (ok (some { book-id, borrower, borrowed-at, deposit-amount }))
+  //     const borrowData = inner.value;
+  //     const bookId = Number(borrowData["book-id"].value);
+
+  //     // Now fetch the book details with the known ID
+  //     const bookResult = await fetchCallReadOnlyFunction({
+  //       contractAddress: CONTRACT_ADDRESS,
+  //       contractName: CONTRACT_NAME,
+  //       functionName: "get-book",
+  //       functionArgs: [Cl.uint(bookId)],
+  //       network: STACKS_MAINNET,
+  //       senderAddress: CONTRACT_ADDRESS,
+  //     });
+
+  //     const bookJson = cvToJSON(bookResult);
+  //     if (!bookJson.value) {
+  //       setBorrowedBooks([]);
+  //       return;
+  //     }
+
+  //     const d = bookJson.value.value;
+  //     setBorrowedBooks([
+  //       {
+  //         id: bookId,
+  //         title: d.title.value,
+  //         author: d.author.value,
+  //         coverPage: d["cover-page"].value,
+  //         "is-available": false,
+  //         "total-borrows": Number(d["total-borrows"].value),
+  //         "deposit-amount": Number(borrowData["deposit-amount"].value),
+  //         borrowedAt: Number(borrowData["borrowed-at"].value),
+  //         "deposit-token": borrowData["deposit-token"].value,
+  //       },
+  //     ]);
+  //   } catch (e) {
+  //     console.error("Error fetching borrowed books:", e);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
   const fetchBorrowedBooks = async () => {
     if (!connected || !address) {
       setIsLoading(false);
@@ -35,67 +108,83 @@ export default function MyBorrowsPage() {
         await import("@stacks/transactions");
       const { STACKS_MAINNET } = await import("@stacks/network");
 
-      // Single call — no loop needed
-      const result = await fetchCallReadOnlyFunction({
+      // 1. Get total book count
+      const countResult = await fetchCallReadOnlyFunction({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
-        functionName: "get-active-borrow-by-borrower",
-        functionArgs: [Cl.principal(address)],
+        functionName: "get-book-count",
+        functionArgs: [],
         network: STACKS_MAINNET,
         senderAddress: CONTRACT_ADDRESS,
       });
 
-      const json = cvToJSON(result);
-
-      // Structure: { value: { value: { value: { book-id, borrower, borrowed-at, deposit-amount } } | null } }
-      const inner = json?.value?.value; // unwrap (ok ...)
-      if (!inner || inner.value === null) {
-        // (ok none) — user has no active borrow
+      const totalBooks = Number(cvToJSON(countResult).value.value);
+      if (totalBooks === 0) {
         setBorrowedBooks([]);
         return;
       }
 
-      // (ok (some { book-id, borrower, borrowed-at, deposit-amount }))
-      const borrowData = inner.value;
-      const bookId = Number(borrowData["book-id"].value);
+      // 2. Fetch all borrows in parallel
+      const borrowPromises = Array.from({ length: totalBooks }, (_, i) =>
+        fetchCallReadOnlyFunction({
+          contractAddress: CONTRACT_ADDRESS,
+          contractName: CONTRACT_NAME,
+          functionName: "get-borrow",
+          functionArgs: [Cl.uint(i + 1)],
+          network: STACKS_MAINNET,
+          senderAddress: CONTRACT_ADDRESS,
+        }).then((r) => ({ id: i + 1, data: cvToJSON(r) })),
+      );
 
-      // Now fetch the book details with the known ID
-      const bookResult = await fetchCallReadOnlyFunction({
-        contractAddress: CONTRACT_ADDRESS,
-        contractName: CONTRACT_NAME,
-        functionName: "get-book",
-        functionArgs: [Cl.uint(bookId)],
-        network: STACKS_MAINNET,
-        senderAddress: CONTRACT_ADDRESS,
+      const borrowResults = await Promise.all(borrowPromises);
+
+      // 3. Filter only borrows belonging to this user
+      const myBorrows = borrowResults.filter((b) => {
+        const val = b.data?.value?.value;
+        return val && val.borrower?.value === address;
       });
 
-      const bookJson = cvToJSON(bookResult);
-      if (!bookJson.value) {
+      if (myBorrows.length === 0) {
         setBorrowedBooks([]);
         return;
       }
 
-      const d = bookJson.value.value;
-      setBorrowedBooks([
-        {
-          id: bookId,
-          title: d.title.value,
-          author: d.author.value,
-          coverPage: d["cover-page"].value,
-          "is-available": false,
-          "total-borrows": Number(d["total-borrows"].value),
-          "deposit-amount": Number(borrowData["deposit-amount"].value),
-          borrowedAt: Number(borrowData["borrowed-at"].value),
-          "deposit-token": borrowData["deposit-token"].value,
-        },
-      ]);
+      // 4. Fetch book details for each active borrow
+      const bookPromises = myBorrows.map(({ id, data }) =>
+        fetchCallReadOnlyFunction({
+          contractAddress: CONTRACT_ADDRESS,
+          contractName: CONTRACT_NAME,
+          functionName: "get-book",
+          functionArgs: [Cl.uint(id)],
+          network: STACKS_MAINNET,
+          senderAddress: CONTRACT_ADDRESS,
+        }).then((r) => {
+          const bookJson = cvToJSON(r);
+          const d = bookJson?.value?.value;
+          const borrowData = data.value.value;
+          if (!d) return null;
+          return {
+            id,
+            title: d.title.value,
+            author: d.author.value,
+            coverPage: d["cover-page"].value,
+            "is-available": false,
+            "total-borrows": Number(d["total-borrows"].value),
+            "deposit-amount": Number(borrowData["deposit-amount"].value),
+            borrowedAt: Number(borrowData["borrowed-at"].value),
+            "deposit-token": borrowData["deposit-token"].value,
+          } as Book;
+        }),
+      );
+
+      const books = (await Promise.all(bookPromises)).filter(Boolean) as Book[];
+      setBorrowedBooks(books);
     } catch (e) {
       console.error("Error fetching borrowed books:", e);
     } finally {
       setIsLoading(false);
     }
   };
-
   useEffect(() => {
     fetchBorrowedBooks();
   }, [connected, address]);
