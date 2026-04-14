@@ -133,7 +133,8 @@ function EditRow({
         try {
       let finalCover = coverPage;
       if (imageFile) finalCover = await uploadToIPFS(imageFile);
-      onSave(title, author, finalCover, depositMicro, depositToken);
+      // onSave(title, author, finalCover, depositMicro, depositToken);
+    } catch {
 
   };
 }
