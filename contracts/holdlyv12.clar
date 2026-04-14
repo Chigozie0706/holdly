@@ -19,6 +19,7 @@
 (define-constant ERR_NOT_BOOK_OWNER (err u109))
 (define-constant ERR_INVALID_STRING (err u110))
 (define-constant ERR_INVALID_TOKEN (err u111))
+(define-constant ERR_HISTORY_FULL (err u113))
 
 ;; Data structure for books
 (define-map books
@@ -206,24 +207,25 @@
             (map-delete borrows book-id)
             (map-delete borrower-active-borrow tx-sender)
 
-            ;;  Record history entry
-            (map-set user-borrow-history tx-sender
-                (unwrap-panic
-                    (as-max-len?
-                        (append
-                            (default-to (list) (map-get? user-borrow-history tx-sender))
-                            {
-                                book-id: book-id,
-                                borrowed-at: (get borrowed-at borrow),
-                                returned-at: burn-block-height,
-                                deposit-amount: amount,
-                                deposit-token: token,
-                            }
-                        )
-                        u20
-                    )
-                )
+            ;; Record history entry
+(map-set user-borrow-history tx-sender
+    (unwrap! 
+        (as-max-len?
+            (append
+                (default-to (list) (map-get? user-borrow-history tx-sender))
+                {
+                    book-id: book-id,
+                    borrowed-at: (get borrowed-at borrow),
+                    returned-at: burn-block-height,
+                    deposit-amount: amount,
+                    deposit-token: token,
+                }
             )
+            u20
+        )
+        ERR_HISTORY_FULL
+    )
+)
 
             (print {
                 event: "book-returned",
