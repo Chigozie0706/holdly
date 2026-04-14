@@ -39,107 +39,107 @@ interface MyListedBooksProps {
   onDelete: (id: number) => void;
 }
 
-function EditRow({
-  book,
-  onSave,
-  onCancel,
-}: {
-  book: Book;
-  onSave: (
-    title: string,
-    author: string,
-    coverPage: string,
-    depositAmount: number,
-    depositToken: "STX" | "sBTC",
-  ) => void;
-  onCancel: () => void;
-});
+// function EditRow({
+//   book,
+//   onSave,
+//   onCancel,
+// }: {
+//   book: Book;
+//   onSave: (
+//     title: string,
+//     author: string,
+//     coverPage: string,
+//     depositAmount: number,
+//     depositToken: "STX" | "sBTC",
+//   ) => void;
+//   onCancel: () => void;
+// });
 
-{
-  const [title, setTitle] = useState(book.title);
-  const [author, setAuthor] = useState(book.author);
-  const [coverPage, setCoverPage] = useState(book.coverPage || "");
-  const [depositSTX, setDepositSTX] = useState(
-    (book["deposit-amount"] / 1_000_000).toFixed(2),
-  );
-  const [depositToken, setDepositToken] = useState<"STX" | "sBTC">(
-    (book["deposit-token"] as "STX" | "sBTC") || "STX",
-  );
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
+// {
+// const [title, setTitle] = useState(book.title);
+// const [author, setAuthor] = useState(book.author);
+// const [coverPage, setCoverPage] = useState(book.coverPage || "");
+// const [depositSTX, setDepositSTX] = useState(
+//   (book["deposit-amount"] / 1_000_000).toFixed(2),
+// );
+// const [depositToken, setDepositToken] = useState<"STX" | "sBTC">(
+//   (book["deposit-token"] as "STX" | "sBTC") || "STX",
+// );
+// const [imageFile, setImageFile] = useState<File | null>(null);
+// const [imagePreview, setImagePreview] = useState<string | null>(null);
+// const [isUploading, setIsUploading] = useState(false);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    if (!file.type.startsWith("image/")) {
-      toast.error("Only image files allowed");
-      return;
-    }
-    if (file.size > 10 * 1024 * 1024) {
-      toast.error("File must be under 10MB");
-      return;
-    }
-    setImageFile(file);
-    setCoverPage("");
-    const reader = new FileReader();
-    reader.onload = () => setImagePreview(reader.result as string);
-    reader.readAsDataURL(file);
-  };
+//   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     const file = e.target.files?.[0];
+//     if (!file) return;
+//     if (!file.type.startsWith("image/")) {
+//       toast.error("Only image files allowed");
+//       return;
+//     }
+//     if (file.size > 10 * 1024 * 1024) {
+//       toast.error("File must be under 10MB");
+//       return;
+//     }
+//     setImageFile(file);
+//     setCoverPage("");
+//     const reader = new FileReader();
+//     reader.onload = () => setImagePreview(reader.result as string);
+//     reader.readAsDataURL(file);
+//   };
 
-  const uploadToIPFS = async (file: File): Promise<string> => {
-    const toastId = toast.loading("Uploading to IPFS…");
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append(
-        "pinataMetadata",
-        JSON.stringify({ name: `holdly-cover-${Date.now()}` }),
-      );
-      const res = await fetch(
-        "https://api.pinata.cloud/pinning/pinFileToIPFS",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_PINATA_JWT}`,
-          },
-          body: formData,
-        },
-      );
-      if (!res.ok) throw new Error("Upload failed");
-      const data = await res.json();
-      const url = `https://gateway.pinata.cloud/ipfs/${data.IpfsHash}`;
-      toast.success("Uploaded to IPFS!", { id: toastId });
-      return url;
-    } catch {
-      toast.error("Failed to upload image", { id: toastId });
-      throw new Error("Upload failed");
-    }
-  };
+//   const uploadToIPFS = async (file: File): Promise<string> => {
+//     const toastId = toast.loading("Uploading to IPFS…");
+//     try {
+//       const formData = new FormData();
+//       formData.append("file", file);
+//       formData.append(
+//         "pinataMetadata",
+//         JSON.stringify({ name: `holdly-cover-${Date.now()}` }),
+//       );
+//       const res = await fetch(
+//         "https://api.pinata.cloud/pinning/pinFileToIPFS",
+//         {
+//           method: "POST",
+//           headers: {
+//             Authorization: `Bearer ${process.env.NEXT_PUBLIC_PINATA_JWT}`,
+//           },
+//           body: formData,
+//         },
+//       );
+//       if (!res.ok) throw new Error("Upload failed");
+//       const data = await res.json();
+//       const url = `https://gateway.pinata.cloud/ipfs/${data.IpfsHash}`;
+//       toast.success("Uploaded to IPFS!", { id: toastId });
+//       return url;
+//     } catch {
+//       toast.error("Failed to upload image", { id: toastId });
+//       throw new Error("Upload failed");
+//     }
+//   };
 
-  const handleSave = async () => {
-    if (!title.trim() || !author.trim()) {
-      toast.error("Title and author are required");
-      return;
-    }
+//   const handleSave = async () => {
+//     if (!title.trim() || !author.trim()) {
+//       toast.error("Title and author are required");
+//       return;
+//     }
 
-    const depositMicro = Math.floor(parseFloat(depositSTX || "0") * 1_000_000);
-    if (depositMicro < 100000) {
-      toast.error("Minimum deposit is 0.1");
-      return;
-    }
+//     const depositMicro = Math.floor(parseFloat(depositSTX || "0") * 1_000_000);
+//     if (depositMicro < 100000) {
+//       toast.error("Minimum deposit is 0.1");
+//       return;
+//     }
 
-    setIsUploading(true);
-        try {
-      let finalCover = coverPage;
-      if (imageFile) finalCover = await uploadToIPFS(imageFile);
-      // onSave(title, author, finalCover, depositMicro, depositToken);
-    } catch {
-    } finally {
-      setIsUploading(false);
-
-  };
-}
+//     setIsUploading(true);
+//     try {
+//       let finalCover = coverPage;
+//       if (imageFile) finalCover = await uploadToIPFS(imageFile);
+//       // onSave(title, author, finalCover, depositMicro, depositToken);
+//     } catch {
+//     } finally {
+//       setIsUploading(false);
+//     }
+//   };
+// }
 
 export default function MyListedBooks({
   books,
