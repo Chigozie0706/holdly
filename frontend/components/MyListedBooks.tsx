@@ -135,6 +135,7 @@ function EditRow({
       if (imageFile) finalCover = await uploadToIPFS(imageFile);
       // onSave(title, author, finalCover, depositMicro, depositToken);
     } catch {
+    } finally {
 
   };
 }
