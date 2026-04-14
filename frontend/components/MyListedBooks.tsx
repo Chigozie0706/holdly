@@ -136,6 +136,7 @@ function EditRow({
       // onSave(title, author, finalCover, depositMicro, depositToken);
     } catch {
     } finally {
+      setIsUploading(false);
 
   };
 }
