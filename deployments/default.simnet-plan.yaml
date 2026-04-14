@@ -100,8 +100,8 @@ plan:
     - id: 2
       transactions:
         - emulated-contract-publish:
-            contract-name: holdlyv11
+            contract-name: holdlyv12
             emulated-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
-            path: contracts/holdlyv11.clar
+            path: contracts/holdlyv12.clar
             clarity-version: 2
       epoch: "3.3"
