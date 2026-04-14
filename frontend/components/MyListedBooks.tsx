@@ -130,6 +130,9 @@ function EditRow({
     }
 
     setIsUploading(true);
+        try {
+      let finalCover = coverPage;
+
   };
 }
 
