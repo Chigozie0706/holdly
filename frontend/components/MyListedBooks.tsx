@@ -124,9 +124,12 @@ function EditRow({
     }
 
     const depositMicro = Math.floor(parseFloat(depositSTX || "0") * 1_000_000);
-        if (depositMicro < 100000) {
+    if (depositMicro < 100000) {
       toast.error("Minimum deposit is 0.1");
+      return;
+    }
 
+    setIsUploading(true);
   };
 }
 
