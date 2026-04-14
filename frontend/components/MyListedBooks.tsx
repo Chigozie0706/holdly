@@ -132,6 +132,7 @@ function EditRow({
     setIsUploading(true);
         try {
       let finalCover = coverPage;
+      if (imageFile) finalCover = await uploadToIPFS(imageFile);
 
   };
 }
