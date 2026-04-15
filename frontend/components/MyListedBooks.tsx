@@ -150,6 +150,9 @@ const [isUploading, setIsUploading] = useState(false);
               <div style={{ position: "relative" }}>
                 <img src={imagePreview} alt="preview" className="edit-cover-preview" />
                 <button
+                  className="edit-cover-remove"
+                  onClick={() => { setImageFile(null); setImagePreview(null); }}
+                >
 
 }
 
