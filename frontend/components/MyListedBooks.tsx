@@ -180,6 +180,13 @@ const [isUploading, setIsUploading] = useState(false);
                 placeholder="Title"
                 maxLength={200}
               />
+              <input
+                className="dash-edit-input"
+                value={author}
+                onChange={(e) => setAuthor(e.target.value)}
+                placeholder="Author"
+                maxLength={100}
+              />
 
 )
 }
