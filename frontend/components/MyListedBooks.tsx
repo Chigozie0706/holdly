@@ -142,6 +142,11 @@ const [isUploading, setIsUploading] = useState(false);
 
     return (
     <tr className="edit-row">
+      <td colSpan={5}>
+        <div className="edit-row-inner">
+          {/* Cover preview / upload */}
+          <div className="edit-cover-wrap">
+            {imagePreview ? (
 
 }
 
