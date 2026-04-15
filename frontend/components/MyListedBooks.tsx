@@ -148,6 +148,7 @@ const [isUploading, setIsUploading] = useState(false);
           <div className="edit-cover-wrap">
             {imagePreview ? (
               <div style={{ position: "relative" }}>
+                <img src={imagePreview} alt="preview" className="edit-cover-preview" />
 
 }
 
