@@ -173,7 +173,13 @@ const [isUploading, setIsUploading] = useState(false);
                     {/* Fields */}
           <div className="edit-fields">
             <div className="edit-fields-row">
-
+<input
+                className="dash-edit-input"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Title"
+                maxLength={200}
+              />
 
 )
 }
