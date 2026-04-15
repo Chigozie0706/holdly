@@ -159,6 +159,11 @@ const [isUploading, setIsUploading] = useState(false);
               </div>
             ) : book.coverPage ? (
               <img src={book.coverPage} alt={book.title} className="edit-cover-preview" />
+            ) : (
+              <div className="edit-cover-placeholder">
+                <BookOpen size={14} color="rgba(212,163,82,0.3)" />
+              </div>
+            )}
 
 }
 
