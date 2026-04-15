@@ -164,7 +164,13 @@ const [isUploading, setIsUploading] = useState(false);
                 <BookOpen size={14} color="rgba(212,163,82,0.3)" />
               </div>
             )}
+                        <label className="edit-upload-label">
+              <Upload size={11} /> Change
+              <input type="file" accept="image/*" onChange={handleFileChange} style={{ display: "none" }} />
+            </label>
+          </div>
 
+)
 }
 
 export default function MyListedBooks({
