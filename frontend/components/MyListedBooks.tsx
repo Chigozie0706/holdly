@@ -8,6 +8,7 @@ import {
   Library,
   Pencil,
   Trash2,
+  X,
 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -153,6 +154,7 @@ const [isUploading, setIsUploading] = useState(false);
                   className="edit-cover-remove"
                   onClick={() => { setImageFile(null); setImagePreview(null); }}
                 >
+                  <X size={10} />
 
 }
 
