@@ -155,6 +155,8 @@ const [isUploading, setIsUploading] = useState(false);
                   onClick={() => { setImageFile(null); setImagePreview(null); }}
                 >
                   <X size={10} />
+                </button>
+              </div>
 
 }
 
