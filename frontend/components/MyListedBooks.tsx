@@ -170,6 +170,11 @@ const [isUploading, setIsUploading] = useState(false);
             </label>
           </div>
 
+                    {/* Fields */}
+          <div className="edit-fields">
+            <div className="edit-fields-row">
+
+
 )
 }
 
