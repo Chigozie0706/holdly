@@ -157,6 +157,8 @@ const [isUploading, setIsUploading] = useState(false);
                   <X size={10} />
                 </button>
               </div>
+            ) : book.coverPage ? (
+              <img src={book.coverPage} alt={book.title} className="edit-cover-preview" />
 
 }
 
