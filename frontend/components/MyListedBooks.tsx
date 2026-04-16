@@ -196,6 +196,19 @@ const [isUploading, setIsUploading] = useState(false);
               maxLength={200}
               style={{ display: imageFile ? "none" : "block" }}
             />
+
+                        <div className="edit-fields-row">
+              <div style={{ position: "relative", flex: 1 }}>
+                <input
+                  className="dash-edit-input"
+                  type="number"
+                  value={depositSTX}
+                  onChange={(e) => setDepositSTX(e.target.value)}
+                  placeholder="Deposit amount"
+                  min="0.1"
+                  step="0.1"
+                />
+
 )
 }
 
