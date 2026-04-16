@@ -212,6 +212,9 @@ const [isUploading, setIsUploading] = useState(false);
                   position: "absolute", right: "0.65rem", top: "50%",
                   transform: "translateY(-50%)", fontSize: "0.72rem",
                   color: "rgba(212,163,82,0.6)", pointerEvents: "none"
+                }}>
+                  {depositToken}
+                </span>
 
 )
 }
