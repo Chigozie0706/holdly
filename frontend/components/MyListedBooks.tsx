@@ -187,7 +187,15 @@ const [isUploading, setIsUploading] = useState(false);
                 placeholder="Author"
                 maxLength={100}
               />
-
+            </div>
+            <input
+              className="dash-edit-input"
+              value={coverPage}
+              onChange={(e) => { setCoverPage(e.target.value); setImageFile(null); setImagePreview(null); }}
+              placeholder="Or paste image URL"
+              maxLength={200}
+              style={{ display: imageFile ? "none" : "block" }}
+            />
 )
 }
 
