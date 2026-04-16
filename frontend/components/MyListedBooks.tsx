@@ -215,6 +215,9 @@ const [isUploading, setIsUploading] = useState(false);
                 }}>
                   {depositToken}
                 </span>
+              </div>
+              <div className="edit-token-select">
+                {(["STX", "sBTC"] as const).map((t) => (
 
 )
 }
