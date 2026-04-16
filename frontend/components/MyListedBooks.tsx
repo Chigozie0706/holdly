@@ -208,6 +208,10 @@ const [isUploading, setIsUploading] = useState(false);
                   min="0.1"
                   step="0.1"
                 />
+                <span style={{
+                  position: "absolute", right: "0.65rem", top: "50%",
+                  transform: "translateY(-50%)", fontSize: "0.72rem",
+                  color: "rgba(212,163,82,0.6)", pointerEvents: "none"
 
 )
 }
