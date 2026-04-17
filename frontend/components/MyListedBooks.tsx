@@ -218,6 +218,12 @@ const [isUploading, setIsUploading] = useState(false);
               </div>
               <div className="edit-token-select">
                 {(["STX", "sBTC"] as const).map((t) => (
+                  <button
+                    key={t}
+                    type="button"
+                    onClick={() => setDepositToken(t)}
+                    className={`edit-token-btn ${depositToken === t ? "active" : ""}`}
+                  >
 
 )
 }
