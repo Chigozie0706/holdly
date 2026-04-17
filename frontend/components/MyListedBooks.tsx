@@ -231,6 +231,9 @@ const [isUploading, setIsUploading] = useState(false);
             </div>
           </div>
 
+          {/* Actions */}
+          <div className="edit-row-actions">
+
 )
 }
 
