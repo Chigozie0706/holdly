@@ -227,6 +227,9 @@ const [isUploading, setIsUploading] = useState(false);
                     {t}
                   </button>
                 ))}
+              </div>
+            </div>
+          </div>
 
 )
 }
