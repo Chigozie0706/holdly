@@ -224,6 +224,8 @@ const [isUploading, setIsUploading] = useState(false);
                     onClick={() => setDepositToken(t)}
                     className={`edit-token-btn ${depositToken === t ? "active" : ""}`}
                   >
+                    {t}
+                  </button>
 
 )
 }
