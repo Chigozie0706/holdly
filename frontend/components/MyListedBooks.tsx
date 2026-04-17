@@ -233,6 +233,8 @@ const [isUploading, setIsUploading] = useState(false);
 
           {/* Actions */}
           <div className="edit-row-actions">
+            <button
+              className="dash-action-btn save"
 
 )
 }
