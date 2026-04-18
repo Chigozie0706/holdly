@@ -243,6 +243,7 @@ const [isUploading, setIsUploading] = useState(false);
                 : <Check size={13} />
               }
             </button>
+            <button className="dash-action-btn cancel" onClick={onCancel} disabled={isUploading}>
 
 )
 }
