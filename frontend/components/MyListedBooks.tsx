@@ -238,6 +238,8 @@ const [isUploading, setIsUploading] = useState(false);
               onClick={handleSave}
               disabled={isUploading}
             >
+              {isUploading
+                ? <span className="dash-spinner" />
 
 )
 }
