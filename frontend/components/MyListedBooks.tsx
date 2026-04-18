@@ -236,6 +236,8 @@ const [isUploading, setIsUploading] = useState(false);
             <button
               className="dash-action-btn save"
               onClick={handleSave}
+              disabled={isUploading}
+            >
 
 )
 }
