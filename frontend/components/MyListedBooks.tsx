@@ -8,7 +8,9 @@ import {
   Library,
   Pencil,
   Trash2,
+  Check,
   X,
+  Upload,
 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -54,9 +56,7 @@ function EditRow({
     depositToken: "STX" | "sBTC",
   ) => void;
   onCancel: () => void;
-});
-
-{
+}) {
   const [title, setTitle] = useState(book.title);
   const [author, setAuthor] = useState(book.author);
   const [coverPage, setCoverPage] = useState(book.coverPage || "");
