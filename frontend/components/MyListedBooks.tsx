@@ -242,6 +242,7 @@ const [isUploading, setIsUploading] = useState(false);
                 ? <span className="dash-spinner" />
                 : <Check size={13} />
               }
+            </button>
 
 )
 }
