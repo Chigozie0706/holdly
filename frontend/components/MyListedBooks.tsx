@@ -469,6 +469,8 @@ export default function MyListedBooks({
                       onUpdate(book.id, title, author, coverPage, depositAmount, depositToken);
                       setEditingId(null);
                     }}
+                                        onCancel={() => setEditingId(null)}
+
             ))}
           </tbody>
         </table>
