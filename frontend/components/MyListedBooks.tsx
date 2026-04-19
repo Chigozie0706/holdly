@@ -465,6 +465,7 @@ export default function MyListedBooks({
                   <EditRow
                     key={`edit-${book.id}`}
                     book={book}
+                    onSave={(title, author, coverPage, depositAmount, depositToken) => {
 
             ))}
           </tbody>
