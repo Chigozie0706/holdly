@@ -466,6 +466,7 @@ export default function MyListedBooks({
                     key={`edit-${book.id}`}
                     book={book}
                     onSave={(title, author, coverPage, depositAmount, depositToken) => {
+                      onUpdate(book.id, title, author, coverPage, depositAmount, depositToken);
 
             ))}
           </tbody>
