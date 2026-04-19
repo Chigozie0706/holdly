@@ -459,6 +459,8 @@ export default function MyListedBooks({
                   )}
                 </td>
               </tr>
+
+              /* Inline edit row */
             ))}
           </tbody>
         </table>
