@@ -464,6 +464,7 @@ export default function MyListedBooks({
                               {editingId === book.id && (
                   <EditRow
                     key={`edit-${book.id}`}
+                    book={book}
 
             ))}
           </tbody>
