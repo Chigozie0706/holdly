@@ -467,7 +467,8 @@ export default function MyListedBooks({
                     book={book}
                     onSave={(title, author, coverPage, depositAmount, depositToken) => {
                       onUpdate(book.id, title, author, coverPage, depositAmount, depositToken);
-
+                      setEditingId(null);
+                    }}
             ))}
           </tbody>
         </table>
