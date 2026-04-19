@@ -387,90 +387,107 @@ export default function MyListedBooks({
 
           <tbody>
             {myBooks.map((book) => (
-              <tr key={book.id}>
-                <td>
-                  <div className="dash-book-cell">
-                    {book.coverPage ? (
-                      <img
-                        src={book.coverPage}
-                        alt={book.title}
-                        className="dash-book-thumb"
-                        onError={(e) =>
-                          ((e.target as HTMLImageElement).style.display =
-                            "none")
-                        }
-                      />
-                    ) : (
-                      <div className="dash-book-thumb-placeholder">
-                        <BookOpen size={14} color="rgba(212,163,82,0.3)" />
+              <>
+                <tr key={book.id}>
+                  <td>
+                    <div className="dash-book-cell">
+                      {book.coverPage ? (
+                        <img
+                          src={book.coverPage}
+                          alt={book.title}
+                          className="dash-book-thumb"
+                          onError={(e) =>
+                            ((e.target as HTMLImageElement).style.display =
+                              "none")
+                          }
+                        />
+                      ) : (
+                        <div className="dash-book-thumb-placeholder">
+                          <BookOpen size={14} color="rgba(212,163,82,0.3)" />
+                        </div>
+                      )}
+
+                      <div>
+                        <p className="dash-book-title">{book.title}</p>
+                        <p className="dash-book-author">by {book.author}</p>
                       </div>
+                    </div>
+                  </td>
+                  <td>
+                    <span
+                      className={`dash-status ${book["is-available"] ? "available" : "on-loan"}`}
+                    >
+                      {book["is-available"] ? "Available" : "On Loan"}
+                    </span>
+                  </td>
+                  <td>
+                    <span className="dash-deposit">
+                      {(book["deposit-amount"] / 1_000_000).toFixed(2)}{" "}
+                      {book["deposit-token"] || "STX"}
+                    </span>
+                  </td>
+                  <td>
+                    <span className="dash-borrows">
+                      {book["total-borrows"]}x
+                    </span>
+                  </td>
+
+                  <td>
+                    {book["is-available"] ? (
+                      <div className="dash-actions">
+                        <button
+                          className="dash-action-btn edit"
+                          // onClick={() =>
+                          //   onUpdate(
+                          //     book.id,
+                          //     book.title,
+                          //     book.author,
+                          //     book.coverPage || "",
+                          //   )
+                          // }
+                          title="Edit"
+                        >
+                          <Pencil size={13} />
+                        </button>
+                        <button
+                          className="dash-action-btn delete"
+                          onClick={() => onDelete(book.id)}
+                          title="Delete"
+                        >
+                          <Trash2 size={13} />
+                        </button>
+                      </div>
+                    ) : (
+                      <span className="dash-locked">Locked</span>
                     )}
-
-                    <div>
-                      <p className="dash-book-title">{book.title}</p>
-                      <p className="dash-book-author">by {book.author}</p>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <span
-                    className={`dash-status ${book["is-available"] ? "available" : "on-loan"}`}
-                  >
-                    {book["is-available"] ? "Available" : "On Loan"}
-                  </span>
-                </td>
-                <td>
-                  <span className="dash-deposit">
-                    {(book["deposit-amount"] / 1_000_000).toFixed(2)}{" "}
-                    {book["deposit-token"] || "STX"}
-                  </span>
-                </td>
-                <td>
-                  <span className="dash-borrows">{book["total-borrows"]}x</span>
-                </td>
-
-                <td>
-                  {book["is-available"] ? (
-                    <div className="dash-actions">
-                      <button
-                        className="dash-action-btn edit"
-                        // onClick={() =>
-                        //   onUpdate(
-                        //     book.id,
-                        //     book.title,
-                        //     book.author,
-                        //     book.coverPage || "",
-                        //   )
-                        // }
-                        title="Edit"
-                      >
-                        <Pencil size={13} />
-                      </button>
-                      <button
-                        className="dash-action-btn delete"
-                        onClick={() => onDelete(book.id)}
-                        title="Delete"
-                      >
-                        <Trash2 size={13} />
-                      </button>
-                    </div>
-                  ) : (
-                    <span className="dash-locked">Locked</span>
-                  )}
-                </td>
-              </tr>
-
-              /* Inline edit row */
-                              {editingId === book.id && (
+                  </td>
+                </tr>
+                /* Inline edit row */
+                {editingId === book.id && (
                   <EditRow
                     key={`edit-${book.id}`}
                     book={book}
-                    onSave={(title, author, coverPage, depositAmount, depositToken) => {
-                      onUpdate(book.id, title, author, coverPage, depositAmount, depositToken);
+                    onSave={(
+                      title,
+                      author,
+                      coverPage,
+                      depositAmount,
+                      depositToken,
+                    ) => {
+                      onUpdate(
+                        book.id,
+                        title,
+                        author,
+                        coverPage,
+                        depositAmount,
+                        depositToken,
+                      );
                       setEditingId(null);
                     }}
-                                        onCancel={() => setEditingId(null)}
-
+                    onCancel={() => setEditingId(null)}
+                  />
+                )}
+              </>
             ))}
           </tbody>
         </table>
