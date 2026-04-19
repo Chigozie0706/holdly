@@ -73,6 +73,7 @@ export default function MyListedBooksPage() {
     title: string,
     author: string,
     coverPage: string,
+    depositAmount: number,
   ) => {
     if (!connected) return;
     setIsProcessing(true);
