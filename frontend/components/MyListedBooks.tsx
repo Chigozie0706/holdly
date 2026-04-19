@@ -462,6 +462,7 @@ export default function MyListedBooks({
 
               /* Inline edit row */
                               {editingId === book.id && (
+                  <EditRow
 
             ))}
           </tbody>
