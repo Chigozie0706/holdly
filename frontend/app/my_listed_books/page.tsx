@@ -90,6 +90,7 @@ export default function MyListedBooksPage() {
           Cl.stringUtf8(author),
           Cl.stringUtf8(coverPage || "https://via.placeholder.com/150"),
           Cl.uint(DEPOSIT_AMOUNT),
+          Cl.stringAscii(depositToken),
         ],
       });
       if (response.txid) {
