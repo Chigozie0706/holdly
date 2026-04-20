@@ -193,5 +193,6 @@ background: rgba(212,163,82,0.05);
 .edit-row-inner {
     display: flex; align-items: flex-start; gap: 1rem;
   padding: 1rem;
+  border-top: 1px solid rgba(212,163,82,0.1);
 
 }
