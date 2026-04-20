@@ -74,6 +74,7 @@ export default function MyListedBooksPage() {
     author: string,
     coverPage: string,
     depositAmount: number,
+    depositToken: "STX" | "sBTC",
   ) => {
     if (!connected) return;
     setIsProcessing(true);
