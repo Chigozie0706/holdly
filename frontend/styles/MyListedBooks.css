@@ -188,3 +188,5 @@ background: rgba(212,163,82,0.05);
   font-size: 0.65rem; font-weight: 500;
   letter-spacing: 0.08em; text-transform: uppercase;
 }
+
+.edit-row { background: rgba(212,163,82,0.03); }
