@@ -104,6 +104,7 @@ export default function MyListedBooksPage() {
                   author,
                   coverPage,
                   "deposit-amount": depositAmount,
+                  "deposit-token": depositToken,
                 }
               : b,
           ),
