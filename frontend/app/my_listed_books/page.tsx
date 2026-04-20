@@ -97,7 +97,15 @@ export default function MyListedBooksPage() {
         toast.success("Book updated!");
         setBooks((prev) =>
           prev.map((b) =>
-            b.id === id ? { ...b, title, author, coverPage } : b,
+            b.id === id
+              ? {
+                  ...b,
+                  title,
+                  author,
+                  coverPage,
+                  "deposit-amount": depositAmount,
+                }
+              : b,
           ),
         );
       }
