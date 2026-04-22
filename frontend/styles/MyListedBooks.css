@@ -200,5 +200,5 @@ background: rgba(212,163,82,0.05);
 
 .edit-cover-wrap {
   display: flex;
-  flex-direction:
+  flex-direction:column;
 }
