@@ -234,5 +234,5 @@ background: rgba(212,163,82,0.05);
   cursor: pointer;
 padding: 2px 4px;
 font-size: 0.65rem;
-display:
+display:flex;
 }
