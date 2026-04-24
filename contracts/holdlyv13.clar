@@ -12,3 +12,18 @@
 
 ;; Minimum deposit
 (define-constant MIN_DEPOSIT u100000)
+
+
+;; Error codes
+(define-constant ERR_BOOK_NOT_FOUND (err u101))
+(define-constant ERR_BOOK_NOT_AVAILABLE (err u102))
+(define-constant ERR_BOOK_ALREADY_RETURNED (err u103))
+(define-constant ERR_NOT_BORROWER (err u104))
+(define-constant ERR_INVALID_DEPOSIT_AMOUNT (err u108))
+(define-constant ERR_NOT_BOOK_OWNER (err u109))
+(define-constant ERR_INVALID_STRING (err u110))
+(define-constant ERR_INVALID_TOKEN (err u111))
+(define-constant ERR_HISTORY_FULL (err u113))
+(define-constant ERR_INVALID_SCORE (err u114))
+(define-constant ERR_NOT_ELIGIBLE_TO_RATE (err u115))
+(define-constant ERR_ALREADY_RATED (err u116))
