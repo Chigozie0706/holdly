@@ -64,3 +64,6 @@
 
 ;; Track active borrow per borrower
 (define-map borrower-active-borrow principal uint)
+
+;; Track total borrows per user
+(define-map user-total-borrows principal uint)
