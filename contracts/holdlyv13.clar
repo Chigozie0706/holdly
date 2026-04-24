@@ -13,7 +13,6 @@
 ;; Minimum deposit
 (define-constant MIN_DEPOSIT u100000)
 
-
 ;; Error codes
 (define-constant ERR_BOOK_NOT_FOUND (err u101))
 (define-constant ERR_BOOK_NOT_AVAILABLE (err u102))
@@ -27,7 +26,6 @@
 (define-constant ERR_INVALID_SCORE (err u114))
 (define-constant ERR_NOT_ELIGIBLE_TO_RATE (err u115))
 (define-constant ERR_ALREADY_RATED (err u116))
-
 
 ;;  Maps 
 
@@ -57,17 +55,14 @@
     }
 )
 
-
 ;; Track number of books per owner
 (define-map owner-book-count principal uint)
-
 
 ;; Track active borrow per borrower
 (define-map borrower-active-borrow principal uint)
 
 ;; Track total borrows per user
 (define-map user-total-borrows principal uint)
-
 
 ;; Store borrow history per user (up to 20 entries)
 (define-map user-borrow-history
@@ -90,13 +85,11 @@
     }
 )
 
-
 ;; Track who has rated which book (prevent double rating)
 (define-map user-book-rated
     { user: principal, book-id: uint }
     bool
 )
-
 
 ;; Track which books a user has returned (rating eligibility)
 (define-map user-returned-books
@@ -106,7 +99,6 @@
 
 ;; Counter for book IDs
 (define-data-var book-id-counter uint u0)
-
 
 ;;  Private helpers 
 
@@ -391,7 +383,6 @@
         (ok true)
     )
 )
-
 
 ;;  Read-only functions 
 
