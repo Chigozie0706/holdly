@@ -45,3 +45,14 @@
         deposit-token: (string-ascii 4),
     }
 )
+
+;; Data structure for active borrows
+(define-map borrows
+    uint
+    {
+        borrower: principal,
+        borrowed-at: uint,
+        deposit-amount: uint,
+        deposit-token: (string-ascii 4),
+    }
+)
