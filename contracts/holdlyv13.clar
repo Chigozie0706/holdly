@@ -80,3 +80,13 @@
         deposit-token: (string-ascii 4),
     })
 )
+
+;; Store ratings per book
+(define-map book-ratings
+    uint
+    {
+        total-score: uint,
+        count: uint,
+    }
+)
+
