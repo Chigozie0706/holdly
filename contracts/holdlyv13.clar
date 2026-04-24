@@ -391,3 +391,92 @@
         (ok true)
     )
 )
+
+
+;;  Read-only functions 
+
+(define-read-only (get-book (book-id uint))
+    (map-get? books book-id)
+)
+
+(define-read-only (get-borrow (book-id uint))
+    (map-get? borrows book-id)
+)
+
+(define-read-only (get-book-count)
+    (ok (var-get book-id-counter))
+)
+
+(define-read-only (is-book-available (book-id uint))
+    (match (map-get? books book-id)
+        book (ok (get is-available book))
+        ERR_BOOK_NOT_FOUND
+    )
+)
+
+(define-read-only (get-book-deposit-amount (book-id uint))
+    (match (map-get? books book-id)
+        book (ok (get deposit-amount book))
+        ERR_BOOK_NOT_FOUND
+    )
+)
+
+(define-read-only (get-contract-stx-balance)
+    (ok (stx-get-balance CONTRACT_ADDRESS))
+)
+
+(define-read-only (get-owner-book-count (owner principal))
+    (ok (default-to u0 (map-get? owner-book-count owner)))
+)
+
+(define-read-only (get-active-borrow-by-borrower (borrower principal))
+    (match (map-get? borrower-active-borrow borrower)
+        book-id (match (map-get? borrows book-id)
+            borrow (ok (some {
+                book-id: book-id,
+                borrower: (get borrower borrow),
+                borrowed-at: (get borrowed-at borrow),
+                deposit-amount: (get deposit-amount borrow),
+                deposit-token: (get deposit-token borrow),
+            }))
+            (ok none)
+        )
+        (ok none)
+    )
+)
+
+(define-read-only (get-user-total-borrows (user principal))
+    (ok (default-to u0 (map-get? user-total-borrows user)))
+)
+
+(define-read-only (get-user-borrow-history (user principal))
+    (ok (default-to (list) (map-get? user-borrow-history user)))
+)
+
+;; Get rating data for a book
+(define-read-only (get-book-rating (book-id uint))
+    (match (map-get? book-ratings book-id)
+        rating (ok {
+            total-score: (get total-score rating),
+            count: (get count rating),
+            ;; average x10 to avoid decimals e.g. 45 = 4.5 stars
+            average: (if (> (get count rating) u0)
+                (/ (* (get total-score rating) u10) (get count rating))
+                u0
+            ),
+        })
+        (ok { total-score: u0, count: u0, average: u0 })
+    )
+)
+
+;; Check if a user can rate a book
+(define-read-only (can-user-rate (user principal) (book-id uint))
+    (ok {
+        eligible: (default-to false
+            (map-get? user-returned-books { user: user, book-id: book-id })
+        ),
+        already-rated: (default-to false
+            (map-get? user-book-rated { user: user, book-id: book-id })
+        ),
+    })
+)
