@@ -9,3 +9,6 @@
 ;; Supported token types
 (define-constant TOKEN_STX "STX")
 (define-constant TOKEN_SBTC "sBTC")
+
+;; Minimum deposit
+(define-constant MIN_DEPOSIT u100000)
