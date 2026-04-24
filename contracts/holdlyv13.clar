@@ -97,3 +97,13 @@
     bool
 )
 
+
+;; Track which books a user has returned (rating eligibility)
+(define-map user-returned-books
+    { user: principal, book-id: uint }
+    bool
+)
+
+;; Counter for book IDs
+(define-data-var book-id-counter uint u0)
+
