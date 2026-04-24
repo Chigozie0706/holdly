@@ -27,3 +27,21 @@
 (define-constant ERR_INVALID_SCORE (err u114))
 (define-constant ERR_NOT_ELIGIBLE_TO_RATE (err u115))
 (define-constant ERR_ALREADY_RATED (err u116))
+
+
+;;  Maps 
+
+;; Data structure for books
+(define-map books
+    uint
+    {
+        title: (string-utf8 200),
+        author: (string-utf8 100),
+        cover-page: (string-utf8 200),
+        owner: principal,
+        is-available: bool,
+        total-borrows: uint,
+        deposit-amount: uint,
+        deposit-token: (string-ascii 4),
+    }
+)
