@@ -107,3 +107,15 @@
 ;; Counter for book IDs
 (define-data-var book-id-counter uint u0)
 
+
+;;  Private helpers 
+
+(define-private (send-stx-from-contract (amount uint) (recipient principal))
+    (as-contract (stx-transfer? amount tx-sender recipient))
+)
+
+(define-private (send-sbtc-from-contract (amount uint) (recipient principal))
+    (as-contract
+        (contract-call? SBTC_CONTRACT transfer amount tx-sender recipient none)
+    )
+)
