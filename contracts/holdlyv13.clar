@@ -60,3 +60,7 @@
 
 ;; Track number of books per owner
 (define-map owner-book-count principal uint)
+
+
+;; Track active borrow per borrower
+(define-map borrower-active-borrow principal uint)
