@@ -67,3 +67,16 @@
 
 ;; Track total borrows per user
 (define-map user-total-borrows principal uint)
+
+
+;; Store borrow history per user (up to 20 entries)
+(define-map user-borrow-history
+    principal
+    (list 20 {
+        book-id: uint,
+        borrowed-at: uint,
+        returned-at: uint,
+        deposit-amount: uint,
+        deposit-token: (string-ascii 4),
+    })
+)
