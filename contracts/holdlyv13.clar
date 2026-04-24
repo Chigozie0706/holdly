@@ -56,3 +56,7 @@
         deposit-token: (string-ascii 4),
     }
 )
+
+
+;; Track number of books per owner
+(define-map owner-book-count principal uint)
