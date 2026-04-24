@@ -5,3 +5,7 @@
 
 ;; sBTC contract
 (define-constant SBTC_CONTRACT 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token)
+
+;; Supported token types
+(define-constant TOKEN_STX "STX")
+(define-constant TOKEN_SBTC "sBTC")
