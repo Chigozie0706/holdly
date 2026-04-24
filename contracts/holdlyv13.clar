@@ -90,3 +90,10 @@
     }
 )
 
+
+;; Track who has rated which book (prevent double rating)
+(define-map user-book-rated
+    { user: principal, book-id: uint }
+    bool
+)
+
