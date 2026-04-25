@@ -72,6 +72,7 @@ export default function Library() {
             });
 
             const ratingJson = cvToJSON(ratingResult);
+            const ratingData = ratingJson.value.value;
 
             fetched.push({
               id: i,
