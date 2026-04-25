@@ -65,6 +65,7 @@ export default function Library() {
             const ratingResult = await fetchCallReadOnlyFunction({
               contractAddress: CONTRACT_ADDRESS,
               contractName: CONTRACT_NAME,
+              functionName: "get-book-rating",
             });
             fetched.push({
               id: i,
