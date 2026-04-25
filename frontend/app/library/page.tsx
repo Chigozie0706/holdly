@@ -162,6 +162,7 @@ export default function Library() {
     author: string,
     coverPage: string,
     depositAmount: number,
+    depositToken: "STX" | "sBTC",
   ) => {
     if (!connected || !address) {
       toast.error("Please connect your wallet first");
