@@ -62,7 +62,9 @@ export default function Library() {
           if (bookJson.value) {
             const d = bookJson.value.value;
 
-            const ratingResult = await fetchCallReadOnlyFunction({});
+            const ratingResult = await fetchCallReadOnlyFunction({
+              contractAddress: CONTRACT_ADDRESS,
+            });
             fetched.push({
               id: i,
               title: d.title.value,
