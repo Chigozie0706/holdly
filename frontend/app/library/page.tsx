@@ -86,6 +86,7 @@ export default function Library() {
               "deposit-token": d["deposit-token"].value,
               rating: {
                 average: Number(ratingData.average.value),
+                count: Number(ratingData.count.value),
               },
             });
           }
