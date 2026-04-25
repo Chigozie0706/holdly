@@ -215,6 +215,8 @@ export default function Library() {
 
   const handleRateBook = async (bookId: number, score: number) => {
     if (!connected || !address) {
+      toast.error("Please connect your wallet first");
+      return;
     }
   };
 
