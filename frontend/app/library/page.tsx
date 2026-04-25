@@ -213,7 +213,10 @@ export default function Library() {
     }
   };
 
-  const handleRateBook = async (bookId: number, score: number) => {};
+  const handleRateBook = async (bookId: number, score: number) => {
+    if (!connected || !address) {
+    }
+  };
 
   const handleDeleteBook = async (bookId: number) => {
     if (!connected || !address) {
