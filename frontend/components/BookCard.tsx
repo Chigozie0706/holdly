@@ -131,15 +131,29 @@ export default function BookCard({
       return;
     }
 
+    const depositMicro = Math.floor(
+      parseFloat(editDepositSTX || "0") * 1_000_000,
+    );
+    if (depositMicro < 100000) {
+      toast.error("Minimum deposit is 0.1");
+      return;
+    }
+
     setIsUploading(true);
     try {
       let finalCover = editCover;
-
       if (editFile) {
         finalCover = await uploadToIPFS(editFile);
       }
 
-      onUpdate(book.id, editTitle, editAuthor, finalCover);
+      onUpdate(
+        book.id,
+        editTitle,
+        editAuthor,
+        finalCover,
+        depositMicro,
+        editDepositToken,
+      );
       setIsEditing(false);
       setEditFile(null);
       setEditPreview(null);
