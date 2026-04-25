@@ -66,6 +66,7 @@ export default function Library() {
               contractAddress: CONTRACT_ADDRESS,
               contractName: CONTRACT_NAME,
               functionName: "get-book-rating",
+              functionArgs: [Cl.uint(i)],
             });
             fetched.push({
               id: i,
