@@ -218,6 +218,9 @@ export default function Library() {
       toast.error("Please connect your wallet first");
       return;
     }
+
+      try {
+      }
   };
 
   const handleDeleteBook = async (bookId: number) => {
