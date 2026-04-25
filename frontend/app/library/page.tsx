@@ -161,6 +161,7 @@ export default function Library() {
     title: string,
     author: string,
     coverPage: string,
+    depositAmount: number,
   ) => {
     if (!connected || !address) {
       toast.error("Please connect your wallet first");
