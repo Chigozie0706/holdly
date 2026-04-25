@@ -219,8 +219,13 @@ export default function Library() {
       return;
     }
 
-      try {
-      }
+    try {
+      const { request } = await import("@stacks/connect");
+    } catch (error) {
+      toast.error(
+        `Failed to rate: ${error instanceof Error ? error.message : "Unknown error"}`,
+      );
+    }
   };
 
   const handleDeleteBook = async (bookId: number) => {
