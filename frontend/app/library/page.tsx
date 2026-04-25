@@ -84,7 +84,9 @@ export default function Library() {
               "total-borrows": Number(d["total-borrows"].value),
               "deposit-amount": Number(d["deposit-amount"].value),
               "deposit-token": d["deposit-token"].value,
-              rating: {},
+              rating: {
+                average: Number(ratingData.average.value),
+              },
             });
           }
         } catch (e) {
