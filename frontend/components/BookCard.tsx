@@ -58,6 +58,9 @@ export default function BookCard({
   const [editFile, setEditFile] = useState<File | null>(null);
   const [editPreview, setEditPreview] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [editDepositSTX, setEditDepositSTX] = useState(
+    (book["deposit-amount"] / 1_000_000).toFixed(2),
+  );
 
   const isAvailable = book["is-available"];
   const isOwner = connected && address && book.owner && address === book.owner;
