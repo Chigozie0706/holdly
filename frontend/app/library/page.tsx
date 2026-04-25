@@ -20,6 +20,7 @@ interface Book {
   "total-borrows": number;
   "deposit-amount": number;
   "deposit-token": string;
+  rating?: { average: number; count: number };
 }
 
 export default function Library() {
@@ -60,6 +61,8 @@ export default function Library() {
           const bookJson = cvToJSON(bookResult);
           if (bookJson.value) {
             const d = bookJson.value.value;
+
+            const ratingResult = await fetchCallReadOnlyFunction({});
             fetched.push({
               id: i,
               title: d.title.value,

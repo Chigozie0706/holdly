@@ -462,7 +462,7 @@ export default function MyListedBooks({
                     )}
                   </td>
                 </tr>
-                /* Inline edit row */
+                {/* Inline edit row  */}
                 {editingId === book.id && (
                   <EditRow
                     key={`edit-${book.id}`}
