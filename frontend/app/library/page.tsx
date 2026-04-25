@@ -191,7 +191,16 @@ export default function Library() {
         toast.success(`Book updated! TX: ${response.txid}`);
         setBooks((prev) =>
           prev.map((b) =>
-            b.id === bookId ? { ...b, title, author, coverPage } : b,
+            b.id === bookId
+              ? {
+                  ...b,
+                  title,
+                  author,
+                  coverPage,
+                  "deposit-amount": depositAmount,
+                  "deposit-token": depositToken,
+                }
+              : b,
           ),
         );
       }

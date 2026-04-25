@@ -33,6 +33,8 @@ interface BookCardProps {
     title: string,
     author: string,
     coverPage: string,
+    depositAmount: number,
+    depositToken: "STX" | "sBTC",
   ) => void;
   onDelete: (id: number) => void;
   connected: boolean;
