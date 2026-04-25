@@ -70,6 +70,9 @@ export default function Library() {
               network: STACKS_MAINNET,
               senderAddress: CONTRACT_ADDRESS,
             });
+
+            const ratingJson = cvToJSON(ratingResult);
+
             fetched.push({
               id: i,
               title: d.title.value,
