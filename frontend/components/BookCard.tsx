@@ -269,7 +269,13 @@ export default function BookCard({
                     step="0.1"
                   />
 
-                  <span></span>
+                  <span
+                    style={{
+                      position: "absolute",
+                      right: "0.65rem",
+                      top: "50%",
+                    }}
+                  ></span>
                 </div>
               </div>
 
