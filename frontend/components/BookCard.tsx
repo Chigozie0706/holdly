@@ -279,7 +279,10 @@ export default function BookCard({
                       color: "rgba(212,163,82,0.6)",
                       pointerEvents: "none",
                     }}
-                  ></span>
+                  >
+                    {" "}
+                    {editDepositToken}
+                  </span>
                 </div>
               </div>
 
