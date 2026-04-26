@@ -259,7 +259,7 @@ export default function BookCard({
 
                 {/*  Deposit amount */}
                 <div style={{ position: "relative" }}>
-                  <input />
+                  <input className="book-edit-input" />
                 </div>
               </div>
 
