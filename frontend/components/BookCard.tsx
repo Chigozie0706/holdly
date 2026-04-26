@@ -274,6 +274,8 @@ export default function BookCard({
                       position: "absolute",
                       right: "0.65rem",
                       top: "50%",
+                      transform: "translateY(-50%)",
+                      fontSize: "0.72rem",
                     }}
                   ></span>
                 </div>
