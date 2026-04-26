@@ -258,7 +258,9 @@ export default function BookCard({
                 )}
 
                 {/*  Deposit amount */}
-                <div style={{ position: "relative" }}></div>
+                <div style={{ position: "relative" }}>
+                  <input />
+                </div>
               </div>
 
               <div className="book-owner-actions">
