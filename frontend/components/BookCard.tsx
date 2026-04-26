@@ -268,6 +268,8 @@ export default function BookCard({
                     min="0.1"
                     step="0.1"
                   />
+
+                  <span></span>
                 </div>
               </div>
 
