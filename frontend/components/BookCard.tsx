@@ -299,6 +299,10 @@ export default function BookCard({
                         fontSize: "0.72rem",
                         cursor: "pointer",
                         transition: "all 0.15s",
+                        background:
+                          editDepositToken === t
+                            ? "rgba(212,163,82,0.12)"
+                            : "rgba(255,255,255,0.04)",
                       }}
                     ></button>
                   ))}
