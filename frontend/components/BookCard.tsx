@@ -292,6 +292,11 @@ export default function BookCard({
                       key={t}
                       type="button"
                       onClick={() => setEditDepositToken(t)}
+                      style={{
+                        flex: 1,
+                        padding: "0.38rem",
+                        borderRadius: "2px",
+                      }}
                     ></button>
                   ))}
                 </div>
