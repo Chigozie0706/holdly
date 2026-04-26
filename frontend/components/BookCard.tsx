@@ -276,6 +276,8 @@ export default function BookCard({
                       top: "50%",
                       transform: "translateY(-50%)",
                       fontSize: "0.72rem",
+                      color: "rgba(212,163,82,0.6)",
+                      pointerEvents: "none",
                     }}
                   ></span>
                 </div>
