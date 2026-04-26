@@ -296,6 +296,9 @@ export default function BookCard({
                         flex: 1,
                         padding: "0.38rem",
                         borderRadius: "2px",
+                        fontSize: "0.72rem",
+                        cursor: "pointer",
+                        transition: "all 0.15s",
                       }}
                     ></button>
                   ))}
