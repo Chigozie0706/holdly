@@ -256,6 +256,9 @@ export default function BookCard({
                     maxLength={200}
                   />
                 )}
+
+                {/*  Deposit amount */}
+                <div style={{ position: "relative" }}></div>
               </div>
 
               <div className="book-owner-actions">
