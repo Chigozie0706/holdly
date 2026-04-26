@@ -284,6 +284,9 @@ export default function BookCard({
                     {editDepositToken}
                   </span>
                 </div>
+
+                {/* Token selector */}
+                <div style={{ display: "flex", gap: "0.3rem" }}></div>
               </div>
 
               <div className="book-owner-actions">
