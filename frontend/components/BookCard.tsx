@@ -288,7 +288,7 @@ export default function BookCard({
                 {/* Token selector */}
                 <div style={{ display: "flex", gap: "0.3rem" }}>
                   {(["STX", "sBTC"] as const).map((t) => (
-                    <button key={t}></button>
+                    <button key={t} type="button"></button>
                   ))}
                 </div>
               </div>
