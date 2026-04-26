@@ -286,7 +286,11 @@ export default function BookCard({
                 </div>
 
                 {/* Token selector */}
-                <div style={{ display: "flex", gap: "0.3rem" }}></div>
+                <div style={{ display: "flex", gap: "0.3rem" }}>
+                    {(["STX", "sBTC"] as const).map((t) => (
+  ))}
+
+                </div>
               </div>
 
               <div className="book-owner-actions">
