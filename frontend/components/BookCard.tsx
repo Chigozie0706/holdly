@@ -307,6 +307,10 @@ export default function BookCard({
                           editDepositToken === t
                             ? "1px solid rgba(212,163,82,0.35)"
                             : "1px solid rgba(255,255,255,0.08)",
+                        color:
+                          editDepositToken === t
+                            ? "#D4A352"
+                            : "rgba(255,255,255,0.35)",
                       }}
                     ></button>
                   ))}
