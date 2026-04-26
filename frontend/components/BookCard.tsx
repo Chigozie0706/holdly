@@ -259,7 +259,11 @@ export default function BookCard({
 
                 {/*  Deposit amount */}
                 <div style={{ position: "relative" }}>
-                  <input className="book-edit-input" type="number" />
+                  <input
+                    className="book-edit-input"
+                    type="number"
+                    value={editDepositSTX}
+                  />
                 </div>
               </div>
 
