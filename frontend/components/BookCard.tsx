@@ -266,6 +266,7 @@ export default function BookCard({
                     onChange={(e) => setEditDepositSTX(e.target.value)}
                     placeholder="Deposit amount"
                     min="0.1"
+                    step="0.1"
                   />
                 </div>
               </div>
