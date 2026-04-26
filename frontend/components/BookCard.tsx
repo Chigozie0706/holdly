@@ -263,6 +263,7 @@ export default function BookCard({
                     className="book-edit-input"
                     type="number"
                     value={editDepositSTX}
+                    onChange={(e) => setEditDepositSTX(e.target.value)}
                   />
                 </div>
               </div>
