@@ -168,6 +168,8 @@ export default function BookCard({
     setEditTitle(book.title);
     setEditAuthor(book.author);
     setEditCover(book.coverPage || "");
+    setEditDepositSTX((book["deposit-amount"] / 1_000_000).toFixed(2));
+
     setEditFile(null);
     setEditPreview(null);
     setIsEditing(false);
