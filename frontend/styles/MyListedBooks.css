@@ -250,3 +250,5 @@ background: rgba(212,163,82,0.05);
   border-radius: 2px;
   transition: all 0.15s;
 }
+
+.edit-upload-label:hover{}
