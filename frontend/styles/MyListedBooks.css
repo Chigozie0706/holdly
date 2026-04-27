@@ -253,5 +253,5 @@ background: rgba(212,163,82,0.05);
 
 .edit-upload-label:hover{
   color: #D4A352;
-  border-color:
+  border-color: rgba(212,163,82,0.5);
 }
