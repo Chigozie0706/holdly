@@ -232,9 +232,12 @@ background: rgba(212,163,82,0.05);
   border-radius: 2px;
   color: white;
   cursor: pointer;
-padding: 2px 4px;
-font-size: 0.65rem;
-display:flex;
-align-items: center;
+  padding: 2px 4px;
+  font-size: 0.65rem;
+  display:flex;
+  align-items: center;
+}
 
+.edit-upload-label {
+  
 }

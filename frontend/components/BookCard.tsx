@@ -169,7 +169,7 @@ export default function BookCard({
     setEditAuthor(book.author);
     setEditCover(book.coverPage || "");
     setEditDepositSTX((book["deposit-amount"] / 1_000_000).toFixed(2));
-
+    setEditDepositToken((book["deposit-token"] as "STX" | "sBTC") || "STX");
     setEditFile(null);
     setEditPreview(null);
     setIsEditing(false);
