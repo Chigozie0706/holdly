@@ -265,4 +265,5 @@ background: rgba(212,163,82,0.05);
 
 .edit-fields-row {
   display: flex;
+  gap: 0.4rem;
 }
