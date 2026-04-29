@@ -287,5 +287,5 @@ background: rgba(212,163,82,0.05);
 }
 
 .edit-token-select{
-  display: 
+  display: flex;
 }
