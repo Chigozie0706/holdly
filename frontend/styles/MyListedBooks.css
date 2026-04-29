@@ -278,5 +278,5 @@ background: rgba(212,163,82,0.05);
   font-size: 0.78rem;
   outline: none;
   box-sizing: border-box;
-  transition:
+  transition: border-color 0.15s;
 }
