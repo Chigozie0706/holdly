@@ -283,4 +283,5 @@ background: rgba(212,163,82,0.05);
 
 .dash-edit-input:focus {
   border-color: rgba(212,163,82,0.5);
+  box-shadow:
 }
