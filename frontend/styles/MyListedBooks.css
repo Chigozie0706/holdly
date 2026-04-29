@@ -280,3 +280,7 @@ background: rgba(212,163,82,0.05);
   box-sizing: border-box;
   transition: border-color 0.15s;
 }
+
+.dash-edit-input:focus {
+  
+}
