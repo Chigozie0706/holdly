@@ -271,5 +271,6 @@ background: rgba(212,163,82,0.05);
 .dash-edit-input {
   width: 100%;
   padding: 0.4rem 0.65rem;
-  background:
+  background: rgba(255,255,255,0.05);
+
 }
