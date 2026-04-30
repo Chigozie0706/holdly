@@ -319,4 +319,6 @@ background: rgba(212,163,82,0.05);
 .dash-action-btn.save {
   background: rgba(74,222,128,0.08);
   border: 1px solid rgba(74,222,128,0.25);
+  color: #4ade80;
+
 }
