@@ -314,3 +314,7 @@ background: rgba(212,163,82,0.05);
   gap: 0.35rem;
   flex-shrink: 0;
 }
+
+
+.dash-action-btn.save {
+}
