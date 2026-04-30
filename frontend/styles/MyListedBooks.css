@@ -312,4 +312,5 @@ background: rgba(212,163,82,0.05);
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+  flex-shrink:
 }
