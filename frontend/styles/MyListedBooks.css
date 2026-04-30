@@ -310,5 +310,5 @@ background: rgba(212,163,82,0.05);
 
 .edit-row-actions {
   display: flex;
-  flex-direction:
+  flex-direction: column;
 }
