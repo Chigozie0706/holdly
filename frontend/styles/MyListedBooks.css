@@ -305,5 +305,6 @@ background: rgba(212,163,82,0.05);
   .edit-token-btn.active {
   background: rgba(212,163,82,0.12);
   border-color: rgba(212,163,82,0.35);
-  color:
+  color: #D4A352;
+
 }
