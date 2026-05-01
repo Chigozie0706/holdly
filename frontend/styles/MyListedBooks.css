@@ -338,4 +338,5 @@ background: rgba(212,163,82,0.05);
 
  .dash-action-btn:disabled {
   opacity: 0.5;
+  cursor: not-allowed;
  }
