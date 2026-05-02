@@ -344,3 +344,6 @@ background: rgba(212,163,82,0.05);
  @keyframes spin {
   to { transform: rotate(360deg); }
  }
+
+ .dash-spinner {
+ }
