@@ -12,6 +12,7 @@ import {
   X,
   Upload,
 } from "lucide-react";
+import React from "react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -387,8 +388,8 @@ export default function MyListedBooks({
 
           <tbody>
             {myBooks.map((book) => (
-              <>
-                <tr key={book.id}>
+              <React.Fragment>
+                <tr>
                   <td>
                     <div className="dash-book-cell">
                       {book.coverPage ? (
@@ -482,7 +483,7 @@ export default function MyListedBooks({
                     onCancel={() => setEditingId(null)}
                   />
                 )}
-              </>
+              </React.Fragment>
             ))}
           </tbody>
         </table>
