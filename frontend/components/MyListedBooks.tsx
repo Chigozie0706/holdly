@@ -437,14 +437,9 @@ export default function MyListedBooks({
                       <div className="dash-actions">
                         <button
                           className="dash-action-btn edit"
-                          // onClick={() =>
-                          //   onUpdate(
-                          //     book.id,
-                          //     book.title,
-                          //     book.author,
-                          //     book.coverPage || "",
-                          //   )
-                          // }
+                          onClick={() =>
+                            setEditingId(editingId === book.id ? null : book.id)
+                          }
                           title="Edit"
                         >
                           <Pencil size={13} />
