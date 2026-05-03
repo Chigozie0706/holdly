@@ -134,7 +134,7 @@ function EditRow({
     try {
       let finalCover = coverPage;
       if (imageFile) finalCover = await uploadToIPFS(imageFile);
-      onSave(title, author, finalCover, depositMicro);
+      onSave(title, author, finalCover, depositMicro, depositToken);
     } catch {
     } finally {
       setIsUploading(false);
