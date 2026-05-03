@@ -388,7 +388,7 @@ export default function MyListedBooks({
 
           <tbody>
             {myBooks.map((book) => (
-              <React.Fragment key={}>
+              <React.Fragment key={book.id}>
                 <tr>
                   <td>
                     <div className="dash-book-cell">
