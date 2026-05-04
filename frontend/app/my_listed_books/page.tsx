@@ -7,8 +7,6 @@ import { useStacks } from "@/providers/stacks-provider";
 import { toast } from "sonner";
 import { CONTRACT_ADDRESS, CONTRACT_NAME } from "@/config/contract";
 
-const DEPOSIT_AMOUNT = 500000;
-
 export default function MyListedBooksPage() {
   const { address, connected } = useStacks();
   const [books, setBooks] = useState<any[]>([]);
