@@ -16,8 +16,6 @@ interface AddBookFormProps {
   ) => void;
 }
 
-const DEPOSIT_AMOUNT = 500000;
-
 export default function AddBookForm({ onAdd }: AddBookFormProps) {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
