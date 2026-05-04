@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import MyBorrows from "@/components/MyBorrows";
 import { useStacks } from "@/providers/stacks-provider";
 import { CONTRACT_ADDRESS, CONTRACT_NAME } from "@/config/contract";
