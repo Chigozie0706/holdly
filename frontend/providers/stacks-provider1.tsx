@@ -8,4 +8,6 @@ import {
   type ReactNode,
 } from "react";
 
-interface StacksContextType {}
+interface StacksContextType {
+  address: string | null;
+}
