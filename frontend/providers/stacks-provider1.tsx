@@ -14,4 +14,5 @@ interface StacksContextType {
   publicKey: string | null;
   connected: boolean;
   connectWallet: () => Promise<void>;
+  disconnectWallet: () => void;
 }
