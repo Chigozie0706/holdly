@@ -15,4 +15,5 @@ interface StacksContextType {
   connected: boolean;
   connectWallet: () => Promise<void>;
   disconnectWallet: () => void;
+  isLoading: boolean;
 }
