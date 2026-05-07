@@ -12,4 +12,5 @@ interface StacksContextType {
   address: string | null;
   btcAddress: string | null;
   publicKey: string | null;
+  connected: boolean;
 }
