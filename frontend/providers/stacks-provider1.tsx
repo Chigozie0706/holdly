@@ -13,4 +13,5 @@ interface StacksContextType {
   btcAddress: string | null;
   publicKey: string | null;
   connected: boolean;
+  connectWallet: () => Promise<void>;
 }
