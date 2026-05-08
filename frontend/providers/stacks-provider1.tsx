@@ -20,6 +20,4 @@ interface StacksContextType {
 
 const StacksContext = createContext<StacksContextType | undefined>(undefined);
 
-export function StacksProvider{
-  
-}
+export function StacksProvider({ children }) {}
