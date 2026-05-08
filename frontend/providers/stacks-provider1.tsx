@@ -18,4 +18,4 @@ interface StacksContextType {
   isLoading: boolean;
 }
 
-const StacksContext;
+const StacksContext = createContext;
