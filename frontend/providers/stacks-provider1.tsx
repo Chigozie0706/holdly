@@ -17,3 +17,5 @@ interface StacksContextType {
   disconnectWallet: () => void;
   isLoading: boolean;
 }
+
+const StacksContext;
