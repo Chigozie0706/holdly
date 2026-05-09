@@ -24,4 +24,5 @@ export function StacksProvider({ children }: { children: ReactNode }) {
   const [address, setAddress] = useState<string | null>(null);
   const [btcAddress, setBtcAddress] = useState<string | null>(null);
   const [publicKey, setPublicKey] = useState<string | null>(null);
+  const [connected, setConnected];
 }
