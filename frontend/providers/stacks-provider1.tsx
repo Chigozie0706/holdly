@@ -33,7 +33,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
     setIsLoading(true);
 
     try {
-      const { connect };
+      const { connect } =  await
     } catch (error) {
     } finally {
     }
