@@ -29,5 +29,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
 
   async function connectWallet() {
     if (connected && address) return;
+
+    setIsLoading(true);
   }
 }
