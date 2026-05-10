@@ -26,8 +26,8 @@ export function StacksProvider({ children }: { children: ReactNode }) {
   const [publicKey, setPublicKey] = useState<string | null>(null);
   const [connected, setConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-}
 
-async function connectWallet() {
-  if(connected && address)
+  async function connectWallet() {
+    if (connected && address) return;
+  }
 }
