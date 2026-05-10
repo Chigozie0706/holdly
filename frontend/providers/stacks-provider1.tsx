@@ -31,5 +31,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
     if (connected && address) return;
 
     setIsLoading(true);
+
+    try {}
   }
 }
