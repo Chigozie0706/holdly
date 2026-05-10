@@ -33,6 +33,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
     setIsLoading(true);
 
     try {
+      const { connect };
     } catch (error) {
     } finally {
     }
