@@ -28,4 +28,6 @@ export function StacksProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(false);
 }
 
-async function connectWallet() {}
+async function connectWallet() {
+  if()
+}
