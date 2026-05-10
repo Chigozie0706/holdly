@@ -32,6 +32,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
 
     setIsLoading(true);
 
-    try {}
+    try {
+    } catch {}
   }
 }
