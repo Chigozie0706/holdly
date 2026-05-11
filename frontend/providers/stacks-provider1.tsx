@@ -45,6 +45,10 @@ export function StacksProvider({ children }: { children: ReactNode }) {
         setConnected(true);
         console.log("Connected to:", stxAccount.address);
       }
+
+      if () {
+        
+      }
     } catch (error) {
     } finally {
     }
