@@ -35,6 +35,8 @@ export function StacksProvider({ children }: { children: ReactNode }) {
     try {
       const { connect } = await import("@stacks/connect");
       const response = await connect();
+
+      const stxAccount;
     } catch (error) {
     } finally {
     }
