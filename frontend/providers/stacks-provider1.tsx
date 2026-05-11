@@ -37,6 +37,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
       const response = await connect();
 
       const stxAccount = response.addresses[2];
+      const btcAccount;
     } catch (error) {
     } finally {
     }
