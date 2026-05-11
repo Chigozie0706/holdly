@@ -41,6 +41,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
 
       if (stxAccount) {
         setAddress(stxAccount.address);
+        setPublicKey();
       }
     } catch (error) {
     } finally {
