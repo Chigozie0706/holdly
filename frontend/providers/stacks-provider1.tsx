@@ -46,8 +46,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
         console.log("Connected to:", stxAccount.address);
       }
 
-      if () {
-        
+      if (btcAccount) {
       }
     } catch (error) {
     } finally {
