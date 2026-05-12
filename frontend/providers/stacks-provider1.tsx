@@ -47,6 +47,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
       }
 
       if (btcAccount) {
+        setBtcAddress();
       }
     } catch (error) {
     } finally {
