@@ -26,4 +26,30 @@ export function StacksProvider({ children }: { children: ReactNode }) {
   const [publicKey, setPublicKey] = useState<string | null>(null);
   const [connected, setConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  async function connectWallet() {
+    if (connected && address) return;
+
+    setIsLoading(true);
+
+    try {
+      const { connect } = await import("@stacks/connect");
+      const response = await connect();
+
+      const stxAccount = response.addresses[2];
+      const btcAccount = response.addresses[0];
+
+      if (stxAccount) {
+        setAddress(stxAccount.address);
+        setPublicKey(stxAccount.publicKey);
+        setConnected(true);
+        console.log("Connected to:", stxAccount.address);
+      }
+
+      if (btcAccount) {
+      }
+    } catch (error) {
+    } finally {
+    }
+  }
 }
