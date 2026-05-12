@@ -57,6 +57,6 @@ export function StacksProvider({ children }: { children: ReactNode }) {
   }
 
   function disconnectWallet() {
-    import("@stacks/connect");
+    import("@stacks/connect").then();
   }
 }
