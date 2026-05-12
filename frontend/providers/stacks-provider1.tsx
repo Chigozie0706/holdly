@@ -50,7 +50,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
         setBtcAddress(btcAccount.address);
       }
     } catch (error) {
-      console.error();
+      console.error("Connection failed:", error);
     } finally {
     }
   }
