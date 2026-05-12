@@ -60,6 +60,6 @@ export function StacksProvider({ children }: { children: ReactNode }) {
     import("@stacks/connect").then(({ disconnect }) => disconnect());
     setAddress(null);
     setBtcAddress(null);
-    setPublicKey();
+    setPublicKey(null);
   }
 }
