@@ -62,5 +62,6 @@ export function StacksProvider({ children }: { children: ReactNode }) {
     setBtcAddress(null);
     setPublicKey(null);
     setConnected(false);
+    console.log("Disconnected");
   }
 }
