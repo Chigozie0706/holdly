@@ -35,7 +35,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
 
     setIsLoading(true);
     try {
-      // ✅ Dynamically import only when called (guaranteed client-side)
+      //  Dynamically import only when called (guaranteed client-side)
       const { connect } = await import("@stacks/connect");
       const response = await connect();
 
@@ -58,7 +58,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
   }
 
   function disconnectWallet() {
-    // ✅ Dynamic import here too
+    //  Dynamic import here too
     import("@stacks/connect").then(({ disconnect }) => disconnect());
     setAddress(null);
     setBtcAddress(null);
@@ -68,7 +68,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const checkConnection = async () => {
-      // ✅ Safe — only runs in browser, after mount
+      //  Safe — only runs in browser, after mount
       const { isConnected, getLocalStorage } = await import("@stacks/connect");
 
       if (!isConnected()) return;
