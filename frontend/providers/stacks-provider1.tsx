@@ -61,5 +61,6 @@ export function StacksProvider({ children }: { children: ReactNode }) {
     setAddress(null);
     setBtcAddress(null);
     setPublicKey(null);
+    setConnected();
   }
 }
