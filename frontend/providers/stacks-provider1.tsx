@@ -52,6 +52,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
     } catch (error) {
       console.error("Connection failed:", error);
     } finally {
+      setIsLoading();
     }
   }
 }
