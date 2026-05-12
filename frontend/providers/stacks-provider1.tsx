@@ -59,6 +59,6 @@ export function StacksProvider({ children }: { children: ReactNode }) {
   function disconnectWallet() {
     import("@stacks/connect").then(({ disconnect }) => disconnect());
     setAddress(null);
-    setBtcAddress();
+    setBtcAddress(null);
   }
 }
