@@ -55,4 +55,6 @@ export function StacksProvider({ children }: { children: ReactNode }) {
       setIsLoading(false);
     }
   }
+
+  function disconnectWallet() {}
 }
