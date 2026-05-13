@@ -72,6 +72,10 @@ export function StacksProvider({ children }: { children: ReactNode }) {
       const { isConnected, getLocalStorage } = await import("@stacks/connect");
 
       if (!isConnected()) return;
+
+      try {
+        
+      }
     };
   });
 }
