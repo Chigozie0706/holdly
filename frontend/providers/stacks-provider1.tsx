@@ -74,11 +74,11 @@ export function StacksProvider({ children }: { children: ReactNode }) {
       if (!isConnected()) return;
 
       try {
-        const userData = getLocalStorage()
+        const userData = getLocalStorage();
 
-        if (!userData) 
+        if (!userData?.addresses) return;
           
       }
-    };
+    }
   });
 }
