@@ -64,4 +64,6 @@ export function StacksProvider({ children }: { children: ReactNode }) {
     setConnected(false);
     console.log("Disconnected");
   }
+
+  // Restore session on mount
 }
