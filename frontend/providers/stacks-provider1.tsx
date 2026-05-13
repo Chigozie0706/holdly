@@ -67,5 +67,5 @@ export function StacksProvider({ children }: { children: ReactNode }) {
 
   // Restore session on mount
 
-  useEffect();
+  useEffect(() => {});
 }
