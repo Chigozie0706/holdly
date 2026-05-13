@@ -68,6 +68,8 @@ export function StacksProvider({ children }: { children: ReactNode }) {
   // Restore session on mount
 
   useEffect(() => {
-    const checkConnection = async () => {};
+    const checkConnection = async () => {
+      const { isConnected };
+    };
   });
 }
