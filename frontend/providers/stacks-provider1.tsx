@@ -71,8 +71,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
     const checkConnection = async () => {
       const { isConnected, getLocalStorage } = await import("@stacks/connect");
 
-      if () {
-        
+      if (!isConnected) {
       }
     };
   });
