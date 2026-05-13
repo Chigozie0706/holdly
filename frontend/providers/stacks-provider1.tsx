@@ -69,7 +69,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const checkConnection = async () => {
-      const { isConnected, getLocalStorage };
+      const { isConnected, getLocalStorage } = await import()
     };
   });
 }
