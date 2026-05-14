@@ -78,7 +78,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
 
         if (!userData?.addresses) return;
         
-        const addresses = Array.isArray(userData.addresses) ? userData.addresses : Object
+        const addresses = Array.isArray(userData.addresses) ? userData.addresses : Object.values()
       }
     }
   });
