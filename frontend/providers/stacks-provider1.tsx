@@ -80,7 +80,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
         
         const addresses = Array.isArray(userData.addresses) ? userData.addresses : Object.values(userData.addresses);
 
-        const stxAccount
+        const stxAccount = addresses.find()
       }
     }
   });
