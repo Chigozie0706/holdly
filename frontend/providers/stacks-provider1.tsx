@@ -78,7 +78,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
 
         if (!userData?.addresses) return;
         
-        const addresses
+        const addresses = Array
       }
     }
   });
