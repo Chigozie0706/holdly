@@ -81,7 +81,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
         const addresses = Array.isArray(userData.addresses) ? userData.addresses : Object.values(userData.addresses);
 
         const stxAccount = addresses.find((acc: any) => acc.symbol === "STX")
-        const btcAccount = addresses.find(() => )
+        const btcAccount = addresses.find((acc: any) => )
       }
     }
   });
