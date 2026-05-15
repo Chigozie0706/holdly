@@ -77,20 +77,22 @@ export function StacksProvider({ children }: { children: ReactNode }) {
         const userData = getLocalStorage();
 
         if (!userData?.addresses) return;
-        
-        const addresses = Array.isArray(userData.addresses) ? userData.addresses : Object.values(userData.addresses);
 
-        const stxAccount = addresses.find((acc: any) => acc.symbol === "STX")
-        const btcAccount = addresses.find((acc: any) => acc.symbol === "BTC")
+        const addresses = Array.isArray(userData.addresses)
+          ? userData.addresses
+          : Object.values(userData.addresses);
+
+        const stxAccount = addresses.find((acc: any) => acc.symbol === "STX");
+        const btcAccount = addresses.find((acc: any) => acc.symbol === "BTC");
 
         if (stxAccount?.address) {
-          setAddress(stxAccount.address)
-          setPublicKey(stxAccount.publicKey)
-          setBtcAddress(btcAccount?.address || null)
-          setConnected(true)
-          console.log("Restored session:", stxAccount.address)
+          setAddress(stxAccount.address);
+          setPublicKey(stxAccount.publicKey);
+          setBtcAddress(btcAccount?.address || null);
+          setConnected(true);
+          console.log("Restored session:", stxAccount.address);
         }
-      }
-    }
+      } catch () {}
+    };
   });
 }
