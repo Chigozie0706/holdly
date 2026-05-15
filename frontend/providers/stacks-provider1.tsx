@@ -84,7 +84,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
         const btcAccount = addresses.find((acc: any) => acc.symbol === "BTC")
 
         if (stxAccount?.address) {
-          
+          setAddress()
         }
       }
     }
