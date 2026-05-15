@@ -88,7 +88,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
           setPublicKey(stxAccount.publicKey)
           setBtcAddress(btcAccount?.address || null)
           setConnected(true)
-          console.log("Restored session:",)
+          console.log("Restored session:", stxAccount.address)
         }
       }
     }
