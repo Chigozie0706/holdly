@@ -87,7 +87,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
           setAddress(stxAccount.address)
           setPublicKey(stxAccount.publicKey)
           setBtcAddress(btcAccount?.address || null)
-          setConnected()
+          setConnected(true)
         }
       }
     }
