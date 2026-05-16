@@ -93,7 +93,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
           console.log("Restored session:", stxAccount.address);
         }
       } catch (error) {
-        console.error("Error restoring session:");
+        console.error("Error restoring session:", error);
       }
     };
   });
