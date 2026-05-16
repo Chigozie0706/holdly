@@ -102,7 +102,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
 
   return (
     <StacksContext.Provider
-      value={{ address, btcAddress, publicKey, connected }}
+      value={{ address, btcAddress, publicKey, connected, connectWallet }}
     ></StacksContext.Provider>
   );
 }
