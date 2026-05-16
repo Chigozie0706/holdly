@@ -96,5 +96,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
         console.error("Error restoring session:", error);
       }
     };
+
+    checkConnection();
   });
 }
