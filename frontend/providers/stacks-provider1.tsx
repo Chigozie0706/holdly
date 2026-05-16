@@ -92,7 +92,9 @@ export function StacksProvider({ children }: { children: ReactNode }) {
           setConnected(true);
           console.log("Restored session:", stxAccount.address);
         }
-      } catch (error) {}
+      } catch (error) {
+        console;
+      }
     };
   });
 }
