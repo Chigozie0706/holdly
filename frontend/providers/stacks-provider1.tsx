@@ -100,5 +100,5 @@ export function StacksProvider({ children }: { children: ReactNode }) {
     checkConnection();
   }, []);
 
-  return <StacksContext.Provider></StacksContext.Provider>;
+  return <StacksContext.Provider value={{}}></StacksContext.Provider>;
 }
