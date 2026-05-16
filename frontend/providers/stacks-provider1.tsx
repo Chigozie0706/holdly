@@ -98,5 +98,5 @@ export function StacksProvider({ children }: { children: ReactNode }) {
     };
 
     checkConnection();
-  });
+  }, []);
 }
