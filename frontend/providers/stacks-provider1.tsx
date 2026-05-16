@@ -109,6 +109,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
         connected,
         connectWallet,
         disconnectWallet,
+        isLoading,
       }}
     ></StacksContext.Provider>
   );
