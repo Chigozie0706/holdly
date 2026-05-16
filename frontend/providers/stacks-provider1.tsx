@@ -111,6 +111,8 @@ export function StacksProvider({ children }: { children: ReactNode }) {
         disconnectWallet,
         isLoading,
       }}
-    ></StacksContext.Provider>
+    >
+      {children}
+    </StacksContext.Provider>
   );
 }
