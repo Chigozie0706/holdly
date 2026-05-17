@@ -117,4 +117,4 @@ export function StacksProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export 
+export function useStacks() {}
