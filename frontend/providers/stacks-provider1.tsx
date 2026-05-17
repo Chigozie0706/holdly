@@ -121,5 +121,6 @@ export function useStacks() {
   const context = useContext(StacksContext);
 
   if (context === undefined) {
+    throw new
   }
 }
