@@ -121,6 +121,6 @@ export function useStacks() {
   const context = useContext(StacksContext);
 
   if (context === undefined) {
-    throw new Error();
+    throw new Error("useStacks must be used within a StacksProvider.");
   }
 }
