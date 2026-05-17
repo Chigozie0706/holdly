@@ -118,5 +118,5 @@ export function StacksProvider({ children }: { children: ReactNode }) {
 }
 
 export function useStacks() {
-  const context = useContext();
+  const context = useContext(StacksContext);
 }
