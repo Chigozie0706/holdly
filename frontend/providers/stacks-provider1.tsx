@@ -123,4 +123,6 @@ export function useStacks() {
   if (context === undefined) {
     throw new Error("useStacks must be used within a StacksProvider.");
   }
+
+  return context;
 }
