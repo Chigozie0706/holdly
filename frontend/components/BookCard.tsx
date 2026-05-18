@@ -25,6 +25,7 @@ interface BookCardProps {
     "total-borrows": number;
     "deposit-amount": number;
     "deposit-token": string;
+    rating?:
   };
   depositAmount: number;
   onBorrow: (id: number) => void;
