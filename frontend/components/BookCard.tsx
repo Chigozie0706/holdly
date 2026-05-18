@@ -71,7 +71,7 @@ export default function BookCard({
   const isOwner = connected && address && book.owner && address === book.owner;
   const canManage = isOwner && isAvailable;
 
-  function StarRating({ average, count });
+  function StarRating({ average, count }: { average: number });
 
   const handleEditFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
