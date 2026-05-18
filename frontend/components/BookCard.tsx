@@ -72,7 +72,7 @@ export default function BookCard({
   const canManage = isOwner && isAvailable;
 
   function StarRating({ average, count }: { average: number; count: number }) {
-    const stars;
+    const stars = average / 10;
   }
 
   const handleEditFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
