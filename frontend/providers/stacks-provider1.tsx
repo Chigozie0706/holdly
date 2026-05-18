@@ -31,27 +31,36 @@ export function StacksProvider({ children }: { children: ReactNode }) {
     if (connected && address) return;
 
     setIsLoading(true);
-
     try {
-      const { connect } = await import("@stacks/connect");
-      const response = await connect();
+      const { connect, getLocalStorage } = await import("@stacks/connect");
+      await connect();
 
-      const stxAccount = response.addresses[2];
-      const btcAccount = response.addresses[0];
+      // ✅ Poll localStorage up to 10 times (every 300ms)
+      // because the wallet writes addresses after the promise resolves
+      let attempts = 0;
+      const poll = setInterval(() => {
+        attempts++;
+        const userData = getLocalStorage() as any;
+        const stxAddress = userData?.addresses?.stx?.[0]?.address ?? null;
+        const stxPublicKey = userData?.addresses?.stx?.[0]?.publicKey ?? null;
+        const btcAddr = userData?.addresses?.btc?.[0]?.address ?? null;
 
-      if (stxAccount) {
-        setAddress(stxAccount.address);
-        setPublicKey(stxAccount.publicKey);
-        setConnected(true);
-        console.log("Connected to:", stxAccount.address);
-      }
-
-      if (btcAccount) {
-        setBtcAddress(btcAccount.address);
-      }
+        if (stxAddress) {
+          setAddress(stxAddress);
+          setPublicKey(stxPublicKey);
+          setBtcAddress(btcAddr);
+          setConnected(true);
+          console.log("✅ Connected:", stxAddress);
+          clearInterval(poll);
+          setIsLoading(false);
+        } else if (attempts >= 10) {
+          clearInterval(poll);
+          setIsLoading(false);
+          console.warn("⚠️ Could not read address after connect");
+        }
+      }, 300);
     } catch (error) {
-      console.error("Connection failed:", error);
-    } finally {
+      console.error("❌ Connection failed:", error);
       setIsLoading(false);
     }
   }
@@ -62,10 +71,7 @@ export function StacksProvider({ children }: { children: ReactNode }) {
     setBtcAddress(null);
     setPublicKey(null);
     setConnected(false);
-    console.log("Disconnected");
   }
-
-  // Restore session on mount
 
   useEffect(() => {
     const checkConnection = async () => {
@@ -74,26 +80,25 @@ export function StacksProvider({ children }: { children: ReactNode }) {
       if (!isConnected()) return;
 
       try {
-        const userData = getLocalStorage();
+        // ✅ Cast to any to bypass stale AddressEntry[] type
+        const userData = getLocalStorage() as any;
+        console.log("📦 localStorage data:", userData);
 
         if (!userData?.addresses) return;
 
-        const addresses = Array.isArray(userData.addresses)
-          ? userData.addresses
-          : Object.values(userData.addresses);
+        const stxAddress = userData.addresses?.stx?.[0]?.address ?? null;
+        const stxPublicKey = userData.addresses?.stx?.[0]?.publicKey ?? null;
+        const btcAddr = userData.addresses?.btc?.[0]?.address ?? null;
 
-        const stxAccount = addresses.find((acc: any) => acc.symbol === "STX");
-        const btcAccount = addresses.find((acc: any) => acc.symbol === "BTC");
-
-        if (stxAccount?.address) {
-          setAddress(stxAccount.address);
-          setPublicKey(stxAccount.publicKey);
-          setBtcAddress(btcAccount?.address || null);
+        if (stxAddress) {
+          setAddress(stxAddress);
+          setPublicKey(stxPublicKey);
+          setBtcAddress(btcAddr);
           setConnected(true);
-          console.log("Restored session:", stxAccount.address);
+          console.log("🔄 Restored session:", stxAddress);
         }
       } catch (error) {
-        console.error("Error restoring session:", error);
+        console.error("❌ Error restoring session:", error);
       }
     };
 
@@ -119,10 +124,8 @@ export function StacksProvider({ children }: { children: ReactNode }) {
 
 export function useStacks() {
   const context = useContext(StacksContext);
-
   if (context === undefined) {
     throw new Error("useStacks must be used within a StacksProvider.");
   }
-
   return context;
 }

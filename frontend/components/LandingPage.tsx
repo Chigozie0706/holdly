@@ -14,7 +14,7 @@ import {
   Zap,
   BookMarked,
 } from "lucide-react";
-import { useStacks } from "@/providers/stacks-provider";
+import { useStacks } from "@/providers/stacks-provider1";
 
 export default function LandingPage() {
   const router = useRouter();

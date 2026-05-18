@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import BrowseBooks from "@/components/BrowseBooks";
-import { useStacks } from "@/providers/stacks-provider";
+import { useStacks } from "@/providers/stacks-provider1";
 import { toast } from "sonner";
 import {
   DEPOSIT_AMOUNT,

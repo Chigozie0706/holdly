@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Footer from "@/components/Footer";
 import MyListedBooks from "@/components/MyListedBooks";
-import { useStacks } from "@/providers/stacks-provider";
+import { useStacks } from "@/providers/stacks-provider1";
 import { toast } from "sonner";
 import { CONTRACT_ADDRESS, CONTRACT_NAME } from "@/config/contract";
 
