@@ -75,9 +75,9 @@ export default function BookCard({
     const stars = average / 10;
 
     return (
-      <div
-        style={{ display: "flex", alignItems: "center", gap: "0.3rem" }}
-      ></div>
+      <div style={{ display: "flex", alignItems: "center", gap: "0.3rem" }}>
+        {[]}
+      </div>
     );
   }
 
