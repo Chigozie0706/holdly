@@ -74,7 +74,11 @@ export default function BookCard({
   function StarRating({ average, count }: { average: number; count: number }) {
     const stars = average / 10;
 
-    return <div style={{ display: "flex", alignItems: "center", gap: }}></div>;
+    return (
+      <div
+        style={{ display: "flex", alignItems: "center", gap: "0.3rem" }}
+      ></div>
+    );
   }
 
   const handleEditFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
