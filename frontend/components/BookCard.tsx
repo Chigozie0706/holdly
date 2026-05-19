@@ -77,7 +77,7 @@ export default function BookCard({
     return (
       <div style={{ display: "flex", alignItems: "center", gap: "0.3rem" }}>
         {[1, 2, 3, 4, 5].map((star) => (
-          <span></span>
+          <span key={star}></span>
         ))}
       </div>
     );
