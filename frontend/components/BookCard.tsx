@@ -79,7 +79,7 @@ export default function BookCard({
         {[1, 2, 3, 4, 5].map((star) => (
           <span
             key={star}
-            style={{ fontSize: "0.7rem", color: star <= Math.round(stars) }}
+            style={{ fontSize: "0.7rem", color: star <= Math.round(stars) ? "#D4A352" }}
           ></span>
         ))}
       </div>
