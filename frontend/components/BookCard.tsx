@@ -91,7 +91,7 @@ export default function BookCard({
           </span>
         ))}
 
-        <span></span>
+        <span style={{}}></span>
       </div>
     );
   }
