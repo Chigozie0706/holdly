@@ -86,7 +86,9 @@ export default function BookCard({
                   ? "#D4A352"
                   : "rgba(255,255,255,0.15)",
             }}
-          ></span>
+          >
+            ★
+          </span>
         ))}
       </div>
     );
