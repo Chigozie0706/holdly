@@ -91,7 +91,7 @@ export default function BookCard({
           </span>
         ))}
 
-        <span style={{}}></span>
+        <span style={{fontSize:}}></span>
       </div>
     );
   }
