@@ -390,9 +390,11 @@ export default function BookCard({
                     {book["deposit-token"] || "STX"}
                   </span>
                 </div>
-                <div className="book-meta-borrows">
-                  <Users size={11} />
-                  {book["total-borrows"]}x
+                <div>
+                  <div className="book-meta-borrows">
+                    <Users size={11} />
+                    {book["total-borrows"]}x
+                  </div>
                 </div>
               </div>
 
