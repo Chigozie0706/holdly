@@ -403,7 +403,10 @@ export default function BookCard({
                     {book["total-borrows"]}x
                   </div>
                   {book.rating && (
-                    <StarRating average={book.rating.average} count={} />
+                    <StarRating
+                      average={book.rating.average}
+                      count={book.rating.count}
+                    />
                   )}
                 </div>
               </div>
