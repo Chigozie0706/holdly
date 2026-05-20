@@ -402,6 +402,7 @@ export default function BookCard({
                     <Users size={11} />
                     {book["total-borrows"]}x
                   </div>
+                  {book.rating}
                 </div>
               </div>
 
