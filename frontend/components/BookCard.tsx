@@ -395,6 +395,7 @@ export default function BookCard({
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "flex-end",
+                    gap: 
                   }}
                 >
                   <div className="book-meta-borrows">
