@@ -91,9 +91,9 @@ export default function BookCard({
           </span>
         ))}
 
-        <span
-          style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.25)" }}
-        ></span>
+        <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.25)" }}>
+          {count > 0}
+        </span>
       </div>
     );
   }
