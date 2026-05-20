@@ -90,6 +90,8 @@ export default function BookCard({
             ★
           </span>
         ))}
+
+        <span></span>
       </div>
     );
   }
