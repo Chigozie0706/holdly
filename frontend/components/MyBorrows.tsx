@@ -2,6 +2,7 @@
 
 import "@/styles/MyBorrows.css";
 import { BookOpen, Coins, Hash, ArrowLeft, RotateCcw } from "lucide-react";
+import { useState } from "react";
 
 interface BorrowedBook {
   id: number;
