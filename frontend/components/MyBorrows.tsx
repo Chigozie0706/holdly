@@ -27,7 +27,7 @@ export default function MyBorrows({
   connected,
   isLoading = false,
 }: MyBorrowsProps) {
-  const [ratingBookId];
+  const [ratingBookId, setRatingBookId];
   const totalDeposit = borrowedBooks.reduce(
     (sum, b) => sum + b["deposit-amount"],
     0,
