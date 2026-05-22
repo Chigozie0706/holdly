@@ -40,7 +40,7 @@ export default function MyBorrows({
     if (!connected) return;
 
     try {
-      const { request } = await 
+      const { request } = await  import("@stacks/connect");
     }
   };
 
