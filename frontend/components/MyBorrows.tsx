@@ -36,7 +36,7 @@ export default function MyBorrows({
     0,
   );
 
-  const handleRate = async (bookId:) => {};
+  const handleRate = async (bookId: number) => {};
 
   return (
     <>
