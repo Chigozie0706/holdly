@@ -36,7 +36,7 @@ export default function MyBorrows({
     0,
   );
 
-  const handleRate = () => {};
+  const handleRate = async () => {};
 
   return (
     <>
