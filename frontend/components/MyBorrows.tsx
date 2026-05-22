@@ -41,6 +41,7 @@ export default function MyBorrows({
 
     try {
       const { request } = await  import("@stacks/connect");
+      const { Cl }
     }
   };
 
