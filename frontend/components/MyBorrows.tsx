@@ -37,7 +37,7 @@ export default function MyBorrows({
   );
 
   const handleRate = async (bookId: number, score: number) => {
-    if (!connected)
+    if (!connected) return;
   };
 
   return (
