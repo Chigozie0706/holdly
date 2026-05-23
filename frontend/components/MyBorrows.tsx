@@ -4,6 +4,7 @@ import { CONTRACT_ADDRESS, CONTRACT_NAME } from "@/config/contract";
 import "@/styles/MyBorrows.css";
 import { BookOpen, Coins, Hash, ArrowLeft, RotateCcw } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 interface BorrowedBook {
   id: number;
@@ -51,7 +52,7 @@ export default function MyBorrows({
       })
 
       if (response.txid) {
-        
+        toast.success()
       }
     }
   };
