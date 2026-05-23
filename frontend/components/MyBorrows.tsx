@@ -46,7 +46,7 @@ export default function MyBorrows({
 
       const response = await  request("stx_callContract", {
         contract : `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
-        functionName: 
+        functionName:  "rate-book"
       })
     }
   };
