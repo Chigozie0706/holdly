@@ -44,7 +44,8 @@ export default function MyBorrows({
       const { Cl } = await  import("@stacks/transactions");
 
       const response = await  request("stx_callContract", {
-        contract : `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`
+        contract : `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
+        functionName: 
       })
     }
   };
