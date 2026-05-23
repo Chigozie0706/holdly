@@ -53,6 +53,7 @@ export default function MyBorrows({
 
       if (response.txid) {
         toast.success("Rating submitted!")
+        setRatingBookId()
       }
     }
   };
