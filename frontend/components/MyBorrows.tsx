@@ -52,7 +52,7 @@ export default function MyBorrows({
       })
 
       if (response.txid) {
-        toast.success()
+        toast.success("Rating submitted!")
       }
     }
   };
