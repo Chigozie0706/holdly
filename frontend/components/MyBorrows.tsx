@@ -1,5 +1,6 @@
 "use client";
 
+import { CONTRACT_ADDRESS } from "@/config/contract";
 import "@/styles/MyBorrows.css";
 import { BookOpen, Coins, Hash, ArrowLeft, RotateCcw } from "lucide-react";
 import { useState } from "react";
