@@ -56,7 +56,9 @@ export default function MyBorrows({
         setRatingBookId(null);
       }
     } catch (error) {
-      toast.error();
+      toast.error(
+        `Failed to rate: ${error instanceof Error ? error.message : "Unknown error"}`,
+      );
     }
   };
 
