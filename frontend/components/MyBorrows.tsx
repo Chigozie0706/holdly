@@ -42,20 +42,20 @@ export default function MyBorrows({
     if (!connected) return;
 
     try {
-      const { request } = await  import("@stacks/connect");
-      const { Cl } = await  import("@stacks/transactions");
+      const { request } = await import("@stacks/connect");
+      const { Cl } = await import("@stacks/transactions");
 
-      const response = await  request("stx_callContract", {
-        contract : `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
-        functionName:  "rate-book",
-        functionArgs : [Cl.uint(bookId), Cl.uint(score)]
-      })
+      const response = await request("stx_callContract", {
+        contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
+        functionName: "rate-book",
+        functionArgs: [Cl.uint(bookId), Cl.uint(score)],
+      });
 
       if (response.txid) {
-        toast.success("Rating submitted!")
-        setRatingBookId()
+        toast.success("Rating submitted!");
+        setRatingBookId(null);
       }
-    }
+    } catch {}
   };
 
   return (
