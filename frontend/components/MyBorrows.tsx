@@ -55,7 +55,7 @@ export default function MyBorrows({
         toast.success("Rating submitted!");
         setRatingBookId(null);
       }
-    } catch {}
+    } catch (error) {}
   };
 
   return (
