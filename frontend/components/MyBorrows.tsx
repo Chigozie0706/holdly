@@ -49,6 +49,10 @@ export default function MyBorrows({
         functionName:  "rate-book",
         functionArgs : [Cl.uint(bookId), Cl.uint(score)]
       })
+
+      if () {
+        
+      }
     }
   };
 
