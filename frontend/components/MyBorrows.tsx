@@ -50,7 +50,7 @@ export default function MyBorrows({
         functionArgs : [Cl.uint(bookId), Cl.uint(score)]
       })
 
-      if () {
+      if (response.txid) {
         
       }
     }
