@@ -36,9 +36,10 @@ export default function BorrowHistoryPage() {
       return;
     }
 
-    try{
-              setIsFetching(true);
-const { fetchCallReadOnlyFunction, Cl, cvToJSON }
-    }
+    try {
+      setIsFetching(true);
+      const { fetchCallReadOnlyFunction, Cl, cvToJSON } =
+        await import("@stacks/transactions");
+    } catch {}
   };
 }
