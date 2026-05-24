@@ -66,6 +66,7 @@ export default function BorrowHistoryPage() {
       });
 
       const historyJson = cvToJSON(historyResult);
+      const entries = historyJson.value.value as any[];
     } catch {}
   };
 }
