@@ -30,5 +30,8 @@ export default function BorrowHistoryPage() {
   const [selectedScore, setSelectedScore] = useState(0);
   const [ratedBooks, setRatedBooks] = useState<Set<number>>(new Set());
 
-  const fetchHistory = async () => {};
+  const fetchHistory = async () => {
+    if (!connected || !address) {
+    }
+  };
 }
