@@ -38,7 +38,7 @@ export default function BorrowHistoryPage() {
 
     try{
               setIsFetching(true);
-
+const { fetchCallReadOnlyFunction, Cl, cvToJSON }
     }
   };
 }
