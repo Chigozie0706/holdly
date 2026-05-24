@@ -32,6 +32,8 @@ export default function BorrowHistoryPage() {
 
   const fetchHistory = async () => {
     if (!connected || !address) {
+      setIsFetching(false);
+      return;
     }
   };
 }
