@@ -41,7 +41,7 @@ export default function BorrowHistoryPage() {
       const { fetchCallReadOnlyFunction, Cl, cvToJSON } =
         await import("@stacks/transactions");
 
-      const { STACKS_MAINNET };
+      const { STACKS_MAINNET } = await import("@stacks/network");
     } catch {}
   };
 }
