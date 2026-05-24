@@ -35,5 +35,10 @@ export default function BorrowHistoryPage() {
       setIsFetching(false);
       return;
     }
+
+    try{
+              setIsFetching(true);
+
+    }
   };
 }
