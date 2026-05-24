@@ -64,6 +64,8 @@ export default function BorrowHistoryPage() {
         network: STACKS_MAINNET,
         senderAddress: CONTRACT_ADDRESS,
       });
+
+      const historyJson = cvToJSON(historyResult);
     } catch {}
   };
 }
