@@ -24,4 +24,9 @@ export default function BorrowHistoryPage() {
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [totalBorrows, setTotalBorrows] = useState(0);
   const [isFetching, setIsFetching] = useState(true);
+
+  //  Rating state
+  const [ratingBookId, setRatingBookId] = useState<number | null>(null);
+  const [selectedScore, setSelectedScore] = useState(0);
+  const [ratedBooks, setRatedBooks] = useState<Set<number>>(new Set());
 }
