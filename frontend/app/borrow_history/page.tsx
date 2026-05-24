@@ -42,6 +42,16 @@ export default function BorrowHistoryPage() {
         await import("@stacks/transactions");
 
       const { STACKS_MAINNET } = await import("@stacks/network");
+
+      // Fetch total borrows
+      const totalResult = await fetchCallReadOnlyFunction({
+        contractAddress: CONTRACT_ADDRESS,
+        contractName: CONTRACT_NAME,
+        functionName: "get-user-total-borrows",
+        functionArgs: [Cl.principal(address)],
+        network: STACKS_MAINNET,
+        senderAddress: CONTRACT_ADDRESS,
+      });
     } catch {}
   };
 }
