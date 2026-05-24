@@ -18,3 +18,5 @@ interface HistoryEntry {
   depositAmount: number;
   depositToken: string;
 }
+
+export default function BorrowHistoryPage() {}
