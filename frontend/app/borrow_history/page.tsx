@@ -19,4 +19,9 @@ interface HistoryEntry {
   depositToken: string;
 }
 
-export default function BorrowHistoryPage() {}
+export default function BorrowHistoryPage() {
+  const { address, connected } = useStacks();
+  const [history, setHistory] = useState<HistoryEntry[]>([]);
+  const [totalBorrows, setTotalBorrows] = useState(0);
+  const [isFetching, setIsFetching] = useState(true);
+}
