@@ -67,6 +67,10 @@ export default function BorrowHistoryPage() {
 
       const historyJson = cvToJSON(historyResult);
       const entries = historyJson.value.value as any[];
+
+      // Enrich with book details and check rating eligibility
+
+      const enriched: HistoryEntry[] = await Promise.all();
     } catch {}
   };
 }
