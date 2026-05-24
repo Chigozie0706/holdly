@@ -52,6 +52,8 @@ export default function BorrowHistoryPage() {
         network: STACKS_MAINNET,
         senderAddress: CONTRACT_ADDRESS,
       });
+
+      setTotalBorrows(Number(cvToJSON(totalResult).value.value));
     } catch {}
   };
 }
