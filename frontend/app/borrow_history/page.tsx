@@ -84,6 +84,7 @@ export default function BorrowHistoryPage() {
             })
 
                         const bookJson = cvToJSON(bookResult);
+            const bookData = bookJson.value?.value;
 
           }
         }),
