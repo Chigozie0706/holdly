@@ -96,6 +96,7 @@ export default function BorrowHistoryPage() {
             });
 
                         const canRateJson = cvToJSON(canRateResult);
+            const alreadyRated = canRateJson.value.value["already-rated"].value;
 
           }
         }),
