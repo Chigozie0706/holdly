@@ -72,7 +72,7 @@ export default function BorrowHistoryPage() {
 
       const enriched: HistoryEntry[] = await Promise.all(
         entries.map(async (entry: any) => {
-          const bookId = Number(entry.value["book-id"].value)
+          const bookId = Number(entry.value["book-id"].value);
           try {
             const bookResult = await fetchCallReadOnlyFunction({
               contractAddress: CONTRACT_ADDRESS,
@@ -81,9 +81,9 @@ export default function BorrowHistoryPage() {
               functionArgs: [Cl.uint(bookId)],
               network: STACKS_MAINNET,
               senderAddress: CONTRACT_ADDRESS,
-            })
+            });
 
-                        const bookJson = cvToJSON(bookResult);
+            const bookJson = cvToJSON(bookResult);
             const bookData = bookJson.value?.value;
 
             const canRateResult = await fetchCallReadOnlyFunction({
@@ -95,13 +95,12 @@ export default function BorrowHistoryPage() {
               senderAddress: CONTRACT_ADDRESS,
             });
 
-                        const canRateJson = cvToJSON(canRateResult);
+            const canRateJson = cvToJSON(canRateResult);
             const alreadyRated = canRateJson.value.value["already-rated"].value;
             if (alreadyRated) {
-                            setRatedBooks((prev) => new Set(prev).add(bookId));
-
+              setRatedBooks((prev) => new Set(prev).add(bookId));
             }
-                        return {
+            return {
               bookId,
               title: bookData?.title?.value,
               author: bookData?.author?.value,
@@ -111,8 +110,7 @@ export default function BorrowHistoryPage() {
               depositAmount: Number(entry.value["deposit-amount"].value),
               depositToken: entry.value["deposit-token"].value,
             };
-
-          }
+          } catch {}
         }),
       );
     } catch {}
