@@ -110,7 +110,15 @@ export default function BorrowHistoryPage() {
               depositAmount: Number(entry.value["deposit-amount"].value),
               depositToken: entry.value["deposit-token"].value,
             };
-          } catch {}
+          } catch {
+            return {
+              bookId,
+              borrowedAt: Number(entry.value["borrowed-at"].value),
+              returnedAt: Number(entry.value["returned-at"].value),
+              depositAmount: Number(entry.value["deposit-amount"].value),
+              depositToken: entry.value["deposit-token"].value,
+            };
+          }
         }),
       );
     } catch {}
