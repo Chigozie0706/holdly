@@ -72,9 +72,16 @@ export default function BorrowHistoryPage() {
 
       const enriched: HistoryEntry[] = await Promise.all(
         entries.map(async (entry: any) => {
-          const bookId = Number(entry.value["book-id"].value);
+          const bookId = Number(entry.value["book-id"].value)
           try {
-            
+            const bookResult = await fetchCallReadOnlyFunction({
+              contractAddress: CONTRACT_ADDRESS,
+              contractName: CONTRACT_NAME,
+              functionName: "get-book",
+              functionArgs: [Cl.uint(bookId)],
+              network: STACKS_MAINNET,
+              senderAddress: CONTRACT_ADDRESS,
+            })
           }
         }),
       );
