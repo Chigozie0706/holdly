@@ -72,7 +72,7 @@ export default function BorrowHistoryPage() {
 
       const enriched: HistoryEntry[] = await Promise.all(
         entries.map(async (entry: any) => {
-          const bookId;
+          const bookId = Number(entry.value["book-id"].value);
         }),
       );
     } catch {}
