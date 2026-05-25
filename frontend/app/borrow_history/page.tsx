@@ -71,7 +71,9 @@ export default function BorrowHistoryPage() {
       // Enrich with book details and check rating eligibility
 
       const enriched: HistoryEntry[] = await Promise.all(
-        entries.map(async (entry: any) => {}),
+        entries.map(async (entry: any) => {
+          const bookId;
+        }),
       );
     } catch {}
   };
