@@ -85,7 +85,7 @@ export default function BorrowHistoryPage() {
 
                         const bookJson = cvToJSON(bookResult);
             const bookData = bookJson.value?.value;
-            
+
             const canRateResult = await fetchCallReadOnlyFunction({
               contractAddress: CONTRACT_ADDRESS,
               contractName: CONTRACT_NAME,
@@ -94,6 +94,8 @@ export default function BorrowHistoryPage() {
               network: STACKS_MAINNET,
               senderAddress: CONTRACT_ADDRESS,
             });
+
+                        const canRateJson = cvToJSON(canRateResult);
 
           }
         }),
