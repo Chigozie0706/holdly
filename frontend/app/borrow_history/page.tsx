@@ -101,6 +101,17 @@ export default function BorrowHistoryPage() {
                             setRatedBooks((prev) => new Set(prev).add(bookId));
 
             }
+                        return {
+              bookId,
+              title: bookData?.title?.value,
+              author: bookData?.author?.value,
+              coverPage: bookData?.["cover-page"]?.value,
+              borrowedAt: Number(entry.value["borrowed-at"].value),
+              returnedAt: Number(entry.value["returned-at"].value),
+              depositAmount: Number(entry.value["deposit-amount"].value),
+              depositToken: entry.value["deposit-token"].value,
+            };
+
           }
         }),
       );
