@@ -70,7 +70,7 @@ export default function BorrowHistoryPage() {
 
       // Enrich with book details and check rating eligibility
 
-      const enriched: HistoryEntry[] = await Promise.all();
+      const enriched: HistoryEntry[] = await Promise.all(entries.map());
     } catch {}
   };
 }
