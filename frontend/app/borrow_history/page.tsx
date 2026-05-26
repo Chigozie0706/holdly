@@ -157,4 +157,7 @@ export default function BorrowHistoryPage() {
   useEffect(() => {
     fetchHistory();
   }, [connected, address]);
+
+  if (!connected) {
+  }
 }
