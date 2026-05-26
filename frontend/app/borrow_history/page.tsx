@@ -124,7 +124,8 @@ export default function BorrowHistoryPage() {
 
       setHistory(enriched.reverse());
     } catch (error) {
-      console.error();
+      console.error("Error fetching history:", error);
+    } finally {
     }
   };
 }
