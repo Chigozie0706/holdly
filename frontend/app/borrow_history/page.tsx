@@ -136,6 +136,11 @@ export default function BorrowHistoryPage() {
     try{
             const { request } = await import("@stacks/connect");
       const { Cl } = await import("@stacks/transactions");
+      const response = await request("stx_callContract", {
+        contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
+        functionName: "rate-book",
+        functionArgs: [Cl.uint(bookId), Cl.uint(score)],
+      });
 
     }
   };
