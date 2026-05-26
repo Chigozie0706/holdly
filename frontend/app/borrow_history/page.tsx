@@ -172,7 +172,9 @@ export default function BorrowHistoryPage() {
               border: "1px dashed rgba(255,255,255,0.07)",
               borderRadius: "4px",
             }}
-          ></div>
+          >
+            <BookOpen size={28} color="rgba(212,163,82,0.3)" />
+          </div>
         </main>
       </div>
     );
