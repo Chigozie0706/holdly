@@ -184,6 +184,10 @@ export default function BorrowHistoryPage() {
               {" "}
               Connect your wallet
             </p>
+
+            <p
+              style={{ color: "rgba(255,255,255,0.2)", fontSize: "0.78rem" }}
+            ></p>
           </div>
         </main>
       </div>
