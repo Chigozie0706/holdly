@@ -130,5 +130,5 @@ export default function BorrowHistoryPage() {
     }
   };
 
-  const handleRate = async () => {};
+  const handleRate = async (bookId: number, score: number) => {};
 }
