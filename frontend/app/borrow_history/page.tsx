@@ -141,7 +141,8 @@ export default function BorrowHistoryPage() {
         functionName: "rate-book",
         functionArgs: [Cl.uint(bookId), Cl.uint(score)],
       });
-
+      if (response.txid) {
+      }
     }
   };
 }
