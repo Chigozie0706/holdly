@@ -180,7 +180,10 @@ export default function BorrowHistoryPage() {
                 fontFamily: "serif",
                 fontSize: "1.05rem",
               }}
-            ></p>
+            >
+              {" "}
+              Connect your wallet
+            </p>
           </div>
         </main>
       </div>
