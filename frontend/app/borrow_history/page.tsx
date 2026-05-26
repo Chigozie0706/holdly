@@ -147,6 +147,10 @@ export default function BorrowHistoryPage() {
         setRatingBookId(null);
         setSelectedScore(0);
       }
-    } catch (error) {}
+    } catch (error) {
+      toast.error(
+        `Failed to rate: ${error instanceof Error ? error.message : "Unknown error"}`,
+      );
+    }
   };
 }
