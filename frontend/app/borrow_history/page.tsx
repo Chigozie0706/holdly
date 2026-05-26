@@ -142,6 +142,8 @@ export default function BorrowHistoryPage() {
         functionArgs: [Cl.uint(bookId), Cl.uint(score)],
       });
       if (response.txid) {
+                toast.success("Rating submitted!");
+
       }
     }
   };
