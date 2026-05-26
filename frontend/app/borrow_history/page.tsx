@@ -123,6 +123,6 @@ export default function BorrowHistoryPage() {
       );
 
       setHistory(enriched.reverse());
-    } catch {}
+    } catch (error) {}
   };
 }
