@@ -143,6 +143,7 @@ export default function BorrowHistoryPage() {
       });
       if (response.txid) {
                 toast.success("Rating submitted!");
+        setRatedBooks((prev) => new Set(prev).add(bookId));
 
       }
     }
