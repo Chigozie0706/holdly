@@ -135,6 +135,7 @@ export default function BorrowHistoryPage() {
 
     try{
             const { request } = await import("@stacks/connect");
+      const { Cl } = await import("@stacks/transactions");
 
     }
   };
