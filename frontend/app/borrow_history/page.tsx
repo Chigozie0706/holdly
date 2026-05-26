@@ -133,8 +133,8 @@ export default function BorrowHistoryPage() {
   const handleRate = async (bookId: number, score: number) => {
     if (!connected || score === 0) return;
 
-    try{
-            const { request } = await import("@stacks/connect");
+    try {
+      const { request } = await import("@stacks/connect");
       const { Cl } = await import("@stacks/transactions");
       const response = await request("stx_callContract", {
         contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
@@ -142,12 +142,11 @@ export default function BorrowHistoryPage() {
         functionArgs: [Cl.uint(bookId), Cl.uint(score)],
       });
       if (response.txid) {
-                toast.success("Rating submitted!");
+        toast.success("Rating submitted!");
         setRatedBooks((prev) => new Set(prev).add(bookId));
         setRatingBookId(null);
         setSelectedScore(0);
-
       }
-    }
+    } catch (error) {}
   };
 }
