@@ -145,6 +145,7 @@ export default function BorrowHistoryPage() {
                 toast.success("Rating submitted!");
         setRatedBooks((prev) => new Set(prev).add(bookId));
         setRatingBookId(null);
+        setSelectedScore(0);
 
       }
     }
