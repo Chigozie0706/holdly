@@ -191,6 +191,8 @@ export default function BorrowHistoryPage() {
             </p>
           </div>
         </main>
+
+        <Footer bookCount={0} />
       </div>
     );
   }
