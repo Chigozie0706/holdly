@@ -161,7 +161,19 @@ export default function BorrowHistoryPage() {
   if (!connected) {
     return (
       <div className="min-h-screen">
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"></main>
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              padding: "5rem 2rem",
+              gap: "0.85rem",
+              border: "1px dashed rgba(255,255,255,0.07)",
+              borderRadius: "4px",
+            }}
+          ></div>
+        </main>
       </div>
     );
   }
