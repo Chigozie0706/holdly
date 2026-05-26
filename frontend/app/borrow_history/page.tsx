@@ -129,4 +129,6 @@ export default function BorrowHistoryPage() {
       setIsFetching(false);
     }
   };
+
+  const handleRate = async () => {};
 }
