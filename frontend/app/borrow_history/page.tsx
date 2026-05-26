@@ -126,6 +126,7 @@ export default function BorrowHistoryPage() {
     } catch (error) {
       console.error("Error fetching history:", error);
     } finally {
+      setIsFetching(false);
     }
   };
 }
