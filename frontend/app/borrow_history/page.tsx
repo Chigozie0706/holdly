@@ -209,7 +209,10 @@ export default function BorrowHistoryPage() {
               color: "rgba(255,255,255,0.9)",
               margin: "0 0 0.25rem",
             }}
-          ></h2>
+          >
+            {" "}
+            Borrow History
+          </h2>
         </div>
       </main>
     </div>
