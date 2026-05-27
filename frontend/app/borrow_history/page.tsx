@@ -200,7 +200,9 @@ export default function BorrowHistoryPage() {
   return (
     <div className="min-h-screen">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div style={{ marginBottom: "1.75rem" }}></div>
+        <div style={{ marginBottom: "1.75rem" }}>
+          <h2></h2>
+        </div>
       </main>
     </div>
   );
