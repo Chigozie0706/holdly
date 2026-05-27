@@ -225,26 +225,46 @@ export default function BorrowHistoryPage() {
           </p>
         </div>
 
-                {isFetching ? (
-                            <div style={{ textAlign: "center", padding: "3rem", color: "rgba(255,255,255,0.3)" }}>
-                                          Loading history...
-
-</div>
-                ) : history.length === 0 ? (
-                  <div style={{
-            display: "flex", flexDirection: "column", alignItems: "center",
-            padding: "5rem 2rem", gap: "0.85rem",
-            border: "1px dashed rgba(255,255,255,0.07)", borderRadius: "4px"
-          }}>
+        {isFetching ? (
+          <div
+            style={{
+              textAlign: "center",
+              padding: "3rem",
+              color: "rgba(255,255,255,0.3)",
+            }}
+          >
+            Loading history...
+          </div>
+        ) : history.length === 0 ? (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              padding: "5rem 2rem",
+              gap: "0.85rem",
+              border: "1px dashed rgba(255,255,255,0.07)",
+              borderRadius: "4px",
+            }}
+          >
             <BookOpen size={28} color="rgba(212,163,82,0.3)" />
-            <p style={{ color: "rgba(255,255,255,0.45)", fontFamily: "serif" }}>No history yet</p>
+            <p style={{ color: "rgba(255,255,255,0.45)", fontFamily: "serif" }}>
+              No history yet
+            </p>
             <p style={{ color: "rgba(255,255,255,0.2)", fontSize: "0.78rem" }}>
               Books you return will appear here
             </p>
-
-
-                  </div>
-                ): ()}
+          </div>
+        ) : (
+          <div
+            style={{
+              background: "rgba(255,255,255,0.02)",
+              border: "1px solid rgba(255,255,255,0.07)",
+              borderRadius: "4px",
+              overflow: "hidden",
+            }}
+          ></div>
+        )}
       </main>
     </div>
   );
