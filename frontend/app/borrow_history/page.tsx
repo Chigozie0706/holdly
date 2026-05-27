@@ -213,6 +213,8 @@ export default function BorrowHistoryPage() {
             {" "}
             Borrow History
           </h2>
+
+          <p></p>
         </div>
       </main>
     </div>
