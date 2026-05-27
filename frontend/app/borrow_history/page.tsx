@@ -230,7 +230,7 @@ export default function BorrowHistoryPage() {
                                           Loading history...
 
 </div>
-                )}
+                ) : history.length === 0 ? ()}
       </main>
     </div>
   );
