@@ -226,6 +226,10 @@ export default function BorrowHistoryPage() {
         </div>
 
                 {isFetching ? (
+                            <div style={{ textAlign: "center", padding: "3rem", color: "rgba(255,255,255,0.3)" }}>
+                                          Loading history...
+
+</div>
                 )}
       </main>
     </div>
