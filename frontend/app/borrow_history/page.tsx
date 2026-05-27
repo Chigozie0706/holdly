@@ -224,6 +224,9 @@ export default function BorrowHistoryPage() {
             {totalBorrows} book{totalBorrows !== 1 ? "s" : ""} borrowed in total
           </p>
         </div>
+
+                {isFetching ? (
+                )}
       </main>
     </div>
   );
