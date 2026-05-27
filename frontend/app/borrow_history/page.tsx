@@ -238,10 +238,13 @@ export default function BorrowHistoryPage() {
           }}>
             <BookOpen size={28} color="rgba(212,163,82,0.3)" />
             <p style={{ color: "rgba(255,255,255,0.45)", fontFamily: "serif" }}>No history yet</p>
+            <p style={{ color: "rgba(255,255,255,0.2)", fontSize: "0.78rem" }}>
+              Books you return will appear here
+            </p>
 
 
                   </div>
-                )}
+                ): ()}
       </main>
     </div>
   );
