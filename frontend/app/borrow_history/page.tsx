@@ -201,7 +201,15 @@ export default function BorrowHistoryPage() {
     <div className="min-h-screen">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div style={{ marginBottom: "1.75rem" }}>
-          <h2></h2>
+          <h2
+            style={{
+              fontFamily: "serif",
+              fontSize: "1.75rem",
+              fontWeight: 700,
+              color: "rgba(255,255,255,0.9)",
+              margin: "0 0 0.25rem",
+            }}
+          ></h2>
         </div>
       </main>
     </div>
