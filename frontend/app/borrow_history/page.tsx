@@ -230,7 +230,16 @@ export default function BorrowHistoryPage() {
                                           Loading history...
 
 </div>
-                ) : history.length === 0 ? ()}
+                ) : history.length === 0 ? (
+                  <div style={{
+            display: "flex", flexDirection: "column", alignItems: "center",
+            padding: "5rem 2rem", gap: "0.85rem",
+            border: "1px dashed rgba(255,255,255,0.07)", borderRadius: "4px"
+          }}>
+
+
+                  </div>
+                )}
       </main>
     </div>
   );
