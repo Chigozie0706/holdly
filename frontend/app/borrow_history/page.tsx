@@ -237,6 +237,7 @@ export default function BorrowHistoryPage() {
             border: "1px dashed rgba(255,255,255,0.07)", borderRadius: "4px"
           }}>
             <BookOpen size={28} color="rgba(212,163,82,0.3)" />
+            <p style={{ color: "rgba(255,255,255,0.45)", fontFamily: "serif" }}>No history yet</p>
 
 
                   </div>
