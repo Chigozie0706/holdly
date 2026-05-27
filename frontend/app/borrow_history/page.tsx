@@ -220,7 +220,9 @@ export default function BorrowHistoryPage() {
               color: "rgba(255,255,255,0.3)",
               margin: 0,
             }}
-          ></p>
+          >
+            {totalBorrows} book{totalBorrows !== 1 ? "s" : ""} borrowed in total
+          </p>
         </div>
       </main>
     </div>
