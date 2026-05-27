@@ -214,7 +214,13 @@ export default function BorrowHistoryPage() {
             Borrow History
           </h2>
 
-          <p></p>
+          <p
+            style={{
+              fontSize: "0.82rem",
+              color: "rgba(255,255,255,0.3)",
+              margin: 0,
+            }}
+          ></p>
         </div>
       </main>
     </div>
