@@ -336,6 +336,12 @@ export default function BorrowHistoryPage() {
                       Block {entry.returnedAt.toLocaleString()}
                     </td>
 
+
+                    {/* Deposit */}
+                    <td style={{ padding: "0.85rem 1rem", fontSize: "0.82rem", fontWeight: 500, color: "#D4A352" }}>
+                      {(entry.depositAmount / 1_000_000).toFixed(2)} {entry.depositToken}
+                    </td>
+
                         )
             </table>
           </div>
