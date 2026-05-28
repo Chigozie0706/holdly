@@ -378,6 +378,14 @@ export default function BorrowHistoryPage() {
                           >
                             Submit
                           </button>
+                          <button
+                            onClick={() => { setRatingBookId(null); setSelectedScore(0); }}
+                            style={{ background: "none", border: "none", cursor: "pointer", fontSize: "0.8rem", color: "rgba(255,255,255,0.3)" }}
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ) : (
 
                         
             </table>
