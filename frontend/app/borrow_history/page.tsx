@@ -349,8 +349,24 @@ export default function BorrowHistoryPage() {
                           ★ Rated
                         </span>
                       ) :
+                      ratingBookId === entry.bookId ? (
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <button
+                              key={star}
+                              onClick={() => setSelectedScore(star)}
+                              style={{
+                                background: "none", border: "none", cursor: "pointer",
+                                fontSize: "1.1rem", padding: "0.1rem",
+                                color: star <= selectedScore ? "#D4A352" : "rgba(255,255,255,0.2)",
+                                transition: "color 0.1s",
+                              }}
+                            >
+                              ★
+                            </button>
+                          ))}
 
-                        )
+                        
             </table>
           </div>
         )}
