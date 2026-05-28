@@ -503,6 +503,7 @@ export default function BorrowHistoryPage() {
           </div>
         )}
       </main>
+      <Footer bookCount={0} />
     </div>
   );
 }
