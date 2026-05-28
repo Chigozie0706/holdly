@@ -303,7 +303,15 @@ export default function BorrowHistoryPage() {
                             style={{ width: "36px", height: "48px", objectFit: "cover", borderRadius: "2px" }}
                             onError={(e) => ((e.target as HTMLImageElement).style.display = "none")}
                           />
-                        ):()
+                        ):(
+                                                    <div style={{
+                            width: "36px", height: "48px", borderRadius: "2px",
+                            background: "rgba(212,163,82,0.05)",
+                            border: "1px solid rgba(212,163,82,0.1)",
+                            display: "flex", alignItems: "center", justifyContent: "center"
+                          }}>
+</div>
+                        )
             </table>
           </div>
         )}
