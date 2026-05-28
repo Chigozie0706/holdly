@@ -263,7 +263,9 @@ export default function BorrowHistoryPage() {
               borderRadius: "4px",
               overflow: "hidden",
             }}
-          ></div>
+          >
+            <table></table>
+          </div>
         )}
       </main>
     </div>
