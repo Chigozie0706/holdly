@@ -342,6 +342,14 @@ export default function BorrowHistoryPage() {
                       {(entry.depositAmount / 1_000_000).toFixed(2)} {entry.depositToken}
                     </td>
 
+                    {/* Rate */}
+                    <td style={{ padding: "0.85rem 1rem" }}>
+                      {ratedBooks.has(entry.bookId) ? (
+                        <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.2)" }}>
+                          ★ Rated
+                        </span>
+                      ) :
+
                         )
             </table>
           </div>
