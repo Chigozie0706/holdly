@@ -365,6 +365,19 @@ export default function BorrowHistoryPage() {
                               ★
                             </button>
                           ))}
+                          <button
+                            onClick={() => handleRate(entry.bookId, selectedScore)}
+                            disabled={selectedScore === 0}
+                            style={{
+                              padding: "0.25rem 0.5rem", fontSize: "0.7rem",
+                              background: "rgba(212,163,82,0.1)",
+                              border: "1px solid rgba(212,163,82,0.3)",
+                              color: selectedScore > 0 ? "#D4A352" : "rgba(255,255,255,0.2)",
+                              borderRadius: "2px", cursor: selectedScore > 0 ? "pointer" : "not-allowed",
+                            }}
+                          >
+                            Submit
+                          </button>
 
                         
             </table>
