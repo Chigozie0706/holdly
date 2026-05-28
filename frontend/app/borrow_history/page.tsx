@@ -292,73 +292,144 @@ export default function BorrowHistoryPage() {
 
               <tbody>
                 {history.map((entry, i) => (
-                  <tr key={i} style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                  <tr
+                    key={i}
+                    style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}
+                  >
                     {/* Book */}
                     <td style={{ padding: "0.85rem 1rem" }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "0.75rem",
+                        }}
+                      >
                         {entry.coverPage ? (
                           <img
                             src={entry.coverPage}
                             alt={entry.title}
-                            style={{ width: "36px", height: "48px", objectFit: "cover", borderRadius: "2px" }}
-                            onError={(e) => ((e.target as HTMLImageElement).style.display = "none")}
+                            style={{
+                              width: "36px",
+                              height: "48px",
+                              objectFit: "cover",
+                              borderRadius: "2px",
+                            }}
+                            onError={(e) =>
+                              ((e.target as HTMLImageElement).style.display =
+                                "none")
+                            }
                           />
-                        ):(
-                                                    <div style={{
-                            width: "36px", height: "48px", borderRadius: "2px",
-                            background: "rgba(212,163,82,0.05)",
-                            border: "1px solid rgba(212,163,82,0.1)",
-                            display: "flex", alignItems: "center", justifyContent: "center"
-                          }}>
-                                                        <BookOpen size={14} color="rgba(212,163,82,0.3)" />
-
-</div>
+                        ) : (
+                          <div
+                            style={{
+                              width: "36px",
+                              height: "48px",
+                              borderRadius: "2px",
+                              background: "rgba(212,163,82,0.05)",
+                              border: "1px solid rgba(212,163,82,0.1)",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <BookOpen size={14} color="rgba(212,163,82,0.3)" />
+                          </div>
                         )}
                         <div>
-                          <p style={{ fontSize: "0.85rem", fontWeight: 500, color: "rgba(255,255,255,0.85)", margin: "0 0 0.2rem" }}>
+                          <p
+                            style={{
+                              fontSize: "0.85rem",
+                              fontWeight: 500,
+                              color: "rgba(255,255,255,0.85)",
+                              margin: "0 0 0.2rem",
+                            }}
+                          >
                             {entry.title || `Book #${entry.bookId}`}
                           </p>
-                          <p style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.25)", margin: 0 }}>
-                            {entry.author ? `by ${entry.author}` : `ID #${entry.bookId}`}
+                          <p
+                            style={{
+                              fontSize: "0.72rem",
+                              color: "rgba(255,255,255,0.25)",
+                              margin: 0,
+                            }}
+                          >
+                            {entry.author
+                              ? `by ${entry.author}`
+                              : `ID #${entry.bookId}`}
                           </p>
                         </div>
                       </div>
                     </td>
 
-                                        {/* Borrowed at */}
-                    <td style={{ padding: "0.85rem 1rem", fontSize: "0.78rem", color: "rgba(255,255,255,0.4)" }}>
+                    {/* Borrowed at */}
+                    <td
+                      style={{
+                        padding: "0.85rem 1rem",
+                        fontSize: "0.78rem",
+                        color: "rgba(255,255,255,0.4)",
+                      }}
+                    >
                       Block {entry.borrowedAt.toLocaleString()}
                     </td>
 
-
                     {/* Returned at */}
-                    <td style={{ padding: "0.85rem 1rem", fontSize: "0.78rem", color: "rgba(74,222,128,0.7)" }}>
+                    <td
+                      style={{
+                        padding: "0.85rem 1rem",
+                        fontSize: "0.78rem",
+                        color: "rgba(74,222,128,0.7)",
+                      }}
+                    >
                       Block {entry.returnedAt.toLocaleString()}
                     </td>
 
-
                     {/* Deposit */}
-                    <td style={{ padding: "0.85rem 1rem", fontSize: "0.82rem", fontWeight: 500, color: "#D4A352" }}>
-                      {(entry.depositAmount / 1_000_000).toFixed(2)} {entry.depositToken}
+                    <td
+                      style={{
+                        padding: "0.85rem 1rem",
+                        fontSize: "0.82rem",
+                        fontWeight: 500,
+                        color: "#D4A352",
+                      }}
+                    >
+                      {(entry.depositAmount / 1_000_000).toFixed(2)}{" "}
+                      {entry.depositToken}
                     </td>
 
                     {/* Rate */}
                     <td style={{ padding: "0.85rem 1rem" }}>
                       {ratedBooks.has(entry.bookId) ? (
-                        <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.2)" }}>
+                        <span
+                          style={{
+                            fontSize: "0.72rem",
+                            color: "rgba(255,255,255,0.2)",
+                          }}
+                        >
                           ★ Rated
                         </span>
-                      ) :
-                      ratingBookId === entry.bookId ? (
-                        <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                      ) : ratingBookId === entry.bookId ? (
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "0.25rem",
+                          }}
+                        >
                           {[1, 2, 3, 4, 5].map((star) => (
                             <button
                               key={star}
                               onClick={() => setSelectedScore(star)}
                               style={{
-                                background: "none", border: "none", cursor: "pointer",
-                                fontSize: "1.1rem", padding: "0.1rem",
-                                color: star <= selectedScore ? "#D4A352" : "rgba(255,255,255,0.2)",
+                                background: "none",
+                                border: "none",
+                                cursor: "pointer",
+                                fontSize: "1.1rem",
+                                padding: "0.1rem",
+                                color:
+                                  star <= selectedScore
+                                    ? "#D4A352"
+                                    : "rgba(255,255,255,0.2)",
                                 transition: "color 0.1s",
                               }}
                             >
@@ -366,28 +437,68 @@ export default function BorrowHistoryPage() {
                             </button>
                           ))}
                           <button
-                            onClick={() => handleRate(entry.bookId, selectedScore)}
+                            onClick={() =>
+                              handleRate(entry.bookId, selectedScore)
+                            }
                             disabled={selectedScore === 0}
                             style={{
-                              padding: "0.25rem 0.5rem", fontSize: "0.7rem",
+                              padding: "0.25rem 0.5rem",
+                              fontSize: "0.7rem",
                               background: "rgba(212,163,82,0.1)",
                               border: "1px solid rgba(212,163,82,0.3)",
-                              color: selectedScore > 0 ? "#D4A352" : "rgba(255,255,255,0.2)",
-                              borderRadius: "2px", cursor: selectedScore > 0 ? "pointer" : "not-allowed",
+                              color:
+                                selectedScore > 0
+                                  ? "#D4A352"
+                                  : "rgba(255,255,255,0.2)",
+                              borderRadius: "2px",
+                              cursor:
+                                selectedScore > 0 ? "pointer" : "not-allowed",
                             }}
                           >
                             Submit
                           </button>
                           <button
-                            onClick={() => { setRatingBookId(null); setSelectedScore(0); }}
-                            style={{ background: "none", border: "none", cursor: "pointer", fontSize: "0.8rem", color: "rgba(255,255,255,0.3)" }}
+                            onClick={() => {
+                              setRatingBookId(null);
+                              setSelectedScore(0);
+                            }}
+                            style={{
+                              background: "none",
+                              border: "none",
+                              cursor: "pointer",
+                              fontSize: "0.8rem",
+                              color: "rgba(255,255,255,0.3)",
+                            }}
                           >
                             ✕
                           </button>
                         </div>
                       ) : (
-
-                        
+                        <button
+                          onClick={() => {
+                            setRatingBookId(entry.bookId);
+                            setSelectedScore(0);
+                          }}
+                          style={{
+                            padding: "0.3rem 0.6rem",
+                            fontSize: "0.72rem",
+                            background: "rgba(212,163,82,0.06)",
+                            border: "1px solid rgba(212,163,82,0.2)",
+                            color: "rgba(212,163,82,0.7)",
+                            borderRadius: "2px",
+                            cursor: "pointer",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "0.3rem",
+                          }}
+                        >
+                          <Star size={11} /> Rate
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
         )}
