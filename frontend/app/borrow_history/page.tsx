@@ -314,6 +314,16 @@ export default function BorrowHistoryPage() {
 
 </div>
                         )}
+                        <div>
+                          <p style={{ fontSize: "0.85rem", fontWeight: 500, color: "rgba(255,255,255,0.85)", margin: "0 0 0.2rem" }}>
+                            {entry.title || `Book #${entry.bookId}`}
+                          </p>
+                          <p style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.25)", margin: 0 }}>
+                            {entry.author ? `by ${entry.author}` : `ID #${entry.bookId}`}
+                          </p>
+                        </div>
+                      </div>
+                    </td>
 
                         )
             </table>
