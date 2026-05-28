@@ -310,7 +310,11 @@ export default function BorrowHistoryPage() {
                             border: "1px solid rgba(212,163,82,0.1)",
                             display: "flex", alignItems: "center", justifyContent: "center"
                           }}>
+                                                        <BookOpen size={14} color="rgba(212,163,82,0.3)" />
+
 </div>
+                        )}
+
                         )
             </table>
           </div>
