@@ -264,7 +264,32 @@ export default function BorrowHistoryPage() {
               overflow: "hidden",
             }}
           >
-            <table></table>
+            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+              <thead>
+                <tr
+                  style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+                >
+                  {["Book", "Borrowed", "Returned", "Deposit", "Rate"].map(
+                    (h) => (
+                      <th
+                        key={h}
+                        style={{
+                          padding: "0.85rem 1rem",
+                          textAlign: "left",
+                          fontSize: "0.65rem",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.1em",
+                          color: "rgba(255,255,255,0.22)",
+                          fontWeight: 500,
+                        }}
+                      >
+                        {h}
+                      </th>
+                    ),
+                  )}
+                </tr>
+              </thead>
+            </table>
           </div>
         )}
       </main>
