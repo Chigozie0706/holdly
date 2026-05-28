@@ -289,6 +289,21 @@ export default function BorrowHistoryPage() {
                   )}
                 </tr>
               </thead>
+
+              <tbody>
+                {history.map((entry, i) => (
+                  <tr key={i} style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                    {/* Book */}
+                    <td style={{ padding: "0.85rem 1rem" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                        {entry.coverPage ? (
+                          <img
+                            src={entry.coverPage}
+                            alt={entry.title}
+                            style={{ width: "36px", height: "48px", objectFit: "cover", borderRadius: "2px" }}
+                            onError={(e) => ((e.target as HTMLImageElement).style.display = "none")}
+                          />
+                        ):()
             </table>
           </div>
         )}
