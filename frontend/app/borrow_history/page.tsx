@@ -331,6 +331,11 @@ export default function BorrowHistoryPage() {
                     </td>
 
 
+                    {/* Returned at */}
+                    <td style={{ padding: "0.85rem 1rem", fontSize: "0.78rem", color: "rgba(74,222,128,0.7)" }}>
+                      Block {entry.returnedAt.toLocaleString()}
+                    </td>
+
                         )
             </table>
           </div>
