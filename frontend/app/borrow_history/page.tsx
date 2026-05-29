@@ -38,47 +38,68 @@ export default function BorrowHistoryPage() {
 
     try {
       setIsFetching(true);
+
       const { fetchCallReadOnlyFunction, Cl, cvToJSON } =
         await import("@stacks/transactions");
-
       const { STACKS_MAINNET } = await import("@stacks/network");
 
-      // Fetch total borrows
-      const totalResult = await fetchCallReadOnlyFunction({
+      // 1. get total history count
+      const countResult = await fetchCallReadOnlyFunction({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
-        functionName: "get-user-total-borrows",
+        functionName: "get-user-history-count",
         functionArgs: [Cl.principal(address)],
         network: STACKS_MAINNET,
         senderAddress: CONTRACT_ADDRESS,
       });
 
-      setTotalBorrows(Number(cvToJSON(totalResult).value.value));
+      const total = Number(cvToJSON(countResult).value.value);
 
-      // Fetch history list
-      const historyResult = await fetchCallReadOnlyFunction({
-        contractAddress: CONTRACT_ADDRESS,
-        contractName: CONTRACT_NAME,
-        functionName: "get-user-borrow-history",
-        functionArgs: [Cl.principal(address)],
-        network: STACKS_MAINNET,
-        senderAddress: CONTRACT_ADDRESS,
-      });
+      setTotalBorrows(total);
 
-      const historyJson = cvToJSON(historyResult);
-      const entries = historyJson.value.value as any[];
+      if (total === 0) {
+        setHistory([]);
+        return;
+      }
 
-      // Enrich with book details and check rating eligibility
+      // 2. fetch all history items in parallel
+      const historyPromises = Array.from({ length: total }, (_, i) =>
+        fetchCallReadOnlyFunction({
+          contractAddress: CONTRACT_ADDRESS,
+          contractName: CONTRACT_NAME,
+          functionName: "get-user-history-item",
+          functionArgs: [Cl.principal(address), Cl.uint(i + 1)],
+          network: STACKS_MAINNET,
+          senderAddress: CONTRACT_ADDRESS,
+        }).then((res) => {
+          const json = cvToJSON(res);
+          const d = json.value?.value;
 
+          if (!d) return null;
+
+          return {
+            bookId: Number(d["book-id"].value),
+            borrowedAt: Number(d["borrowed-at"].value),
+            returnedAt: Number(d["returned-at"].value),
+            depositAmount: Number(d["deposit-amount"].value),
+            depositToken: d["deposit-token"].value,
+          };
+        }),
+      );
+
+      const results = await Promise.all(historyPromises);
+
+      const valid = results.filter(Boolean) as HistoryEntry[];
+
+      // 3. enrich with book data
       const enriched: HistoryEntry[] = await Promise.all(
-        entries.map(async (entry: any) => {
-          const bookId = Number(entry.value["book-id"].value);
+        valid.map(async (entry) => {
           try {
             const bookResult = await fetchCallReadOnlyFunction({
               contractAddress: CONTRACT_ADDRESS,
               contractName: CONTRACT_NAME,
               functionName: "get-book",
-              functionArgs: [Cl.uint(bookId)],
+              functionArgs: [Cl.uint(entry.bookId)],
               network: STACKS_MAINNET,
               senderAddress: CONTRACT_ADDRESS,
             });
@@ -86,38 +107,14 @@ export default function BorrowHistoryPage() {
             const bookJson = cvToJSON(bookResult);
             const bookData = bookJson.value?.value;
 
-            const canRateResult = await fetchCallReadOnlyFunction({
-              contractAddress: CONTRACT_ADDRESS,
-              contractName: CONTRACT_NAME,
-              functionName: "can-user-rate",
-              functionArgs: [Cl.principal(address), Cl.uint(bookId)],
-              network: STACKS_MAINNET,
-              senderAddress: CONTRACT_ADDRESS,
-            });
-
-            const canRateJson = cvToJSON(canRateResult);
-            const alreadyRated = canRateJson.value.value["already-rated"].value;
-            if (alreadyRated) {
-              setRatedBooks((prev) => new Set(prev).add(bookId));
-            }
             return {
-              bookId,
+              ...entry,
               title: bookData?.title?.value,
               author: bookData?.author?.value,
               coverPage: bookData?.["cover-page"]?.value,
-              borrowedAt: Number(entry.value["borrowed-at"].value),
-              returnedAt: Number(entry.value["returned-at"].value),
-              depositAmount: Number(entry.value["deposit-amount"].value),
-              depositToken: entry.value["deposit-token"].value,
             };
           } catch {
-            return {
-              bookId,
-              borrowedAt: Number(entry.value["borrowed-at"].value),
-              returnedAt: Number(entry.value["returned-at"].value),
-              depositAmount: Number(entry.value["deposit-amount"].value),
-              depositToken: entry.value["deposit-token"].value,
-            };
+            return entry;
           }
         }),
       );
