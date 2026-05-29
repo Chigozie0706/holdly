@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import MyBorrows from "@/components/MyBorrows";
 import { useStacks } from "@/providers/stacks-provider1";
 import { CONTRACT_ADDRESS, CONTRACT_NAME } from "@/config/contract";
+import { toast } from "sonner";
 
 interface Book {
   id: number;
@@ -234,6 +235,86 @@ export default function MyBorrowsPage() {
       setIsProcessing(false);
     }
   };
+
+  // const handleReturn1 = async (bookId: number) => {
+  //   if (!connected || !address) {
+  //     toast.error("Please connect your wallet first");
+  //     return;
+  //   }
+
+  //   setIsProcessing(true);
+  //   try {
+  //     const { request } = await import("@stacks/connect");
+  //     const { Cl, Pc, cvToJSON, fetchCallReadOnlyFunction } =
+  //       await import("@stacks/transactions");
+  //     const { STACKS_MAINNET } = await import("@stacks/network");
+
+  //     // ✅ Fetch the borrow record fresh from chain — don't trust local state
+  //     const borrowResult = await fetchCallReadOnlyFunction({
+  //       contractAddress: CONTRACT_ADDRESS,
+  //       contractName: CONTRACT_NAME,
+  //       functionName: "get-borrow",
+  //       functionArgs: [Cl.uint(bookId)],
+  //       network: STACKS_MAINNET,
+  //       senderAddress: CONTRACT_ADDRESS,
+  //     });
+
+  //     const borrowJson = cvToJSON(borrowResult);
+  //     const borrowData = borrowJson?.value?.value;
+
+  //     if (!borrowData) {
+  //       toast.error("Borrow record not found");
+  //       setIsProcessing(false);
+  //       return;
+  //     }
+
+  //     const depositAmount = Number(borrowData["deposit-amount"].value);
+  //     const depositToken = borrowData["deposit-token"].value;
+
+  //     console.log("On-chain deposit amount:", depositAmount);
+  //     console.log("On-chain deposit token:", depositToken);
+
+  //     const postConditions =
+  //       depositToken === "STX"
+  //         ? [
+  //             Pc.principal(`${CONTRACT_ADDRESS}.${CONTRACT_NAME}`)
+  //               .willSendEq(depositAmount)
+  //               .ustx(),
+  //           ]
+  //         : [];
+
+  //     // const response = await request("stx_callContract", {
+  //     //   contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
+  //     //   functionName: "return-book",
+  //     //   functionArgs: [Cl.uint(bookId)],
+  //     //   postConditions,
+  //     // });
+
+  //     const response = await request("stx_callContract", {
+  //       contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
+  //       functionName: "return-book",
+  //       functionArgs: [Cl.uint(bookId)],
+  //       postConditions: [], // ← remove post-condition entirely
+  //       postConditionMode: "allow" as any, // ← allow any transfers
+  //     });
+
+  //     if (response.txid) {
+  //       toast.success(
+  //         `Returned! Deposit of ${(depositAmount / 1_000_000).toFixed(2)} ${depositToken} will be refunded.`,
+  //       );
+  //       setTimeout(async () => {
+  //         await fetchBorrowedBooks();
+  //         setIsProcessing(false);
+  //       }, 10000);
+  //     }
+  //   } catch (e) {
+  //     console.error("Return error:", e);
+  //     toast.error(
+  //       `Failed to return: ${e instanceof Error ? e.message : "Unknown error"}`,
+  //     );
+  //     setIsProcessing(false);
+  //   }
+  // };
 
   return (
     <>
