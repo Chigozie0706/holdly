@@ -41,7 +41,7 @@ export default function BorrowHistoryPage() {
         await import("@stacks/transactions");
       const { STACKS_MAINNET } = await import("@stacks/network");
 
-      // ✅ Get total history count first
+      //  Get total history count first
       const countResult = await fetchCallReadOnlyFunction({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
@@ -50,15 +50,27 @@ export default function BorrowHistoryPage() {
         network: STACKS_MAINNET,
         senderAddress: CONTRACT_ADDRESS,
       });
-      const totalEntries = Number(cvToJSON(countResult).value.value);
+
+      const countJson = cvToJSON(countResult);
+      console.log(
+        "History count response:",
+        JSON.stringify(countJson, null, 2),
+      );
+
+      //  Safe null check
+      const totalEntries = countJson?.value?.value
+        ? Number(countJson.value.value)
+        : 0;
+
       setTotalBorrows(totalEntries);
 
       if (totalEntries === 0) {
+        setHistory([]);
         setIsFetching(false);
         return;
       }
 
-      // ✅ Fetch each history item by index
+      //  Fetch each history item by index
       const historyPromises = Array.from({ length: totalEntries }, (_, i) =>
         fetchCallReadOnlyFunction({
           contractAddress: CONTRACT_ADDRESS,
@@ -71,14 +83,20 @@ export default function BorrowHistoryPage() {
       );
 
       const historyResults = await Promise.all(historyPromises);
+      console.log(
+        "First history result:",
+        JSON.stringify(historyResults[0], null, 2),
+      );
 
-      // ✅ Enrich with book details
       const enriched: (HistoryEntry | null)[] = await Promise.all(
-        historyResults.map(async (result, i) => {
-          const entry = result?.value?.value;
+        historyResults.map(async (result) => {
+          // response → optional → tuple → actual data
+          const entry = result?.value?.value?.value;
           if (!entry) return null;
 
-          const bookId = Number(entry["book-id"].value);
+          const bookId = Number(entry["book-id"]?.value);
+          if (!bookId) return null;
+
           try {
             const bookResult = await fetchCallReadOnlyFunction({
               contractAddress: CONTRACT_ADDRESS,
@@ -91,7 +109,6 @@ export default function BorrowHistoryPage() {
             const bookJson = cvToJSON(bookResult);
             const bookData = bookJson.value?.value;
 
-            // Check rating eligibility
             const canRateResult = await fetchCallReadOnlyFunction({
               contractAddress: CONTRACT_ADDRESS,
               contractName: CONTRACT_NAME,
@@ -101,7 +118,8 @@ export default function BorrowHistoryPage() {
               senderAddress: CONTRACT_ADDRESS,
             });
             const canRateJson = cvToJSON(canRateResult);
-            const alreadyRated = canRateJson.value.value["already-rated"].value;
+            const alreadyRated =
+              canRateJson.value?.value?.["already-rated"]?.value;
             if (alreadyRated) {
               setRatedBooks((prev) => new Set(prev).add(bookId));
             }
