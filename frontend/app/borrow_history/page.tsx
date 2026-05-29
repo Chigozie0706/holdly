@@ -367,7 +367,7 @@ export default function BorrowHistoryPage() {
                         color: "rgba(255,255,255,0.4)",
                       }}
                     >
-                      Block {entry.borrowedAt.toLocaleString()}
+                      Block #{entry.borrowedAt}
                     </td>
 
                     {/* Returned at */}
