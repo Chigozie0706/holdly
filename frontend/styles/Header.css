@@ -281,3 +281,12 @@
           .wallet-addr    { display: none; }
           .hdr-inner      { padding: 0 1.25rem; }
         }
+
+
+        @media (max-width: 1024px) and (min-width: 769px) {
+  .hdr-nav-link {
+    padding: 0.42rem 0.55rem;
+    font-size: 0.76rem;
+  }
+  .hdr-nav-icon { display: none; } /* hide icons to save space */
+}
