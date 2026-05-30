@@ -1,7 +1,7 @@
 "use client";
 
 import "@/styles/BrowseBooks.css";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Search, Library } from "lucide-react";
 import BookCard from "./BookCard";
 
