@@ -55,7 +55,7 @@ export default function Header({
 
   return (
     <>
-      {/* ── Header bar ── */}
+      {/*  Header bar  */}
       <header className={`hdr ${scrolled ? "scrolled" : ""}`}>
         <div className="hdr-inner">
           {/* Brand */}
@@ -117,7 +117,7 @@ export default function Header({
         </div>
       </header>
 
-      {/* ── Mobile drawer ── */}
+      {/*  Mobile drawer  */}
       <div className={`hdr-drawer ${mobileOpen ? "open" : ""}`}>
         {NAV_LINKS.map(({ href, label, icon: Icon }) => (
           <Link
