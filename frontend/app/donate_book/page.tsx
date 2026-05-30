@@ -4,11 +4,7 @@ import AddBookForm from "@/components/AddBookForm";
 import { useStacks } from "@/providers/stacks-provider1";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import {
-  DEPOSIT_AMOUNT,
-  CONTRACT_ADDRESS,
-  CONTRACT_NAME,
-} from "@/config/contract";
+import { CONTRACT_ADDRESS, CONTRACT_NAME } from "@/config/contract";
 
 export default function DonateBook() {
   const { connected } = useStacks();
