@@ -1,7 +1,7 @@
 "use client";
 
 import "@/styles/LandingPage.css";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   ArrowRight,
@@ -40,7 +40,7 @@ export default function LandingPage() {
         <div className="glow glow-2" />
         <div className="glow glow-3" />
 
-        {/* ── Hero ── */}
+        {/*  Hero  */}
         <section className="lp-hero">
           <div className="hero-grid" />
           <div className="hero-rule hero-rule-t" />
@@ -86,7 +86,7 @@ export default function LandingPage() {
           <div className="hero-rule hero-rule-b" />
         </section>
 
-        {/* ── Stats ── */}
+        {/*  Stats  */}
         <div className="lp-stats">
           <div className="stats-row">
             <div>
@@ -104,7 +104,7 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* ── How it works ── */}
+        {/*  How it works  */}
         <section id="hiw" className="lp-section">
           <p className="sec-eyebrow">How it works</p>
           <h2 className="sec-h2">
@@ -154,7 +154,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* ── Features ── */}
+        {/*  Features  */}
         <section className="lp-section" style={{ paddingTop: 0 }}>
           <p className="sec-eyebrow">Why Holdly</p>
           <h2 className="sec-h2">Built different.</h2>
@@ -202,7 +202,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* ── Final CTA ── */}
+        {/*  Final CTA  */}
         <section className="lp-cta">
           <div className="lp-cta-glow" />
           <div className="lp-cta-line lp-cta-line-t" />
