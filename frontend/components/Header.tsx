@@ -12,6 +12,7 @@ import {
   PlusCircle,
   BookOpen,
   BookCopy,
+  History,
 } from "lucide-react";
 
 interface HeaderProps {
