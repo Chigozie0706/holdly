@@ -93,7 +93,7 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
       );
       if (!res.ok) throw new Error("Upload failed");
       const data = await res.json();
-      // const url = `https://${process.env.NEXT_PUBLIC_PINATA_GATEWAY}/ipfs/${data.IpfsHash}`;
+
       const url = `https://gateway.pinata.cloud/ipfs/${data.IpfsHash}`;
 
       toast.success("Uploaded to IPFS!", { id: toastId });
