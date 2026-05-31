@@ -137,14 +137,15 @@ export default function MyBorrowsPage() {
         contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
         functionName: "return-book",
         functionArgs: [Cl.uint(bookId)],
-        postConditions: [
+        postConditions: 
           // Contract sends the deposit back to the borrower
             book["deposit-token"] === "STX"
 ?
-          Pc.principal(`${CONTRACT_ADDRESS}.${CONTRACT_NAME}`)
-            .willSendEq(book["deposit-amount"])
-            .ustx(),
-        ],
+          [
+        Pc.principal(`${CONTRACT_ADDRESS}.${CONTRACT_NAME}`)
+          .willSendEq(book["deposit-amount"])
+          .ustx(),
+      ]  
       });
 
       if (response.txid) {
