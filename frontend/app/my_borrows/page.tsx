@@ -139,6 +139,8 @@ export default function MyBorrowsPage() {
         functionArgs: [Cl.uint(bookId)],
         postConditions: [
           // Contract sends the deposit back to the borrower
+            book["deposit-token"] === "STX"
+?
           Pc.principal(`${CONTRACT_ADDRESS}.${CONTRACT_NAME}`)
             .willSendEq(book["deposit-amount"])
             .ustx(),
