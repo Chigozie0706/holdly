@@ -119,7 +119,7 @@ export default function MyBorrowsPage() {
 
   const handleReturn = async (bookId: number) => {
     if (!connected || !address) {
-      alert("Please connect your wallet first");
+      toast.error();
       return;
     }
     const book = borrowedBooks.find((b) => b.id === bookId);
