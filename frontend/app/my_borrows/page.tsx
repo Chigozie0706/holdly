@@ -133,19 +133,20 @@ export default function MyBorrowsPage() {
       const { request } = await import("@stacks/connect");
       const { Cl, Pc } = await import("@stacks/transactions");
 
+      const postConditions =
+        book["deposit-token"] === "STX"
+          ? [
+              Pc.principal(`${CONTRACT_ADDRESS}.${CONTRACT_NAME}`)
+                .willSendEq(book["deposit-amount"])
+                .ustx(),
+            ]
+          : [];
+
       const response = await request("stx_callContract", {
         contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
         functionName: "return-book",
         functionArgs: [Cl.uint(bookId)],
-        postConditions:
-          // Contract sends the deposit back to the borrower
-          book["deposit-token"] === "STX"
-            ? [
-                Pc.principal(`${CONTRACT_ADDRESS}.${CONTRACT_NAME}`)
-                  .willSendEq(book["deposit-amount"])
-                  .ustx(),
-              ]
-            : [],
+        postConditions,
       });
 
       if (response.txid) {
