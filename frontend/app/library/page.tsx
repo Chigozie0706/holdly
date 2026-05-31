@@ -128,14 +128,16 @@ export default function Library() {
       const { request } = await import("@stacks/connect");
       const { Cl, Pc } = await import("@stacks/transactions");
 
+      const postConditions =
+        book["deposit-token"] === "STX"
+          ? [Pc.principal(address).willSendEq(book["deposit-amount"]).ustx()]
+          : []; // sBTC handled by token contract
+
       const response = await request("stx_callContract", {
         contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
         functionName: "borrow-book",
         functionArgs: [Cl.uint(bookId)],
-        postConditions: [
-          // Borrower sends deposit to the contract
-          Pc.principal(address).willSendEq(book["deposit-amount"]).ustx(),
-        ],
+        postConditions,
       });
 
       if (response.txid) {
