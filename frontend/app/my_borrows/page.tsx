@@ -146,9 +146,7 @@ export default function MyBorrowsPage() {
       });
 
       if (response.txid) {
-        alert(
-          `Returned! TX: ${response.txid}\nDeposit of ${(book["deposit-amount"] / 1_000_000).toFixed(2)} STX will be refunded.`,
-        );
+        toast.success();
         setTimeout(async () => {
           await fetchBorrowedBooks();
           setIsProcessing(false);
