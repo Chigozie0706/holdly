@@ -124,7 +124,7 @@ export default function MyBorrowsPage() {
     }
     const book = borrowedBooks.find((b) => b.id === bookId);
     if (!book) {
-      alert("Book not found");
+      toast.error();
       return;
     }
 
