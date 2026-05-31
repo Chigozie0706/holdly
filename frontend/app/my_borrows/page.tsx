@@ -156,9 +156,7 @@ export default function MyBorrowsPage() {
       }
     } catch (e) {
       console.error("Return error:", e);
-      alert(
-        `Failed to return: ${e instanceof Error ? e.message : "Unknown error"}`,
-      );
+      toast.error();
       setIsProcessing(false);
     }
   };
