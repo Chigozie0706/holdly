@@ -213,21 +213,6 @@ export default function Library() {
     }
   };
 
-  const handleRateBook = async (bookId: number, score: number) => {
-    if (!connected || !address) {
-      toast.error("Please connect your wallet first");
-      return;
-    }
-
-    try {
-      const { request } = await import("@stacks/connect");
-    } catch (error) {
-      toast.error(
-        `Failed to rate: ${error instanceof Error ? error.message : "Unknown error"}`,
-      );
-    }
-  };
-
   const handleDeleteBook = async (bookId: number) => {
     if (!connected || !address) {
       toast.error("Please connect your wallet first");
