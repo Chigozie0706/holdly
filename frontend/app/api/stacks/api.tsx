@@ -6,6 +6,8 @@ export async function POST(req: NextRequest) {
       await req.json();
     const url = `https://api.mainnet.hiro.so/v2/contracts/call-read/${contractAddress}/${contractName}/${functionName}`;
 
-    const response = await fetch(url, {});
+    const response = await fetch(url, {
+      method: "POST",
+    });
   } catch {}
 }
