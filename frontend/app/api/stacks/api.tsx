@@ -16,5 +16,8 @@ export async function POST(req: NextRequest) {
         arguments: functionArgs,
       }),
     });
+
+    if (!response.ok) {
+    }
   } catch {}
 }
