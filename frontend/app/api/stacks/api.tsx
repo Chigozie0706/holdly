@@ -11,6 +11,10 @@ export async function POST(req: NextRequest) {
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        sender: contractAddress,
+        arguments: functionArgs,
+      }),
     });
   } catch {}
 }
