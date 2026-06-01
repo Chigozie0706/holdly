@@ -8,6 +8,9 @@ export async function POST(req: NextRequest) {
 
     const response = await fetch(url, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
   } catch {}
 }
