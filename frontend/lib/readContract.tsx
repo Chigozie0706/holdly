@@ -4,3 +4,5 @@ import {
   serializeCV,
   ClarityValue,
 } from "@stacks/transactions";
+
+export async function readContract({}) {}
