@@ -26,5 +26,7 @@ export async function POST(req: NextRequest) {
         { status: response.status },
       );
     }
+
+    const data = await response.json();
   } catch {}
 }
