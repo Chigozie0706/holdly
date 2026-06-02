@@ -18,6 +18,7 @@ export async function POST(req: NextRequest) {
     });
 
     if (!response.ok) {
+      return NextResponse.json();
     }
   } catch {}
 }
