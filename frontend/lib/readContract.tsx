@@ -10,4 +10,9 @@ export async function readContract({
   contractName,
   functionName,
   functionArgs = [],
+}: {
+  contractAddress: string;
+  contractName: string;
+  functionName: string;
+  functionArgs?: ClarityValue[];
 }) {}
