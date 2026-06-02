@@ -18,7 +18,13 @@ export async function POST(req: NextRequest) {
     });
 
     if (!response.ok) {
-      return NextResponse.json();
+      return NextResponse.json(
+        {
+          error: "Hiro API error",
+          status: response.status,
+        },
+        { status: response.status },
+      );
     }
   } catch {}
 }
