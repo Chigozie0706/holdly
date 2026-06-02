@@ -5,4 +5,9 @@ import {
   ClarityValue,
 } from "@stacks/transactions";
 
-export async function readContract({}) {}
+export async function readContract({
+  contractAddress,
+  contractName,
+  functionName,
+  functionArgs = [],
+}) {}
