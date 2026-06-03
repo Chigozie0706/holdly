@@ -20,4 +20,6 @@ export async function readContract({
   const serializedArgs = functionArgs.map((arg) =>
     Buffer.from(serializeCV(arg)).toString("hex"),
   );
+
+  const response;
 }
