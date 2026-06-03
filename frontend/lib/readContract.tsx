@@ -31,4 +31,6 @@ export async function readContract({
       functionArgs: serializedArgs,
     }),
   });
+
+  if (!response.ok) throw new Error(`API error: ${response.status}`);
 }
