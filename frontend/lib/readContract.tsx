@@ -17,5 +17,5 @@ export async function readContract({
   functionArgs?: ClarityValue[];
 }) {
   // Serialize args to hex
-  const serializedArgs;
+  const serializedArgs = functionArgs.map((arg) => )
 }
