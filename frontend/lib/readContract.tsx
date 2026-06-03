@@ -23,5 +23,6 @@ export async function readContract({
 
   const response = await fetch("/api/stacks", {
     method: "POST",
+    headers: { "Content-Type": "application/json" },
   });
 }
