@@ -21,5 +21,7 @@ export async function readContract({
     Buffer.from(serializeCV(arg)).toString("hex"),
   );
 
-  const response = await fetch("/api/stacks", {});
+  const response = await fetch("/api/stacks", {
+    method: "POST",
+  });
 }
