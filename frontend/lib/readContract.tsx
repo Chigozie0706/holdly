@@ -37,4 +37,6 @@ export async function readContract({
   const data = await response.json();
 
   // Hiro returns { okay: true, result: "0x..." }
+
+  if (!data.okay)
 }
