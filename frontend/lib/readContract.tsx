@@ -42,4 +42,6 @@ export async function readContract({
 
   // Deserialize the hex result
   const cv = deserializeCV(Buffer.from(data.result.slice(2), "hex"));
+
+  return cvToJSON(cv);
 }
