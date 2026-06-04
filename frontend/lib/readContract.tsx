@@ -38,5 +38,5 @@ export async function readContract({
 
   // Hiro returns { okay: true, result: "0x..." }
 
-  if (!data.okay)
+  if (!data.okay) throw new Error(data.cause ?? "Contract call failed");
 }
