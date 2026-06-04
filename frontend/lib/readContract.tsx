@@ -34,5 +34,5 @@ export async function readContract({
 
   if (!response.ok) throw new Error(`API error: ${response.status}`);
 
-  const data;
+  const data = await response.json();
 }
