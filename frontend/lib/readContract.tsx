@@ -39,4 +39,7 @@ export async function readContract({
   // Hiro returns { okay: true, result: "0x..." }
 
   if (!data.okay) throw new Error(data.cause ?? "Contract call failed");
+
+  // Deserialize the hex result
+  const cv = deserializeCV(Buffer.from(data.result.slice(2), "hex"));
 }
