@@ -35,4 +35,6 @@ export async function readContract({
   if (!response.ok) throw new Error(`API error: ${response.status}`);
 
   const data = await response.json();
+
+  // Hiro returns { okay: true, result: "0x..." }
 }
