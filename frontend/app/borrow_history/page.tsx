@@ -39,6 +39,8 @@ export default function BorrowHistoryPage() {
       setIsFetching(true);
       const { fetchCallReadOnlyFunction, Cl, cvToJSON } =
         await import("@stacks/transactions");
+      const { readContract } = 
+
       const { STACKS_MAINNET } = await import("@stacks/network");
 
       //  Get total history count first
