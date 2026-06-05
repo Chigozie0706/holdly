@@ -39,7 +39,7 @@ export default function BorrowHistoryPage() {
       setIsFetching(true);
       const { fetchCallReadOnlyFunction, Cl, cvToJSON } =
         await import("@stacks/transactions");
-      const { readContract } = await import()
+      const { readContract } = await import("@/lib/readContract");
 
       const { STACKS_MAINNET } = await import("@stacks/network");
 
