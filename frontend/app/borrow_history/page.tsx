@@ -43,6 +43,13 @@ export default function BorrowHistoryPage() {
 
       const { STACKS_MAINNET } = await import("@stacks/network");
 
+      const json = await readContract({
+        contractAddress: CONTRACT_ADDRESS,
+        contractName: CONTRACT_NAME,
+        functionName: "get-book-count",
+        functionArgs: [],
+      });
+
       //  Get total history count first
       const countResult = await fetchCallReadOnlyFunction({
         contractAddress: CONTRACT_ADDRESS,
