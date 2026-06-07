@@ -62,6 +62,7 @@ export async function readContract(
       return await readContractOnce(params);
     } catch (error) {
       if (attempt === retries) throw error;
+      // Wait before retry — longer each attempt
     }
   }
 }
