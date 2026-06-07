@@ -53,4 +53,7 @@ async function readContractOnce({
   return cvToJSON(cv);
 }
 
-export async function readContract(params: ReadContractParams, retries = 3) {}
+export async function readContract(
+  params: ReadContractParams,
+  retries = 3,
+): Promise<any> {}
