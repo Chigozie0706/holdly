@@ -63,6 +63,7 @@ export async function readContract(
     } catch (error) {
       if (attempt === retries) throw error;
       // Wait before retry — longer each attempt
+      await new Promise((resolve) => setTimeout(resolve, 1000 * attempt));
     }
   }
 }
