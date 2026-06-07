@@ -12,7 +12,7 @@ interface ReadContractParams {
   functionArgs?: ClarityValue[];
 }
 
-export async function readContractOnce({
+async function readContractOnce({
   contractAddress,
   contractName,
   functionName,
@@ -52,3 +52,5 @@ export async function readContractOnce({
 
   return cvToJSON(cv);
 }
+
+export async function readContract(params: ReadContractParams, retries = 3) {}
