@@ -58,8 +58,8 @@ export async function readContract(
   retries = 3,
 ): Promise<any> {
   for (let attempt = 1; attempt <= retries; attempt++) {
-        try {
+    try {
       return await readContractOnce(params);
-    }
+    } catch (error) {}
   }
 }
