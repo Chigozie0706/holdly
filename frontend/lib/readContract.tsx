@@ -46,4 +46,6 @@ export async function readContract({
   return cvToJSON(cv);
 }
 
-interface ReadContractParams {}
+interface ReadContractParams {
+  contractAddress: string;
+}
