@@ -57,5 +57,9 @@ export async function readContract(
   params: ReadContractParams,
   retries = 3,
 ): Promise<any> {
-  for (let attempt = 1; attempt <= retries; attempt++) {}
+  for (let attempt = 1; attempt <= retries; attempt++) {
+        try {
+      return await readContractOnce(params);
+    }
+  }
 }
