@@ -50,4 +50,5 @@ interface ReadContractParams {
   contractAddress: string;
   contractName: string;
   functionName: string;
+  functionArgs?: ClarityValue[];
 }
