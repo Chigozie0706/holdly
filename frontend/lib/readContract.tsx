@@ -56,4 +56,6 @@ async function readContractOnce({
 export async function readContract(
   params: ReadContractParams,
   retries = 3,
-): Promise<any> {}
+): Promise<any> {
+  for (let attempt = 1; attempt <= retries; attempt++) {}
+}
