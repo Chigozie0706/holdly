@@ -48,4 +48,5 @@ export async function readContract({
 
 interface ReadContractParams {
   contractAddress: string;
+  contractName: string;
 }
