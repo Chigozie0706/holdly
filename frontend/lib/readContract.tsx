@@ -5,7 +5,24 @@ import {
   ClarityValue,
 } from "@stacks/transactions";
 
-export async function readContract(params: ReadContractParams, retries = 3) {
+interface ReadContractParams {
+  contractAddress: string;
+  contractName: string;
+  functionName: string;
+  functionArgs?: ClarityValue[];
+}
+
+export async function readContractOnce({
+  contractAddress,
+  contractName,
+  functionName,
+  functionArgs = [],
+}: {
+  contractAddress: string;
+  contractName: string;
+  functionName: string;
+  functionArgs?: ClarityValue[];
+}) {
   // Serialize args to hex
   const serializedArgs = functionArgs.map((arg) =>
     Buffer.from(serializeCV(arg)).toString("hex"),
@@ -34,11 +51,4 @@ export async function readContract(params: ReadContractParams, retries = 3) {
   const cv = deserializeCV(Buffer.from(data.result.slice(2), "hex"));
 
   return cvToJSON(cv);
-}
-
-interface ReadContractParams {
-  contractAddress: string;
-  contractName: string;
-  functionName: string;
-  functionArgs?: ClarityValue[];
 }
