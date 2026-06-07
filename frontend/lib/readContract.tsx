@@ -5,7 +5,7 @@ import {
   ClarityValue,
 } from "@stacks/transactions";
 
-export async function readContract(params: ReadContractParams) {
+export async function readContract(params: ReadContractParams, retries = 3) {
   // Serialize args to hex
   const serializedArgs = functionArgs.map((arg) =>
     Buffer.from(serializeCV(arg)).toString("hex"),
