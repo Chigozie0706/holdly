@@ -60,6 +60,8 @@ export async function readContract(
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       return await readContractOnce(params);
-    } catch (error) {}
+    } catch (error) {
+      if (attempt === retries) throw error;
+    }
   }
 }
