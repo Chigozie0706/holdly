@@ -45,7 +45,8 @@ export default function MyBorrowsPage() {
         functionArgs: [],
       });
 
-      const totalBooks = Number(cvToJSON(countResult).value.value);
+      const totalBooks = Number(countJson.value.value);
+
       if (totalBooks === 0) {
         setBorrowedBooks([]);
         return;
