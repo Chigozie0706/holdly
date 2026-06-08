@@ -77,15 +77,12 @@ export default function MyBorrowsPage() {
 
       // 4. Fetch book details for each active borrow
       const bookPromises = myBorrows.map(({ id, data }) =>
-        fetchCallReadOnlyFunction({
+        readContract({
           contractAddress: CONTRACT_ADDRESS,
           contractName: CONTRACT_NAME,
           functionName: "get-book",
           functionArgs: [Cl.uint(id)],
-          network: STACKS_MAINNET,
-          senderAddress: CONTRACT_ADDRESS,
-        }).then((r) => {
-          const bookJson = cvToJSON(r);
+        }).then((bookJson) => {
           const d = bookJson?.value?.value;
           const borrowData = data.value.value;
           if (!d) return null;
