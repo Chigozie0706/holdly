@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Header from "@/components/HeaderWrapper";
 import Footer from "@/components/Footer";
 import { useStacks } from "@/providers/stacks-provider1";
 import { CONTRACT_ADDRESS, CONTRACT_NAME } from "@/config/contract";
 import { BookOpen, Star } from "lucide-react";
 import { toast } from "sonner";
+import { readContract } from "@/lib/readContract";
 
 interface HistoryEntry {
   bookId: number;
@@ -24,8 +24,6 @@ export default function BorrowHistoryPage() {
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [totalBorrows, setTotalBorrows] = useState(0);
   const [isFetching, setIsFetching] = useState(true);
-
-  //  Rating state
   const [ratingBookId, setRatingBookId] = useState<number | null>(null);
   const [selectedScore, setSelectedScore] = useState(0);
   const [ratedBooks, setRatedBooks] = useState<Set<number>>(new Set());
@@ -37,36 +35,15 @@ export default function BorrowHistoryPage() {
     }
     try {
       setIsFetching(true);
-      const { fetchCallReadOnlyFunction, Cl, cvToJSON } =
-        await import("@stacks/transactions");
-      const { readContract } = await import("@/lib/readContract");
+      const { Cl } = await import("@stacks/transactions");
 
-      const { STACKS_MAINNET } = await import("@stacks/network");
-
-      const json = await readContract({
-        contractAddress: CONTRACT_ADDRESS,
-        contractName: CONTRACT_NAME,
-        functionName: "get-book-count",
-        functionArgs: [],
-      });
-
-      //  Get total history count first
-      const countResult = await fetchCallReadOnlyFunction({
+      const countJson = await readContract({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
         functionName: "get-user-history-count",
         functionArgs: [Cl.principal(address)],
-        network: STACKS_MAINNET,
-        senderAddress: CONTRACT_ADDRESS,
       });
 
-      const countJson = cvToJSON(countResult);
-      console.log(
-        "History count response:",
-        JSON.stringify(countJson, null, 2),
-      );
-
-      //  Safe null check
       const totalEntries = countJson?.value?.value
         ? Number(countJson.value.value)
         : 0;
@@ -79,27 +56,19 @@ export default function BorrowHistoryPage() {
         return;
       }
 
-      //  Fetch each history item by index
       const historyPromises = Array.from({ length: totalEntries }, (_, i) =>
-        fetchCallReadOnlyFunction({
+        readContract({
           contractAddress: CONTRACT_ADDRESS,
           contractName: CONTRACT_NAME,
           functionName: "get-user-history-item",
           functionArgs: [Cl.principal(address), Cl.uint(i + 1)],
-          network: STACKS_MAINNET,
-          senderAddress: CONTRACT_ADDRESS,
-        }).then((r) => cvToJSON(r)),
+        }),
       );
 
       const historyResults = await Promise.all(historyPromises);
-      console.log(
-        "First history result:",
-        JSON.stringify(historyResults[0], null, 2),
-      );
 
       const enriched: (HistoryEntry | null)[] = await Promise.all(
         historyResults.map(async (result) => {
-          // response → optional → tuple → actual data
           const entry = result?.value?.value?.value;
           if (!entry) return null;
 
@@ -107,26 +76,20 @@ export default function BorrowHistoryPage() {
           if (!bookId) return null;
 
           try {
-            const bookResult = await fetchCallReadOnlyFunction({
+            const bookJson = await readContract({
               contractAddress: CONTRACT_ADDRESS,
               contractName: CONTRACT_NAME,
               functionName: "get-book",
               functionArgs: [Cl.uint(bookId)],
-              network: STACKS_MAINNET,
-              senderAddress: CONTRACT_ADDRESS,
             });
-            const bookJson = cvToJSON(bookResult);
             const bookData = bookJson.value?.value;
 
-            const canRateResult = await fetchCallReadOnlyFunction({
+            const canRateJson = await readContract({
               contractAddress: CONTRACT_ADDRESS,
               contractName: CONTRACT_NAME,
               functionName: "can-user-rate",
               functionArgs: [Cl.principal(address), Cl.uint(bookId)],
-              network: STACKS_MAINNET,
-              senderAddress: CONTRACT_ADDRESS,
             });
-            const canRateJson = cvToJSON(canRateResult);
             const alreadyRated =
               canRateJson.value?.value?.["already-rated"]?.value;
             if (alreadyRated) {
@@ -155,11 +118,8 @@ export default function BorrowHistoryPage() {
         }),
       );
 
-      // Most recent first
       setHistory(
-        enriched
-          .filter((entry): entry is HistoryEntry => entry !== null)
-          .reverse(),
+        enriched.filter((e): e is HistoryEntry => e !== null).reverse(),
       );
     } catch (error) {
       console.error("Error fetching history:", error);
@@ -170,7 +130,6 @@ export default function BorrowHistoryPage() {
 
   const handleRate = async (bookId: number, score: number) => {
     if (!connected || score === 0) return;
-
     try {
       const { request } = await import("@stacks/connect");
       const { Cl } = await import("@stacks/transactions");
@@ -219,17 +178,13 @@ export default function BorrowHistoryPage() {
                 fontSize: "1.05rem",
               }}
             >
-              {" "}
               Connect your wallet
             </p>
-
             <p style={{ color: "rgba(255,255,255,0.2)", fontSize: "0.78rem" }}>
-              {" "}
               Connect to view your borrow history
             </p>
           </div>
         </main>
-
         <Footer bookCount={0} />
       </div>
     );
@@ -248,10 +203,8 @@ export default function BorrowHistoryPage() {
               margin: "0 0 0.25rem",
             }}
           >
-            {" "}
             Borrow History
           </h2>
-
           <p
             style={{
               fontSize: "0.82rem",
@@ -327,7 +280,6 @@ export default function BorrowHistoryPage() {
                   )}
                 </tr>
               </thead>
-
               <tbody>
                 {history.map((entry, i) => (
                   <tr
