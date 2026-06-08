@@ -54,14 +54,12 @@ export default function MyBorrowsPage() {
 
       // 2. Fetch all borrows in parallel
       const borrowPromises = Array.from({ length: totalBooks }, (_, i) =>
-        fetchCallReadOnlyFunction({
+        readContract({
           contractAddress: CONTRACT_ADDRESS,
           contractName: CONTRACT_NAME,
           functionName: "get-borrow",
           functionArgs: [Cl.uint(i + 1)],
-          network: STACKS_MAINNET,
-          senderAddress: CONTRACT_ADDRESS,
-        }).then((r) => ({ id: i + 1, data: cvToJSON(r) })),
+        }).then((data) => ({ id: i + 1, data })),
       );
 
       const borrowResults = await Promise.all(borrowPromises);
