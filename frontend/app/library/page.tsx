@@ -9,6 +9,7 @@ import {
   CONTRACT_ADDRESS,
   CONTRACT_NAME,
 } from "@/config/contract";
+import { readContract } from "@/lib/readContract";
 
 interface Book {
   id: number;
@@ -32,46 +33,37 @@ export default function Library() {
   const fetchAllBooks = async () => {
     try {
       setIsFetching(true);
-      const { fetchCallReadOnlyFunction, Cl, cvToJSON } =
-        await import("@stacks/transactions");
-      const { STACKS_MAINNET } = await import("@stacks/network");
+      const { Cl } = await import("@stacks/transactions");
 
-      const countResult = await fetchCallReadOnlyFunction({
+      const countJson = await readContract({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
         functionName: "get-book-count",
         functionArgs: [],
-        network: STACKS_MAINNET,
-        senderAddress: CONTRACT_ADDRESS,
       });
 
-      const totalBooks = Number(cvToJSON(countResult).value.value);
+      const totalBooks = Number(countJson.value.value);
       const fetched: Book[] = [];
 
       for (let i = 1; i <= totalBooks; i++) {
         try {
-          const bookResult = await fetchCallReadOnlyFunction({
+          const bookJson = await readContract({
             contractAddress: CONTRACT_ADDRESS,
             contractName: CONTRACT_NAME,
             functionName: "get-book",
             functionArgs: [Cl.uint(i)],
-            network: STACKS_MAINNET,
-            senderAddress: CONTRACT_ADDRESS,
           });
-          const bookJson = cvToJSON(bookResult);
+
           if (bookJson.value) {
             const d = bookJson.value.value;
 
-            const ratingResult = await fetchCallReadOnlyFunction({
+            const ratingJson = await readContract({
               contractAddress: CONTRACT_ADDRESS,
               contractName: CONTRACT_NAME,
               functionName: "get-book-rating",
               functionArgs: [Cl.uint(i)],
-              network: STACKS_MAINNET,
-              senderAddress: CONTRACT_ADDRESS,
             });
 
-            const ratingJson = cvToJSON(ratingResult);
             const ratingData = ratingJson.value.value;
 
             fetched.push({
@@ -131,7 +123,7 @@ export default function Library() {
       const postConditions =
         book["deposit-token"] === "STX"
           ? [Pc.principal(address).willSendEq(book["deposit-amount"]).ustx()]
-          : []; // sBTC handled by token contract
+          : [];
 
       const response = await request("stx_callContract", {
         contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
@@ -141,16 +133,13 @@ export default function Library() {
       });
 
       if (response.txid) {
-        toast.success(
-          `Borrow submitted! TX: ${response.txid}\n\nWaiting for confirmation…`,
-        );
+        toast.success(`Borrow submitted! Waiting for confirmation…`);
         setTimeout(async () => {
           await fetchAllBooks();
           setIsProcessing(false);
         }, 10000);
       }
     } catch (e) {
-      console.error("Borrow error:", e);
       toast.error(
         `Failed to borrow: ${e instanceof Error ? e.message : "Unknown error"}`,
       );
@@ -170,12 +159,10 @@ export default function Library() {
       toast.error("Please connect your wallet first");
       return;
     }
-
     setIsProcessing(true);
     try {
       const { request } = await import("@stacks/connect");
       const { Cl } = await import("@stacks/transactions");
-
       const response = await request("stx_callContract", {
         contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
         functionName: "update-book",
@@ -188,9 +175,8 @@ export default function Library() {
           Cl.stringAscii(depositToken),
         ],
       });
-
       if (response.txid) {
-        toast.success(`Book updated! TX: ${response.txid}`);
+        toast.success("Book updated!");
         setBooks((prev) =>
           prev.map((b) =>
             b.id === bookId
@@ -215,36 +201,47 @@ export default function Library() {
     }
   };
 
+  const handleRateBook = async (bookId: number, score: number) => {
+    if (!connected || !address) {
+      toast.error("Please connect your wallet first");
+      return;
+    }
+    try {
+      const { request } = await import("@stacks/connect");
+      const { Cl } = await import("@stacks/transactions");
+      const response = await request("stx_callContract", {
+        contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
+        functionName: "rate-book",
+        functionArgs: [Cl.uint(bookId), Cl.uint(score)],
+      });
+      if (response.txid) toast.success("Rating submitted!");
+    } catch (error) {
+      toast.error(
+        `Failed to rate: ${error instanceof Error ? error.message : "Unknown error"}`,
+      );
+    }
+  };
+
   const handleDeleteBook = async (bookId: number) => {
     if (!connected || !address) {
       toast.error("Please connect your wallet first");
       return;
     }
-
     const book = books.find((b) => b.id === bookId);
     if (!book) return;
-
-    if (
-      !window.confirm(
-        `Are you sure you want to delete "${book.title}"? This cannot be undone.`,
-      )
-    )
+    if (!window.confirm(`Delete "${book.title}"? This cannot be undone.`))
       return;
-
     setIsProcessing(true);
     try {
       const { request } = await import("@stacks/connect");
       const { Cl } = await import("@stacks/transactions");
-
       const response = await request("stx_callContract", {
         contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
         functionName: "delete-book",
         functionArgs: [Cl.uint(bookId)],
       });
-
       if (response.txid) {
-        toast.success(`Book deleted! TX: ${response.txid}`);
-        // Optimistically remove from local state
+        toast.success("Book deleted!");
         setBooks((prev) => prev.filter((b) => b.id !== bookId));
       }
     } catch (error) {
