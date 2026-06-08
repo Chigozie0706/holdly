@@ -5,6 +5,7 @@ import MyBorrows from "@/components/MyBorrows";
 import { useStacks } from "@/providers/stacks-provider1";
 import { CONTRACT_ADDRESS, CONTRACT_NAME } from "@/config/contract";
 import { toast } from "sonner";
+import { readContract } from "@/lib/readContract";
 
 interface Book {
   id: number;
