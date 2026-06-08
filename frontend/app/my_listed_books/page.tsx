@@ -6,6 +6,7 @@ import MyListedBooks from "@/components/MyListedBooks";
 import { useStacks } from "@/providers/stacks-provider1";
 import { toast } from "sonner";
 import { CONTRACT_ADDRESS, CONTRACT_NAME } from "@/config/contract";
+import { readContract } from "@/lib/readContract";
 
 export default function MyListedBooksPage() {
   const { address, connected } = useStacks();
