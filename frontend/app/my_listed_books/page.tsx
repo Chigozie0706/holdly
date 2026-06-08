@@ -15,17 +15,15 @@ export default function MyListedBooksPage() {
 
   const fetchAllBooks = async () => {
     try {
-      const { fetchCallReadOnlyFunction, Cl, cvToJSON } =
-        await import("@stacks/transactions");
+      const { Cl } = await import("@stacks/transactions");
+
       const { STACKS_MAINNET } = await import("@stacks/network");
 
-      const bookCountResult = await fetchCallReadOnlyFunction({
+      const countJson = await readContract({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
         functionName: "get-book-count",
         functionArgs: [],
-        network: STACKS_MAINNET,
-        senderAddress: CONTRACT_ADDRESS,
       });
 
       const totalBooks = Number(cvToJSON(bookCountResult).value.value);
