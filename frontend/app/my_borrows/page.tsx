@@ -38,13 +38,11 @@ export default function MyBorrowsPage() {
       const { STACKS_MAINNET } = await import("@stacks/network");
 
       // 1. Get total book count
-      const countResult = await fetchCallReadOnlyFunction({
+      const countJson = await readContract({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
         functionName: "get-book-count",
         functionArgs: [],
-        network: STACKS_MAINNET,
-        senderAddress: CONTRACT_ADDRESS,
       });
 
       const totalBooks = Number(cvToJSON(countResult).value.value);
