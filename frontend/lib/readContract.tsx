@@ -3,6 +3,7 @@ import {
   deserializeCV,
   serializeCV,
   ClarityValue,
+  cvToHex,
 } from "@stacks/transactions";
 
 interface ReadContractParams {
@@ -17,16 +18,16 @@ async function readContractOnce({
   contractName,
   functionName,
   functionArgs = [],
-}: {
-  contractAddress: string;
-  contractName: string;
-  functionName: string;
-  functionArgs?: ClarityValue[];
-}) {
-  // Serialize args to hex
-  const serializedArgs = functionArgs.map((arg) =>
-    Buffer.from(serializeCV(arg)).toString("hex"),
-  );
+}: ReadContractParams) {
+  //  Serialize each arg to hex string
+
+  const serializedArgs = functionArgs.map((arg) => {
+    //  cvToHex handles serialization cleanly
+    const hex = cvToHex(arg);
+    // cvToHex includes "0x" prefix, strip it
+    return hex.startsWith("0x") ? hex.slice(2) : hex;
+  });
+  console.log("readContract calling:", functionName, "args:", serializedArgs);
 
   const response = await fetch("/api/stacks", {
     method: "POST",
@@ -39,17 +40,27 @@ async function readContractOnce({
     }),
   });
 
-  if (!response.ok) throw new Error(`API error: ${response.status}`);
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`API error ${response.status}: ${text}`);
+  }
 
   const data = await response.json();
 
-  // Hiro returns { okay: true, result: "0x..." }
+  if (!data.okay) {
+    throw new Error(data.cause ?? "Contract call failed");
+  }
 
-  if (!data.okay) throw new Error(data.cause ?? "Contract call failed");
+  //  Deserialize hex result
+  const resultHex = data.result.startsWith("0x")
+    ? data.result.slice(2)
+    : data.result;
 
-  // Deserialize the hex result
-  const cv = deserializeCV(Buffer.from(data.result.slice(2), "hex"));
+  const bytes = new Uint8Array(
+    resultHex.match(/.{1,2}/g)!.map((b: string) => parseInt(b, 16)),
+  );
 
+  const cv = deserializeCV(bytes);
   return cvToJSON(cv);
 }
 
@@ -61,8 +72,8 @@ export async function readContract(
     try {
       return await readContractOnce(params);
     } catch (error) {
+      console.error(`Attempt ${attempt} failed:`, error);
       if (attempt === retries) throw error;
-      // Wait before retry — longer each attempt
       await new Promise((resolve) => setTimeout(resolve, 1000 * attempt));
     }
   }
