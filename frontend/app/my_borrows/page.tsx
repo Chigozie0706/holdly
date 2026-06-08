@@ -154,7 +154,6 @@ export default function MyBorrowsPage() {
         }, 10000);
       }
     } catch (e) {
-      console.error("Return error:", e);
       toast.error(
         `Failed to return: ${e instanceof Error ? e.message : "Unknown error"}`,
       );
