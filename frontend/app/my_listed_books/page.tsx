@@ -26,21 +26,19 @@ export default function MyListedBooksPage() {
         functionArgs: [],
       });
 
-      const totalBooks = Number(cvToJSON(bookCountResult).value.value);
+      const totalBooks = Number(countJson.value.value);
+
       const fetchedBooks: any[] = [];
 
       for (let i = 1; i <= totalBooks; i++) {
         try {
-          const bookResult = await fetchCallReadOnlyFunction({
+          const bookJson = await readContract({
             contractAddress: CONTRACT_ADDRESS,
             contractName: CONTRACT_NAME,
             functionName: "get-book",
             functionArgs: [Cl.uint(i)],
-            network: STACKS_MAINNET,
-            senderAddress: CONTRACT_ADDRESS,
           });
 
-          const bookJson = cvToJSON(bookResult);
           if (bookJson.value) {
             const bookData = bookJson.value.value;
             fetchedBooks.push({
