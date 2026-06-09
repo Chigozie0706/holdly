@@ -12,6 +12,7 @@ export async function pollUntilChanged({
   for (let i = 0; i < maxAttempts; i++) {
         try {
       const result = await check();
+      if (result === expectedValue) return true;
 
   }
 }
