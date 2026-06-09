@@ -15,4 +15,5 @@ export async function pollUntilChanged({
       if (result === expectedValue) return true;
 
   }
+  catch {}
 }
