@@ -18,4 +18,5 @@ export async function pollUntilChanged({
     }
     await new Promise((resolve) => setTimeout(resolve, intervalMs));
   }
+  return false;
 }
