@@ -5,4 +5,5 @@ export async function pollUntilChanged({
   intervalMs = 3000,
 }: {
   check: () => Promise<any>;
+  expectedValue: any;
 }) {}
