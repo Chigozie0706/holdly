@@ -10,10 +10,11 @@ export async function pollUntilChanged({
   intervalMs?: number;
 }): Promise<boolean> {
   for (let i = 0; i < maxAttempts; i++) {
-        try {
+    try {
       const result = await check();
       if (result === expectedValue) return true;
-
+    } catch {
+      // ignore errors during polling
+    }
   }
-  catch {}
 }
