@@ -7,4 +7,5 @@ export async function pollUntilChanged({
   check: () => Promise<any>;
   expectedValue: any;
   maxAttempts?: number;
+  intervalMs?: number;
 }) {}
