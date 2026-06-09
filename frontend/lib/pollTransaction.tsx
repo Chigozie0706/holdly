@@ -9,5 +9,8 @@ export async function pollUntilChanged({
   maxAttempts?: number;
   intervalMs?: number;
 }): Promise<boolean> {
-  for (let i = 0; i < maxAttempts; i++) {}
+  for (let i = 0; i < maxAttempts; i++) {
+        try {
+
+  }
 }
