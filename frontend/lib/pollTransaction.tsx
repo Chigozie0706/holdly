@@ -8,4 +8,4 @@ export async function pollUntilChanged({
   expectedValue: any;
   maxAttempts?: number;
   intervalMs?: number;
-}) {}
+}): Promise<boolean> {}
