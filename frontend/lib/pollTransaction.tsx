@@ -11,6 +11,7 @@ export async function pollUntilChanged({
 }): Promise<boolean> {
   for (let i = 0; i < maxAttempts; i++) {
         try {
+      const result = await check();
 
   }
 }
