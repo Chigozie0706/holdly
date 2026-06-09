@@ -16,5 +16,6 @@ export async function pollUntilChanged({
     } catch {
       // ignore errors during polling
     }
+    await new Promise((resolve) => setTimeout(resolve, intervalMs));
   }
 }
