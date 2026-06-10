@@ -155,6 +155,7 @@ export default function Library() {
             return json?.value?.value;
           },
           expectedValue: false,
+          maxAttempts: 20,
         });
       }
     } catch (e) {
