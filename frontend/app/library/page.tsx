@@ -149,6 +149,7 @@ export default function Library() {
             const json = await readContract({
               contractAddress: CONTRACT_ADDRESS,
               contractName: CONTRACT_NAME,
+              functionName: "is-book-available",
             });
           },
         });
