@@ -161,6 +161,7 @@ export default function Library() {
 
         if (confirmed) {
           toast.success("Borrow confirmed!");
+          await fetchAllBooks();
         }
       }
     } catch (e) {
