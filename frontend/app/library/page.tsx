@@ -134,9 +134,13 @@ export default function Library() {
 
       if (response.txid) {
         toast.success(`Borrow submitted! Waiting for confirmation…`);
-              // ✅ Optimistically update UI immediately
+        // ✅ Optimistically update UI immediately
 
-      setBooks((prev) => )  
+        setBooks((prev) =>
+          prev.map((b) =>
+            b.id === bookId ? { ...b, "is-available": false } : b,
+          ),
+        );
       }
     } catch (e) {
       toast.error(
