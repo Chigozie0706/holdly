@@ -158,6 +158,9 @@ export default function Library() {
           maxAttempts: 20,
           intervalMs: 3000,
         });
+
+        if (confirmed) {
+        }
       }
     } catch (e) {
       toast.error(
