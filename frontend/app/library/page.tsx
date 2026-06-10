@@ -134,10 +134,9 @@ export default function Library() {
 
       if (response.txid) {
         toast.success(`Borrow submitted! Waiting for confirmation…`);
-        setTimeout(async () => {
-          await fetchAllBooks();
-          setIsProcessing(false);
-        }, 10000);
+              // ✅ Optimistically update UI immediately
+
+      setBooks((prev) => )  
       }
     } catch (e) {
       toast.error(
