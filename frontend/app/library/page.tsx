@@ -163,6 +163,7 @@ export default function Library() {
           toast.success("Borrow confirmed!");
           await fetchAllBooks();
         } else {
+          toast.error("Transaction took too long. Please refresh.");
         }
       }
     } catch (e) {
