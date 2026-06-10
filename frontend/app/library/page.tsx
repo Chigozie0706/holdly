@@ -141,6 +141,8 @@ export default function Library() {
             b.id === bookId ? { ...b, "is-available": false } : b,
           ),
         );
+
+        //  Poll until confirmed on chain then refresh
       }
     } catch (e) {
       toast.error(
