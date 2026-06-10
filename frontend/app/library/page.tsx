@@ -175,6 +175,8 @@ export default function Library() {
       setBooks((prev) =>
         prev.map((b) => (b.id === bookId ? { ...b, "is-available": true } : b)),
       );
+    } finally {
+      setIsProcessing(false);
     }
   };
 
