@@ -154,6 +154,7 @@ export default function Library() {
             });
             return json?.value?.value;
           },
+          expectedValue: false,
         });
       }
     } catch (e) {
