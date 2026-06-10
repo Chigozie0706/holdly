@@ -171,7 +171,10 @@ export default function Library() {
       toast.error(
         `Failed to borrow: ${e instanceof Error ? e.message : "Unknown error"}`,
       );
-      setIsProcessing(false);
+
+      setBooks((prev) =>
+        prev.map((b) => (b.id === bookId ? { ...b, "is-available": true } : b)),
+      );
     }
   };
 
