@@ -146,7 +146,9 @@ export default function Library() {
         //  Poll until confirmed on chain then refresh
         const confirmed = await pollUntilChanged({
           check: async () => {
-            const json = await readContract({});
+            const json = await readContract({
+              contractAddress: CONTRACT_ADDRESS,
+            });
           },
         });
       }
