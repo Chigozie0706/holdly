@@ -10,7 +10,6 @@ import {
   CONTRACT_NAME,
 } from "@/config/contract";
 import { readContract } from "@/lib/readContract";
-import { pollUntilChanged } from "@/lib/pollTransaction";
 
 interface Book {
   id: number;
@@ -120,6 +119,7 @@ export default function Library() {
     try {
       const { request } = await import("@stacks/connect");
       const { Cl, Pc } = await import("@stacks/transactions");
+      const { pollUntilChanged } = await import("@/lib/pollTransaction");
 
       const postConditions =
         book["deposit-token"] === "STX"
@@ -135,7 +135,7 @@ export default function Library() {
 
       if (response.txid) {
         toast.success(`Borrow submitted! Waiting for confirmation…`);
-        // ✅ Optimistically update UI immediately
+        //  Optimistically update UI immediately
 
         setBooks((prev) =>
           prev.map((b) =>
@@ -145,7 +145,9 @@ export default function Library() {
 
         //  Poll until confirmed on chain then refresh
         const confirmed = await pollUntilChanged({
-          check: async () => {},
+          check: async () => {
+            const json = await readContract({});
+          },
         });
       }
     } catch (e) {
