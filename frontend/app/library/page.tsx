@@ -164,6 +164,7 @@ export default function Library() {
           await fetchAllBooks();
         } else {
           toast.error("Transaction took too long. Please refresh.");
+          await fetchAllBooks();
         }
       }
     } catch (e) {
