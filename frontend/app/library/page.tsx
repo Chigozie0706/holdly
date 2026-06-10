@@ -150,6 +150,7 @@ export default function Library() {
               contractAddress: CONTRACT_ADDRESS,
               contractName: CONTRACT_NAME,
               functionName: "is-book-available",
+              functionArgs: [Cl.uint(bookId)],
             });
           },
         });
