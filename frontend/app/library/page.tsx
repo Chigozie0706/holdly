@@ -152,6 +152,7 @@ export default function Library() {
               functionName: "is-book-available",
               functionArgs: [Cl.uint(bookId)],
             });
+            return json?.value?.value;
           },
         });
       }
