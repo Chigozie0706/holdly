@@ -156,6 +156,7 @@ export default function Library() {
           },
           expectedValue: false,
           maxAttempts: 20,
+          intervalMs: 3000,
         });
       }
     } catch (e) {
