@@ -148,6 +148,7 @@ export default function Library() {
           check: async () => {
             const json = await readContract({
               contractAddress: CONTRACT_ADDRESS,
+              contractName: CONTRACT_NAME,
             });
           },
         });
