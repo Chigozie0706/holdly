@@ -10,6 +10,7 @@ import {
   CONTRACT_NAME,
 } from "@/config/contract";
 import { readContract } from "@/lib/readContract";
+import { pollUntilChanged } from "@/lib/pollTransaction";
 
 interface Book {
   id: number;
@@ -143,7 +144,9 @@ export default function Library() {
         );
 
         //  Poll until confirmed on chain then refresh
-        const confirmed = await pollUntilChanged({});
+        const confirmed = await pollUntilChanged({
+          check: async () => {},
+        });
       }
     } catch (e) {
       toast.error(
