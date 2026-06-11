@@ -166,6 +166,7 @@ export default function MyBorrowsPage() {
             return json?.value?.value;
           },
           expectedValue: true,
+          maxAttempts: 20,
         });
       }
     } catch (e) {
