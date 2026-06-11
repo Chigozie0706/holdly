@@ -165,6 +165,7 @@ export default function MyBorrowsPage() {
             });
             return json?.value?.value;
           },
+          expectedValue: true,
         });
       }
     } catch (e) {
