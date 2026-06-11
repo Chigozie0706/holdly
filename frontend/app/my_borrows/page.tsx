@@ -159,6 +159,7 @@ export default function MyBorrowsPage() {
           check: async () => {
             const json = await readContract({
               contractAddress: CONTRACT_ADDRESS,
+              contractName: CONTRACT_NAME,
             });
           },
         });
