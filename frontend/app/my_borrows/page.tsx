@@ -175,6 +175,8 @@ export default function MyBorrowsPage() {
         } else {
           toast.error("Transaction took too long. Please refresh.");
         }
+
+        await fetchBorrowedBooks();
       }
     } catch (e) {
       toast.error(
