@@ -182,6 +182,8 @@ export default function MyBorrowsPage() {
       toast.error(
         `Failed to return: ${e instanceof Error ? e.message : "Unknown error"}`,
       );
+      await fetchBorrowedBooks(); // refresh to get real state
+    } finally {
       setIsProcessing(false);
     }
   };
