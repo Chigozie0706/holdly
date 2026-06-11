@@ -149,6 +149,9 @@ export default function MyBorrowsPage() {
         toast.success(
           `Returned! Deposit of ${(book["deposit-amount"] / 1_000_000).toFixed(2)} ${book["deposit-token"]} will be refunded.`,
         );
+
+        //  Optimistically remove from list immediately
+        setBorrowedBooks((prev) => prev.filter((b) => b.id !== bookId));
       }
     } catch (e) {
       toast.error(
