@@ -157,7 +157,9 @@ export default function MyBorrowsPage() {
 
         const confirmed = await pollUntilChanged({
           check: async () => {
-            const json = await readContract({});
+            const json = await readContract({
+              contractAddress: CONTRACT_ADDRESS,
+            });
           },
         });
       }
