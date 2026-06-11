@@ -156,7 +156,9 @@ export default function MyBorrowsPage() {
         //  Poll until confirmed on chain
 
         const confirmed = await pollUntilChanged({
-          check: async () => {},
+          check: async () => {
+            const json = await readContract({});
+          },
         });
       }
     } catch (e) {
