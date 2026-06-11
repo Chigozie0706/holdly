@@ -154,6 +154,8 @@ export default function MyBorrowsPage() {
         setBorrowedBooks((prev) => prev.filter((b) => b.id !== bookId));
 
         //  Poll until confirmed on chain
+
+        const confirmed = await pollUntilChanged({});
       }
     } catch (e) {
       toast.error(
