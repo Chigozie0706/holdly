@@ -127,6 +127,7 @@ export default function MyBorrowsPage() {
     try {
       const { request } = await import("@stacks/connect");
       const { Cl, Pc } = await import("@stacks/transactions");
+      const { pollUntilChanged };
 
       const postConditions =
         book["deposit-token"] === "STX"
