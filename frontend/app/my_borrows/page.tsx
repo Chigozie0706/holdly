@@ -171,6 +171,7 @@ export default function MyBorrowsPage() {
         });
 
         if (confirmed) {
+          toast.success("Return confirmed on chain!");
         }
       }
     } catch (e) {
