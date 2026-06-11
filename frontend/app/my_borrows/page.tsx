@@ -152,6 +152,8 @@ export default function MyBorrowsPage() {
 
         //  Optimistically remove from list immediately
         setBorrowedBooks((prev) => prev.filter((b) => b.id !== bookId));
+
+        //  Poll until confirmed on chain
       }
     } catch (e) {
       toast.error(
