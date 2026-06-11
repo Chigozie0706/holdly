@@ -173,6 +173,7 @@ export default function MyBorrowsPage() {
         if (confirmed) {
           toast.success("Return confirmed on chain!");
         } else {
+          toast.error("Transaction took too long. Please refresh.");
         }
       }
     } catch (e) {
