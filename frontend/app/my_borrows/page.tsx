@@ -167,6 +167,7 @@ export default function MyBorrowsPage() {
           },
           expectedValue: true,
           maxAttempts: 20,
+          intervalMs: 3000,
         });
       }
     } catch (e) {
