@@ -163,6 +163,7 @@ export default function MyBorrowsPage() {
               functionName: "is-book-available",
               functionArgs: [Cl.uint(bookId)],
             });
+            return json?.value?.value;
           },
         });
       }
