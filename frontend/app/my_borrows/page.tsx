@@ -155,7 +155,9 @@ export default function MyBorrowsPage() {
 
         //  Poll until confirmed on chain
 
-        const confirmed = await pollUntilChanged({});
+        const confirmed = await pollUntilChanged({
+          check: async () => {},
+        });
       }
     } catch (e) {
       toast.error(
