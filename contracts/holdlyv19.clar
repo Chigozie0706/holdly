@@ -54,6 +54,7 @@
     {
         borrower: principal,
         borrowed-at: uint,
+        due-date: uint,   
         deposit-amount: uint,
         deposit-token: (string-ascii 4),
     }
