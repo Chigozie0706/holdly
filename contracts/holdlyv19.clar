@@ -31,6 +31,7 @@
 (define-constant ERR_NOT_ELIGIBLE_TO_RATE (err u115))
 (define-constant ERR_ALREADY_RATED (err u116))
 (define-constant ERR_NOT_OVERDUE (err u117)) 
+(define-constant ERR_NOT_OWNER (err u118))      
 
 ;;  Maps 
 
