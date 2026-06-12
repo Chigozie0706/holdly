@@ -30,6 +30,7 @@
 (define-constant ERR_INVALID_SCORE (err u114))
 (define-constant ERR_NOT_ELIGIBLE_TO_RATE (err u115))
 (define-constant ERR_ALREADY_RATED (err u116))
+(define-constant ERR_NOT_OVERDUE (err u117)) 
 
 ;;  Maps 
 
