@@ -14,6 +14,8 @@
 (define-constant MIN_DEPOSIT u100000)
 
 ;;  Borrow duration — ~7 days in Bitcoin blocks (1 block ≈ 10 min)
+;; 7 days * 24 hours * 6 blocks/hour = 1008 blocks
+
 
 ;; Error codes
 (define-constant ERR_BOOK_NOT_FOUND (err u101))
