@@ -78,6 +78,7 @@
         returned-at: uint,
         deposit-amount: uint,
         deposit-token: (string-ascii 4),
+        was-overdue: bool,
     }
 )
 
