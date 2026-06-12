@@ -186,6 +186,7 @@
                 (token (get deposit-token book))
 
                 ;;  Calculate due date at borrow time
+                (due-date (+ burn-block-height BORROW_DURATION_BLOCKS))
 
             )
             (try! (if (is-eq token TOKEN_STX)
