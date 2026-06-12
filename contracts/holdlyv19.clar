@@ -184,6 +184,9 @@
         (let (
                 (amount (get deposit-amount book))
                 (token (get deposit-token book))
+
+                ;;  Calculate due date at borrow time
+
             )
             (try! (if (is-eq token TOKEN_STX)
                 (stx-transfer? amount tx-sender CONTRACT_ADDRESS)
