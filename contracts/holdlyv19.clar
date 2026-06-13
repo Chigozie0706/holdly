@@ -241,6 +241,7 @@
                 (amount (get deposit-amount borrow))
                 (token (get deposit-token borrow))
                 (borrower (get borrower borrow))
+                (overdue ())
                 (history-index
                     (+ (default-to u0 (map-get? user-history-count tx-sender)) u1)
                 )
