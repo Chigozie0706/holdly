@@ -246,10 +246,13 @@
                     (+ (default-to u0 (map-get? user-history-count tx-sender)) u1)
                 )
             )
-            ;;  If overdue, deposit goes to book owner instead of borrower
 
+            ;;  If overdue, deposit goes to book owner instead of borrower
             (try! (if (is-eq token TOKEN_STX)
+            (if overdue
+                    (send-stx-from-contract amount (get owner book))
                 (send-stx-from-contract amount borrower)
+            )
                 (send-sbtc-from-contract amount borrower)
             ))
 
