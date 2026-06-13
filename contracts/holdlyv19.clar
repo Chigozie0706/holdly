@@ -13,7 +13,7 @@
 ;; Minimum deposit
 (define-constant MIN_DEPOSIT u100000)
 
-;;  Borrow duration — ~7 days in Bitcoin blocks (1 block ≈ 10 min)
+
 ;; 7 days * 24 hours * 6 blocks/hour = 1008 blocks
 (define-constant BORROW_DURATION_BLOCKS u1008)
 
@@ -296,7 +296,7 @@
             (ok true)
         )
     )
-)
+
 
 ;; Rate a book
 (define-public (rate-book (book-id uint) (score uint))
