@@ -246,7 +246,8 @@
                     (+ (default-to u0 (map-get? user-history-count tx-sender)) u1)
                 )
             )
-            ;; Refund deposit
+            ;;  If overdue, deposit goes to book owner instead of borrower
+
             (try! (if (is-eq token TOKEN_STX)
                 (send-stx-from-contract amount borrower)
                 (send-sbtc-from-contract amount borrower)
