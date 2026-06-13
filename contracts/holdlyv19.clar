@@ -204,6 +204,7 @@
             (map-set borrows book-id {
                 borrower: tx-sender,
                 borrowed-at: burn-block-height,
+                due-date: due-date,
                 deposit-amount: amount,
                 deposit-token: token,
             })
