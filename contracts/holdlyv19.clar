@@ -253,7 +253,11 @@
                     (send-stx-from-contract amount (get owner book))
                 (send-stx-from-contract amount borrower)
             )
+
+                            (if overdue
+                    (send-sbtc-from-contract amount (get owner book))                            
                 (send-sbtc-from-contract amount borrower)
+                            )
             ))
 
             ;; Update book availability
