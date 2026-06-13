@@ -241,7 +241,7 @@
                 (amount (get deposit-amount borrow))
                 (token (get deposit-token borrow))
                 (borrower (get borrower borrow))
-                (overdue (> burn-block-height ()))
+                (overdue (> burn-block-height (get due-date borrow))))
                 (history-index
                     (+ (default-to u0 (map-get? user-history-count tx-sender)) u1)
                 )
