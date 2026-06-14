@@ -330,6 +330,7 @@
             (borrow (unwrap! (map-get? borrows book-id) ERR_BOOK_ALREADY_RETURNED))
         )
         ;; Only book owner can claim
+        (asserts! (is-eq tx-sender (get owner book)) ERR_NOT_OWNER)
     )
 )
 
