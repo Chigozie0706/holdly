@@ -327,6 +327,7 @@
 (define-public (claim-overdue (book-id uint))
     (let (
             (book (unwrap! (map-get? books book-id) ERR_BOOK_NOT_FOUND))
+            (borrow (unwrap! (map-get? borrows book-id) ERR_BOOK_ALREADY_RETURNED))
 
 )
 
