@@ -323,6 +323,8 @@
     )
 )
 
+;;  Owner claims deposit if book is overdue and borrower hasn't returned it
+
 ;; Rate a book
 (define-public (rate-book
         (book-id uint)
