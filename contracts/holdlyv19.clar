@@ -331,6 +331,7 @@
         )
         ;; Only book owner can claim
         (asserts! (is-eq tx-sender (get owner book)) ERR_NOT_OWNER)
+        ;; Must be past due date
     )
 )
 
