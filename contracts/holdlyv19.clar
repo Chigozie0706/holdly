@@ -13,10 +13,8 @@
 ;; Minimum deposit
 (define-constant MIN_DEPOSIT u100000)
 
-
 ;; 7 days * 24 hours * 6 blocks/hour = 1008 blocks
 (define-constant BORROW_DURATION_BLOCKS u1008)
-
 
 ;; Error codes
 (define-constant ERR_BOOK_NOT_FOUND (err u101))
@@ -30,8 +28,8 @@
 (define-constant ERR_INVALID_SCORE (err u114))
 (define-constant ERR_NOT_ELIGIBLE_TO_RATE (err u115))
 (define-constant ERR_ALREADY_RATED (err u116))
-(define-constant ERR_NOT_OVERDUE (err u117)) 
-(define-constant ERR_NOT_OWNER (err u118))      
+(define-constant ERR_NOT_OVERDUE (err u117))
+(define-constant ERR_NOT_OWNER (err u118))
 
 ;;  Maps 
 
@@ -54,24 +52,36 @@
     {
         borrower: principal,
         borrowed-at: uint,
-        due-date: uint,   
+        due-date: uint,
         deposit-amount: uint,
         deposit-token: (string-ascii 4),
     }
 )
 
 ;; Track number of books per owner
-(define-map owner-book-count principal uint)
+(define-map owner-book-count
+    principal
+    uint
+)
 
 ;; Track active borrow per borrower
-(define-map borrower-active-borrow principal uint)
+(define-map borrower-active-borrow
+    principal
+    uint
+)
 
 ;; Track total borrows per user
-(define-map user-total-borrows principal uint)
+(define-map user-total-borrows
+    principal
+    uint
+)
 
 ;; Scalable borrow history storage
 (define-map user-borrow-history
-    { user: principal, index: uint }
+    {
+        user: principal,
+        index: uint,
+    }
     {
         book-id: uint,
         borrowed-at: uint,
@@ -83,7 +93,10 @@
 )
 
 ;; Track how many history entries each user has
-(define-map user-history-count principal uint)
+(define-map user-history-count
+    principal
+    uint
+)
 
 ;; Store ratings per book
 (define-map book-ratings
@@ -96,13 +109,19 @@
 
 ;; Track who has rated which book
 (define-map user-book-rated
-    { user: principal, book-id: uint }
+    {
+        user: principal,
+        book-id: uint,
+    }
     bool
 )
 
 ;; Track which books a user has returned (rating eligibility)
 (define-map user-returned-books
-    { user: principal, book-id: uint }
+    {
+        user: principal,
+        book-id: uint,
+    }
     bool
 )
 
@@ -111,16 +130,18 @@
 
 ;;  Private helpers 
 
-(define-private (send-stx-from-contract (amount uint) (recipient principal))
-    (as-contract
-        (stx-transfer? amount tx-sender recipient)
+(define-private (send-stx-from-contract
+        (amount uint)
+        (recipient principal)
     )
+    (as-contract (stx-transfer? amount tx-sender recipient))
 )
 
-(define-private (send-sbtc-from-contract (amount uint) (recipient principal))
-    (as-contract
-        (contract-call? SBTC_CONTRACT transfer amount tx-sender recipient none)
+(define-private (send-sbtc-from-contract
+        (amount uint)
+        (recipient principal)
     )
+    (as-contract (contract-call? SBTC_CONTRACT transfer amount tx-sender recipient none))
 )
 
 ;;  Public functions 
@@ -184,14 +205,14 @@
         (let (
                 (amount (get deposit-amount book))
                 (token (get deposit-token book))
-
                 ;;  Calculate due date at borrow time
                 (due-date (+ burn-block-height BORROW_DURATION_BLOCKS))
-
             )
             (try! (if (is-eq token TOKEN_STX)
                 (stx-transfer? amount tx-sender CONTRACT_ADDRESS)
-                (contract-call? SBTC_CONTRACT transfer amount tx-sender CONTRACT_ADDRESS none)
+                (contract-call? SBTC_CONTRACT transfer amount tx-sender
+                    CONTRACT_ADDRESS none
+                )
             ))
 
             (map-set books book-id
@@ -241,89 +262,133 @@
                 (amount (get deposit-amount borrow))
                 (token (get deposit-token borrow))
                 (borrower (get borrower borrow))
-                (overdue (> burn-block-height (get due-date borrow))))
-                (history-index
-                    (+ (default-to u0 (map-get? user-history-count tx-sender)) u1)
-                )
+                (overdue (> burn-block-height (get due-date borrow)))
             )
+            (history-index (+ (default-to u0 (map-get? user-history-count tx-sender)) u1))
+        )
 
-            ;;  If overdue, deposit goes to book owner instead of borrower
-            (try! (if (is-eq token TOKEN_STX)
+        ;;  If overdue, deposit goes to book owner instead of borrower
+        (try! (if (is-eq token TOKEN_STX)
             (if overdue
-                    (send-stx-from-contract amount (get owner book))
+                (send-stx-from-contract amount (get owner book))
                 (send-stx-from-contract amount borrower)
             )
 
-                            (if overdue
-                    (send-sbtc-from-contract amount (get owner book))                            
+            (if overdue
+                (send-sbtc-from-contract amount (get owner book))
                 (send-sbtc-from-contract amount borrower)
-                            )
-            ))
-
-            ;; Update book availability
-            (map-set books book-id (merge book { is-available: true }))
-
-            ;; Clear borrow record
-            (map-delete borrows book-id)
-            (map-delete borrower-active-borrow tx-sender)
-
-            ;; Store history entry
-            (map-set user-borrow-history
-                { user: tx-sender, index: history-index }
-                {
-                    book-id: book-id,
-                    borrowed-at: (get borrowed-at borrow),
-                    returned-at: burn-block-height,
-                    deposit-amount: amount,
-                    deposit-token: token,
-                }
             )
+        ))
 
-            ;; Update history count
-            (map-set user-history-count tx-sender history-index)
+        ;; Update book availability
+        (map-set books book-id (merge book { is-available: true }))
 
-            ;; Mark user as eligible to rate this book
-            (map-set user-returned-books { user: tx-sender, book-id: book-id } true)
+        ;; Clear borrow record
+        (map-delete borrows book-id)
+        (map-delete borrower-active-borrow tx-sender)
 
-            (print {
-                event: "book-returned",
-                book-id: book-id,
-                borrower: tx-sender,
-                deposit-token: token,
-                returned-at: burn-block-height,
-            })
+        ;; Store history entry
+        (map-set user-borrow-history {
+            user: tx-sender,
+            index: history-index,
+        } {
+            book-id: book-id,
+            borrowed-at: (get borrowed-at borrow),
+            returned-at: burn-block-height,
+            deposit-amount: amount,
+            deposit-token: token,
+            was-overdue: overdue,
+        })
 
-            (ok true)
+        ;; Update history count
+        (map-set user-history-count tx-sender history-index)
+
+        ;; Mark user as eligible to rate this book
+        (map-set user-returned-books {
+            user: tx-sender,
+            book-id: book-id,
+        }
+            true
         )
-    )
 
+        (print {
+            event: "book-returned",
+            book-id: book-id,
+            borrower: tx-sender,
+            deposit-token: token,
+            returned-at: burn-block-height,
+        })
+
+        (ok true)
+    )
+)
+
+;;  Owner claims deposit if book is overdue and borrower hasn't returned it
+(define-public (claim-overdue (book-id uint))
+    (let (
+            (book (unwrap! (map-get? books book-id) ERR_BOOK_NOT_FOUND))
+            (borrow (unwrap! (map-get? borrows book-id) ERR_BOOK_ALREADY_RETURNED))
+        )
+        ;; Only book owner can claim
+        (asserts! (is-eq tx-sender (get owner book)) ERR_NOT_OWNER)
+        ;; Must be past due date
+        (asserts! (> burn-block-height (get due-date borrow)) ERR_NOT_OVERDUE)
+
+                (let (
+                                    (amount (get deposit-amount borrow))
+                (token (get deposit-token borrow))
+                                (borrower (get borrower borrow))
+
+
+                )
+    )
+)
 
 ;; Rate a book
-(define-public (rate-book (book-id uint) (score uint))
+(define-public (rate-book
+        (book-id uint)
+        (score uint)
+    )
     (begin
         (asserts! (is-some (map-get? books book-id)) ERR_BOOK_NOT_FOUND)
         (asserts! (and (>= score u1) (<= score u5)) ERR_INVALID_SCORE)
         (asserts!
             (default-to false
-                (map-get? user-returned-books { user: tx-sender, book-id: book-id })
+                (map-get? user-returned-books {
+                    user: tx-sender,
+                    book-id: book-id,
+                })
             )
             ERR_NOT_ELIGIBLE_TO_RATE
         )
         (asserts!
             (not (default-to false
-                (map-get? user-book-rated { user: tx-sender, book-id: book-id })
+                (map-get? user-book-rated {
+                    user: tx-sender,
+                    book-id: book-id,
+                })
             ))
             ERR_ALREADY_RATED
         )
 
-        (let ((current (default-to { total-score: u0, count: u0 } (map-get? book-ratings book-id))))
+        (let ((current (default-to {
+                total-score: u0,
+                count: u0,
+            }
+                (map-get? book-ratings book-id)
+            )))
             (map-set book-ratings book-id {
                 total-score: (+ (get total-score current) score),
                 count: (+ (get count current) u1),
             })
         )
 
-        (map-set user-book-rated { user: tx-sender, book-id: book-id } true)
+        (map-set user-book-rated {
+            user: tx-sender,
+            book-id: book-id,
+        }
+            true
+        )
 
         (print {
             event: "book-rated",
@@ -462,8 +527,14 @@
     (ok (default-to u0 (map-get? user-history-count user)))
 )
 
-(define-read-only (get-user-history-item (user principal) (index uint))
-    (ok (map-get? user-borrow-history { user: user, index: index }))
+(define-read-only (get-user-history-item
+        (user principal)
+        (index uint)
+    )
+    (ok (map-get? user-borrow-history {
+        user: user,
+        index: index,
+    }))
 )
 
 (define-read-only (get-book-rating (book-id uint))
@@ -476,17 +547,30 @@
                 u0
             ),
         })
-        (ok { total-score: u0, count: u0, average: u0 })
+        (ok {
+            total-score: u0,
+            count: u0,
+            average: u0,
+        })
     )
 )
 
-(define-read-only (can-user-rate (user principal) (book-id uint))
+(define-read-only (can-user-rate
+        (user principal)
+        (book-id uint)
+    )
     (ok {
         eligible: (default-to false
-            (map-get? user-returned-books { user: user, book-id: book-id })
+            (map-get? user-returned-books {
+                user: user,
+                book-id: book-id,
+            })
         ),
         already-rated: (default-to false
-            (map-get? user-book-rated { user: user, book-id: book-id })
+            (map-get? user-book-rated {
+                user: user,
+                book-id: book-id,
+            })
         ),
     })
 )
