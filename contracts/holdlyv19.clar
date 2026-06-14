@@ -325,7 +325,12 @@
 
 ;;  Owner claims deposit if book is overdue and borrower hasn't returned it
 (define-public (claim-overdue (book-id uint))
+    (let (
+            (book (unwrap! (map-get? books book-id) ERR_BOOK_NOT_FOUND))
+
 )
+
+
 ;; Rate a book
 (define-public (rate-book
         (book-id uint)
