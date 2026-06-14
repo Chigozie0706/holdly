@@ -332,6 +332,7 @@
         ;; Only book owner can claim
         (asserts! (is-eq tx-sender (get owner book)) ERR_NOT_OWNER)
         ;; Must be past due date
+        (asserts! (> burn-block-height (get due-date borrow)) ERR_NOT_OVERDUE)
     )
 )
 
