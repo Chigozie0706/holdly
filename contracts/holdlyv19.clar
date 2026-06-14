@@ -328,9 +328,10 @@
     (let (
             (book (unwrap! (map-get? books book-id) ERR_BOOK_NOT_FOUND))
             (borrow (unwrap! (map-get? borrows book-id) ERR_BOOK_ALREADY_RETURNED))
-
+        )
+        ;; Only book owner can claim
+    )
 )
-
 
 ;; Rate a book
 (define-public (rate-book
