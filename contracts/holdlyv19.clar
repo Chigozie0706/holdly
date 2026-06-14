@@ -337,6 +337,8 @@
                 (let (
                                     (amount (get deposit-amount borrow))
                 (token (get deposit-token borrow))
+                                (borrower (get borrower borrow))
+
 
                 )
     )
