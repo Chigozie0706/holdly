@@ -342,6 +342,7 @@
             ;; Send deposit to owner
             (try! (if (is-eq token TOKEN_STX)
                 (send-stx-from-contract amount tx-sender)
+                (send-sbtc-from-contract amount tx-sender)
             ))
         )
     )
