@@ -341,7 +341,8 @@
                 )
 
                             ;; Send deposit to owner
-
+            (try! (if (is-eq token TOKEN_STX)
+            ))
     )
 )
 
