@@ -334,13 +334,24 @@
         ;; Must be past due date
         (asserts! (> burn-block-height (get due-date borrow)) ERR_NOT_OVERDUE)
 
-                (let (
-                                    (amount (get deposit-amount borrow))
+        (let (
+                (amount (get deposit-amount borrow))
                 (token (get deposit-token borrow))
-                                (borrower (get borrower borrow))
+                (borrower (get borrower borrow))
+            )
+            ;; Send deposit to owner
+            (try! (if (is-eq token TOKEN_STX)
+                (send-stx-from-contract amount tx-sender)
+                (send-sbtc-from-contract amount tx-sender)
+            ))
 
+            ;; Free the book
+            (map-set books book-id (merge book { is-available: true }))
+            (map-delete borrows book-id)
+            (map-delete borrower-active-borrow borrower)
 
-                )
+            (print { event: "overdue-claimed" })
+        )
     )
 )
 
