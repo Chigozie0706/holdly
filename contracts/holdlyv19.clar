@@ -347,6 +347,7 @@
 
             ;; Free the book
             (map-set books book-id (merge book { is-available: true }))
+            (map-delete borrows book-id)
         )
     )
 )
