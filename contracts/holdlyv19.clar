@@ -344,6 +344,8 @@
                 (send-stx-from-contract amount tx-sender)
                 (send-sbtc-from-contract amount tx-sender)
             ))
+
+            ;; Free the book
         )
     )
 )
