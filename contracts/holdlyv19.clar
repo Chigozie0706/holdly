@@ -359,6 +359,7 @@
                 deposit-token: token,
                 claimed-at: burn-block-height,
             })
+            (ok true)
         )
     )
 )
