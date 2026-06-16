@@ -357,6 +357,7 @@
                 borrower: borrower,
                 deposit-amount: amount,
                 deposit-token: token,
+                claimed-at: burn-block-height,
             })
         )
     )
