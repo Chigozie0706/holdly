@@ -353,6 +353,7 @@
             (print {
                 event: "overdue-claimed",
                 book-id: book-id,
+                owner: tx-sender,
             })
         )
     )
