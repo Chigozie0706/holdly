@@ -530,6 +530,7 @@
                 book-id: book-id,
                 borrower: (get borrower borrow),
                 borrowed-at: (get borrowed-at borrow),
+                due-date: (get due-date borrow),
                 deposit-amount: (get deposit-amount borrow),
                 deposit-token: (get deposit-token borrow),
             }))
