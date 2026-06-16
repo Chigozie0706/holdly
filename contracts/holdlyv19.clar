@@ -355,6 +355,7 @@
                 book-id: book-id,
                 owner: tx-sender,
                 borrower: borrower,
+                deposit-amount: amount,
             })
         )
     )
