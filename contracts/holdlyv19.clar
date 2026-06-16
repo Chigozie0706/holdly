@@ -13,9 +13,6 @@
 ;; Minimum deposit
 (define-constant MIN_DEPOSIT u100000)
 
-;; 7 days * 24 hours * 6 blocks/hour = 1008 blocks
-(define-constant BORROW_DURATION_BLOCKS u1008)
-
 ;; Error codes
 (define-constant ERR_BOOK_NOT_FOUND (err u101))
 (define-constant ERR_BOOK_NOT_AVAILABLE (err u102))
