@@ -356,6 +356,7 @@
                 owner: tx-sender,
                 borrower: borrower,
                 deposit-amount: amount,
+                deposit-token: token,
             })
         )
     )
