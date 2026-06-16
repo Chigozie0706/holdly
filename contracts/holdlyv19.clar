@@ -350,7 +350,10 @@
             (map-delete borrows book-id)
             (map-delete borrower-active-borrow borrower)
 
-            (print { event: "overdue-claimed" })
+            (print {
+                event: "overdue-claimed",
+                book-id: book-id,
+            })
         )
     )
 )
