@@ -11,6 +11,7 @@
 (define-constant TOKEN_SBTC "sBTC")
 
 ;;  Min 1 day (~144 blocks), Max 30 days (~4320 blocks)
+(define-constant MIN_BORROW_DURATION u144)
 
 ;; Minimum deposit
 (define-constant MIN_DEPOSIT u100000)
