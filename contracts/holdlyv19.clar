@@ -10,6 +10,8 @@
 (define-constant TOKEN_STX "STX")
 (define-constant TOKEN_SBTC "sBTC")
 
+;;  Min 1 day (~144 blocks), Max 30 days (~4320 blocks)
+
 ;; Minimum deposit
 (define-constant MIN_DEPOSIT u100000)
 
@@ -171,6 +173,7 @@
                 total-borrows: u0,
                 deposit-amount: deposit-amount,
                 deposit-token: deposit-token,
+                borrow-duration: uint,
             })
 
             (var-set book-id-counter book-id)
