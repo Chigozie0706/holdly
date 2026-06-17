@@ -167,6 +167,8 @@
             ERR_INVALID_TOKEN
         )
 
+        ;;  Validate duration
+
         (let ((book-id (+ (var-get book-id-counter) u1)))
             (map-set books book-id {
                 title: title,
