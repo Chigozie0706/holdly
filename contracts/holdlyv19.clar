@@ -215,7 +215,7 @@
                 (amount (get deposit-amount book))
                 (token (get deposit-token book))
                 ;;  Calculate due date at borrow time
-                (due-date (+ burn-block-height BORROW_DURATION_BLOCKS))
+                (due-date (+ burn-block-height (get borrow-duration book)))
             )
             (try! (if (is-eq token TOKEN_STX)
                 (stx-transfer? amount tx-sender CONTRACT_ADDRESS)
