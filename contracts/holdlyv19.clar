@@ -198,6 +198,7 @@
                 owner: tx-sender,
                 deposit-amount: deposit-amount,
                 deposit-token: deposit-token,
+                borrow-duration: borrow-duration,
             })
 
             (ok book-id)
