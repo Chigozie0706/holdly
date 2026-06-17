@@ -452,6 +452,7 @@
             ERR_INVALID_TOKEN
         )
         (asserts! (>= borrow-duration MIN_BORROW_DURATION) ERR_INVALID_DURATION)
+        (asserts! (<= borrow-duration MAX_BORROW_DURATION) ERR_INVALID_DURATION)
 
         (map-set books book-id
             (merge book {
