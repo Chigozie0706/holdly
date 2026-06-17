@@ -181,7 +181,7 @@
                 total-borrows: u0,
                 deposit-amount: deposit-amount,
                 deposit-token: deposit-token,
-                borrow-duration: uint,
+                borrow-duration: borrow-duration,
             })
 
             (var-set book-id-counter book-id)
