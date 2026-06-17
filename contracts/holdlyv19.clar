@@ -461,6 +461,7 @@
                 cover-page: cover-page,
                 deposit-amount: deposit-amount,
                 deposit-token: deposit-token,
+                borrow-duration: borrow-duration,
             })
         )
 
