@@ -471,6 +471,7 @@
             title: title,
             author: author,
             deposit-token: deposit-token,
+            borrow-duration: borrow-duration,
             owner: tx-sender,
         })
 
