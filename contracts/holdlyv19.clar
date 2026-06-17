@@ -12,6 +12,7 @@
 
 ;;  Min 1 day (~144 blocks), Max 30 days (~4320 blocks)
 (define-constant MIN_BORROW_DURATION u144)
+(define-constant MAX_BORROW_DURATION u4320)
 
 ;; Minimum deposit
 (define-constant MIN_DEPOSIT u100000)
