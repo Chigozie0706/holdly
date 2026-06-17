@@ -155,6 +155,7 @@
         (cover-page (string-utf8 200))
         (deposit-amount uint)
         (deposit-token (string-ascii 4))
+        (borrow-duration uint)
     )
     (begin
         (asserts! (> (len title) u0) ERR_INVALID_STRING)
