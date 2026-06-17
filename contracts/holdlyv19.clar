@@ -168,6 +168,7 @@
         )
 
         ;;  Validate duration
+        (asserts! (>= borrow-duration MIN_BORROW_DURATION) ERR_INVALID_DURATION)
 
         (let ((book-id (+ (var-get book-id-counter) u1)))
             (map-set books book-id {
