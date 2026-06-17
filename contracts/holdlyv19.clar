@@ -438,6 +438,7 @@
         (cover-page (string-utf8 200))
         (deposit-amount uint)
         (deposit-token (string-ascii 4))
+        (borrow-duration uint)
     )
     (let ((book (unwrap! (map-get? books book-id) ERR_BOOK_NOT_FOUND)))
         (asserts! (is-eq tx-sender (get owner book)) ERR_NOT_BOOK_OWNER)
@@ -450,6 +451,7 @@
             (or (is-eq deposit-token TOKEN_STX) (is-eq deposit-token TOKEN_SBTC))
             ERR_INVALID_TOKEN
         )
+        (asserts! (>= borrow-duration MIN_BORROW_DURATION) ERR_INVALID_DURATION)
 
         (map-set books book-id
             (merge book {
