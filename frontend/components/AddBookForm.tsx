@@ -28,7 +28,7 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
   const { connected } = useStacks();
   const [depositSTX, setDepositSTX] = useState("0.50");
   const [depositToken, setDepositToken] = useState<"STX" | "sBTC">("STX");
-  const [borrowDays, setBorrowDays];
+  const [borrowDays, setBorrowDays] = useState("7");
 
   const handleFileChange = useCallback(
     (fileOrEvent: File | React.ChangeEvent<HTMLInputElement>) => {
