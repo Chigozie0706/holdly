@@ -296,6 +296,8 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
             <label className="field-label">
               Borrow Duration <span>*</span>
             </label>
+
+            <div></div>
           </div>
 
           {/* Token Selector */}
