@@ -292,6 +292,8 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
             </p>
           </div>
 
+          <div className="field-group"></div>
+
           {/* Token Selector */}
           <div className="field-group">
             <label className="field-label">Deposit Token</label>
