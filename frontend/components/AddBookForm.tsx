@@ -297,7 +297,9 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
               Borrow Duration <span>*</span>
             </label>
 
-            <div style={{ display: "flex", gap: "0.5rem" }}></div>
+            <div style={{ display: "flex", gap: "0.5rem" }}>
+              {["1", "3", "7", "14", "30"]}
+            </div>
           </div>
 
           {/* Token Selector */}
