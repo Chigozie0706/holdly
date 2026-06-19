@@ -320,7 +320,10 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
                       borrowDays === day ? "#D4A352" : "rgba(255,255,255,0.35)",
                     fontSize: "0.78rem",
                   }}
-                ></button>
+                >
+                  {" "}
+                  {day}d
+                </button>
               ))}
             </div>
           </div>
