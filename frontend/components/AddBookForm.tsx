@@ -303,6 +303,7 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
                   key={day}
                   type="button"
                   onClick={() => setBorrowDays(day)}
+                  style={{}}
                 ></button>
               ))}
             </div>
