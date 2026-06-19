@@ -299,7 +299,7 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
 
             <div style={{ display: "flex", gap: "0.5rem" }}>
               {["1", "3", "7", "14", "30"].map((day) => (
-                <button key={day}></button>
+                <button key={day} type="button"></button>
               ))}
             </div>
           </div>
