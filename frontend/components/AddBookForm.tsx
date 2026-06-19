@@ -312,6 +312,10 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
                       borrowDays === day
                         ? "rgba(212,163,82,0.15)"
                         : "rgba(255,255,255,0.04)",
+                    border:
+                      borrowDays === day
+                        ? "1px solid rgba(212,163,82,0.4)"
+                        : "1px solid rgba(255,255,255,0.08)",
                   }}
                 ></button>
               ))}
