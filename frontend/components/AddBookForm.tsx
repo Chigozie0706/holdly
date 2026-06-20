@@ -332,7 +332,10 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
                 color: "rgba(255,255,255,0.25)",
                 marginTop: "0.35rem",
               }}
-            ></p>
+            >
+              {" "}
+              Borrowers must return within this period or lose their deposit
+            </p>
           </div>
 
           {/* Token Selector */}
