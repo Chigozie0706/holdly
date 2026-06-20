@@ -326,7 +326,7 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
                 </button>
               ))}
             </div>
-            <p></p>
+            <p style={{}}></p>
           </div>
 
           {/* Token Selector */}
