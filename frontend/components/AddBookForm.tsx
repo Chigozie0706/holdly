@@ -13,6 +13,7 @@ interface AddBookFormProps {
     coverPage: string,
     depositAmount: number,
     depositToken: "STX" | "sBTC",
+    borrowDuration: number,
   ) => void;
 }
 
