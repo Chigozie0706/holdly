@@ -327,7 +327,11 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
               ))}
             </div>
             <p
-              style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.25)" }}
+              style={{
+                fontSize: "0.72rem",
+                color: "rgba(255,255,255,0.25)",
+                marginTop: "0.35rem",
+              }}
             ></p>
           </div>
 
