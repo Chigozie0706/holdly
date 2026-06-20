@@ -129,7 +129,14 @@ export default function AddBookForm({ onAdd }: AddBookFormProps) {
 
     const borrowDurationBlocks = Number(borrowDays) * 144;
 
-    onAdd(title, author, finalCoverUrl, depositMicroSTX, depositToken);
+    onAdd(
+      title,
+      author,
+      finalCoverUrl,
+      depositMicroSTX,
+      depositToken,
+      borrowDurationBlocks,
+    );
     setTitle("");
     setAuthor("");
     setCoverPage("");
