@@ -80,6 +80,7 @@ export default function Library() {
                 average: Number(ratingData.average.value),
                 count: Number(ratingData.count.value),
               },
+              "borrow-duration": Number(d["borrow-duration"].value),
             });
           }
         } catch (e) {
