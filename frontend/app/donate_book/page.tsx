@@ -16,7 +16,7 @@ export default function DonateBook() {
     coverPage: string,
     depositAmount: number,
     depositToken: "STX" | "sBTC",
-    borrowDuration,
+    borrowDuration: number,
   ) => {
     if (!connected) {
       toast.error("Please connect your wallet first");
