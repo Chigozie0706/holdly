@@ -5,5 +5,5 @@ export function blocksToDate(currentBlock: number, targetBlock: number): Date {
   const blocksRemaining = targetBlock - currentBlock;
   const minutesRemaining = blocksRemaining * MINUTES_PER_BLOCK;
 
-  return new Date(Date.now());
+  return new Date(Date.now() + minutesRemaining * 60 * 1000);
 }
