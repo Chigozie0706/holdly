@@ -3,4 +3,5 @@ const MINUTES_PER_BLOCK = 10;
 
 export function blocksToDate(currentBlock: number, targetBlock: number): Date {
   const blocksRemaining = targetBlock - currentBlock;
+  const minutesRemaining;
 }
