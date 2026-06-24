@@ -13,4 +13,5 @@ export function formatTimeRemaining(
   dueBlock: number,
 ): {
   label: string;
+  isOverdue: boolean;
 } {}
