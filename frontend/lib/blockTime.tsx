@@ -14,4 +14,5 @@ export function formatTimeRemaining(
 ): {
   label: string;
   isOverdue: boolean;
+  urgency: "safe" | "warning" | "danger" | "overdue";
 } {}
