@@ -8,4 +8,4 @@ export function blocksToDate(currentBlock: number, targetBlock: number): Date {
   return new Date(Date.now() + minutesRemaining * 60 * 1000);
 }
 
-export function formatTimeRemaining(currentBlock: number, dueBlock) {}
+export function formatTimeRemaining(currentBlock: number, dueBlock: number) {}
