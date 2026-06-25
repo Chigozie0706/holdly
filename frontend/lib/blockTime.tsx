@@ -18,5 +18,5 @@ export function blocksToDate(currentBlock: number, targetBlock: number): Date {
 // } {}
 
 export function borrowDurationLabel(durationBlocks: number): string {
-  const days;
+  const days = Math.round(durationBlocks / 144);
 }
