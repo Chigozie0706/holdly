@@ -19,4 +19,5 @@ export function blocksToDate(currentBlock: number, targetBlock: number): Date {
 
 export function borrowDurationLabel(durationBlocks: number): string {
   const days = Math.round(durationBlocks / 144);
+  return `${days}`;
 }
