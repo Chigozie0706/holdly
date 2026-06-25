@@ -16,3 +16,5 @@ export function formatTimeRemaining(
   isOverdue: boolean;
   urgency: "safe" | "warning" | "danger" | "overdue";
 } {}
+
+export function borrowDurationLabel() {}
