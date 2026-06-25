@@ -17,4 +17,6 @@ export function blocksToDate(currentBlock: number, targetBlock: number): Date {
 //   urgency: "safe" | "warning" | "danger" | "overdue";
 // } {}
 
-export function borrowDurationLabel(durationBlocks: number): string {}
+export function borrowDurationLabel(durationBlocks: number): string {
+  const days;
+}
