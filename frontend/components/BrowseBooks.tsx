@@ -16,7 +16,7 @@ interface BrowseBooksProps {
     coverPage: string,
     depositAmount: number,
     depositToken: "STX" | "sBTC",
-    borrowDuration,
+    borrowDuration: number,
   ) => void;
   onDelete: (id: number) => void;
   connected: boolean;
