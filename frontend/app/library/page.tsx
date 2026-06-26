@@ -327,6 +327,7 @@ export default function Library() {
         depositAmount={DEPOSIT_AMOUNT}
         onBorrow={handleBorrow}
         connected={connected}
+        onRate={handleRateBook}
         isLoading={isFetching}
         onUpdate={handleUpdateBook}
         onDelete={handleDeleteBook}
