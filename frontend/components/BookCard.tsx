@@ -175,6 +175,8 @@ export default function BookCard({
         finalCover = await uploadToIPFS(editFile);
       }
 
+      const borrowDuration = 1;
+
       onUpdate(
         book.id,
         editTitle,
@@ -182,6 +184,7 @@ export default function BookCard({
         finalCover,
         depositMicro,
         editDepositToken,
+        borrowDuration,
       );
       setIsEditing(false);
       setEditFile(null);
