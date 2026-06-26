@@ -189,7 +189,7 @@ export default function Library() {
     coverPage: string,
     depositAmount: number,
     depositToken: "STX" | "sBTC",
-    borrowDuration,
+    borrowDuration: number,
   ) => {
     if (!connected || !address) {
       toast.error("Please connect your wallet first");
