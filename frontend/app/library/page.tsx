@@ -209,6 +209,7 @@ export default function Library() {
           Cl.stringUtf8(coverPage || "https://via.placeholder.com/150"),
           Cl.uint(depositAmount),
           Cl.stringAscii(depositToken),
+          Cl.uint(borrowDuration),
         ],
       });
       if (response.txid) {
