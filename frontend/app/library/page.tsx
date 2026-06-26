@@ -21,6 +21,7 @@ interface Book {
   "total-borrows": number;
   "deposit-amount": number;
   "deposit-token": string;
+  "borrow-duration":
   rating?: { average: number; count: number };
 }
 
