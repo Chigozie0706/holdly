@@ -77,7 +77,7 @@ export default function Library() {
               "total-borrows": Number(d["total-borrows"].value),
               "deposit-amount": Number(d["deposit-amount"].value),
               "deposit-token": d["deposit-token"].value,
-              "borrow-duration"
+              "borrow-duration": Number(d["borrow-duration"].value),
               rating: {
                 average: Number(ratingData.average.value),
                 count: Number(ratingData.count.value),
