@@ -14,6 +14,31 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 
+function StarRating({ average, count }: { average: number; count: number }) {
+  const stars = average / 10;
+
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: "0.3rem" }}>
+      {[1, 2, 3, 4, 5].map((star) => (
+        <span
+          key={star}
+          style={{
+            fontSize: "0.7rem",
+            color:
+              star <= Math.round(stars) ? "#D4A352" : "rgba(255,255,255,0.15)",
+          }}
+        >
+          ★
+        </span>
+      ))}
+
+      <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.25)" }}>
+        {count > 0 ? `${stars.toFixed(1)} (${count})` : "No ratings"}
+      </span>
+    </div>
+  );
+}
+
 interface BookCardProps {
   book: {
     id: number;
@@ -77,33 +102,6 @@ export default function BookCard({
   const isAvailable = book["is-available"];
   const isOwner = connected && address && book.owner && address === book.owner;
   const canManage = isOwner && isAvailable;
-
-  function StarRating({ average, count }: { average: number; count: number }) {
-    const stars = average / 10;
-
-    return (
-      <div style={{ display: "flex", alignItems: "center", gap: "0.3rem" }}>
-        {[1, 2, 3, 4, 5].map((star) => (
-          <span
-            key={star}
-            style={{
-              fontSize: "0.7rem",
-              color:
-                star <= Math.round(stars)
-                  ? "#D4A352"
-                  : "rgba(255,255,255,0.15)",
-            }}
-          >
-            ★
-          </span>
-        ))}
-
-        <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.25)" }}>
-          {count > 0 ? `${stars.toFixed(1)} (${count})` : "No ratings"}
-        </span>
-      </div>
-    );
-  }
 
   const handleEditFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
