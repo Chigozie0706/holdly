@@ -40,6 +40,7 @@ interface BookCardProps {
     borrowDuration: number,
   ) => void;
   onDelete: (id: number) => void;
+  onRate?: (id: number, score: number) => void;
   connected: boolean;
   address: string | null;
 }
