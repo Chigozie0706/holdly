@@ -51,6 +51,7 @@ export default function BookCard({
   onBorrow,
   onUpdate,
   onDelete,
+  onRate,
   connected,
   address,
 }: BookCardProps) {
