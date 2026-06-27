@@ -13,6 +13,7 @@ import {
   Upload,
 } from "lucide-react";
 import { toast } from "sonner";
+import { borrowDurationLabel } from "@/lib/blockTime";
 
 function StarRating({ average, count }: { average: number; count: number }) {
   const stars = average / 10;
