@@ -71,6 +71,7 @@ export default function BookCard({
     (book["deposit-token"] as "STX" | "sBTC") || "STX",
   );
 
+  const [editBorrowDays, setEditBorrowDays] = useState();
   const isAvailable = book["is-available"];
   const isOwner = connected && address && book.owner && address === book.owner;
   const canManage = isOwner && isAvailable;
