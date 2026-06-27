@@ -173,17 +173,18 @@ export default function BookCard({
       return;
     }
 
+    const borrowDurationBlocks = Number(editBorrowDays) * 144;
+
+    if (borrowDurationBlocks < 144 || borrowDurationBlocks > 4320) {
+      toast.error("Borrow duration must be between 1 and 30 days");
+      return;
+    }
+
     setIsUploading(true);
     try {
       let finalCover = editCover;
       if (editFile) {
         finalCover = await uploadToIPFS(editFile);
-      }
-
-      const borrowDurationBlocks = Number(editBorrowDays) * 144;
-
-      if (borrowDurationBlocks < 144 || borrowDurationBlocks > 4320) {
-        toast.error("Borrow duration must be between 1 and 30 days");
       }
 
       onUpdate(
@@ -193,6 +194,7 @@ export default function BookCard({
         finalCover,
         depositMicro,
         editDepositToken,
+        borrowDurationBlocks,
       );
       setIsEditing(false);
       setEditFile(null);
