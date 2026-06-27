@@ -182,6 +182,8 @@ export default function BookCard({
 
       const borrowDuration = 1;
 
+      const borrowDurationBlocks = Number(editBorrowDays) * 144;
+
       onUpdate(
         book.id,
         editTitle,
