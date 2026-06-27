@@ -183,6 +183,7 @@ export default function BookCard({
       const borrowDurationBlocks = Number(editBorrowDays) * 144;
 
       if (borrowDurationBlocks < 144 || borrowDurationBlocks > 4320) {
+        toast.error("Borrow duration must be between 1 and 30 days");
       }
 
       onUpdate(
