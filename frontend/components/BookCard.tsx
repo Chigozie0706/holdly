@@ -379,6 +379,8 @@ export default function BookCard({
                   >
                     Borrow Duration
                   </p>
+
+                  <div></div>
                 </div>
               </div>
 
