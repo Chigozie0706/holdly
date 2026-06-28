@@ -477,8 +477,7 @@ export default function BookCard({
               </div>
 
               {/*  Borrow duration display */}
-                          {book["borrow-duration"] && (
-                          )}
+              {book["borrow-duration"] && <div></div>}
 
               {isAvailable ? (
                 <button
