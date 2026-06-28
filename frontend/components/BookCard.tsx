@@ -386,6 +386,26 @@ export default function BookCard({
                         key={day}
                         type="button"
                         onClick={() => setEditBorrowDays(day)}
+                        style={{
+                          flex: 1,
+                          padding: "0.35rem",
+                          borderRadius: "2px",
+                          fontSize: "0.68rem",
+                          cursor: "pointer",
+                          transition: "all 0.15s",
+                          background:
+                            editBorrowDays === day
+                              ? "rgba(212,163,82,0.12)"
+                              : "rgba(255,255,255,0.04)",
+                          border:
+                            editBorrowDays === day
+                              ? "1px solid rgba(212,163,82,0.35)"
+                              : "1px solid rgba(255,255,255,0.08)",
+                          color:
+                            editBorrowDays === day
+                              ? "#D4A352"
+                              : "rgba(255,255,255,0.35)",
+                        }}
                       ></button>
                     ))}
                   </div>
