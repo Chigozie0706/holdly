@@ -380,7 +380,9 @@ export default function BookCard({
                     Borrow Duration
                   </p>
 
-                  <div style={{ display: "flex", gap: "0.3rem" }}></div>
+                  <div style={{ display: "flex", gap: "0.3rem" }}>
+                    {["1", "3", "7", "14", "30"].map(() => ())}
+                  </div>
                 </div>
               </div>
 
