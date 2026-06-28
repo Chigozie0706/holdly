@@ -477,7 +477,15 @@ export default function BookCard({
               </div>
 
               {/*  Borrow duration display */}
-              {book["borrow-duration"] && <div></div>}
+              {book["borrow-duration"] && (
+                <div
+                  style={{
+                    fontSize: "0.72rem",
+                    color: "rgba(255,255,255,0.25)",
+                    marginBottom: "0.4rem",
+                  }}
+                ></div>
+              )}
 
               {isAvailable ? (
                 <button
