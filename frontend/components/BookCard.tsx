@@ -382,7 +382,7 @@ export default function BookCard({
 
                   <div style={{ display: "flex", gap: "0.3rem" }}>
                     {["1", "3", "7", "14", "30"].map((day) => (
-                      <button key={day}></button>
+                      <button key={day} type="button"></button>
                     ))}
                   </div>
                 </div>
