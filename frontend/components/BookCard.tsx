@@ -406,7 +406,10 @@ export default function BookCard({
                               ? "#D4A352"
                               : "rgba(255,255,255,0.35)",
                         }}
-                      ></button>
+                      >
+                        {" "}
+                        {day}d
+                      </button>
                     ))}
                   </div>
                 </div>
