@@ -485,7 +485,7 @@ export default function BookCard({
                     marginBottom: "0.4rem",
                   }}
                 >
-                  Borrow period:
+                  Borrow period: {borrowDurationLabel(book["borrow-duration"])}
                 </div>
               )}
 
