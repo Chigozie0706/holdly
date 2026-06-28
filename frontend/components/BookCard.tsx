@@ -484,7 +484,9 @@ export default function BookCard({
                     color: "rgba(255,255,255,0.25)",
                     marginBottom: "0.4rem",
                   }}
-                ></div>
+                >
+                  Borrow period:
+                </div>
               )}
 
               {isAvailable ? (
