@@ -212,7 +212,9 @@ export default function BookCard({
     setEditCover(book.coverPage || "");
     setEditDepositSTX((book["deposit-amount"] / 1_000_000).toFixed(2));
     setEditDepositToken((book["deposit-token"] as "STX" | "sBTC") || "STX");
-    setEditBorrowDays(Math.round((book["borrow-duration"] ?? 1008) / 144));
+    setEditBorrowDays(
+      String(Math.round((book["borrow-duration"] ?? 1008) / 144)),
+    );
     setEditFile(null);
     setEditPreview(null);
     setIsEditing(false);
