@@ -365,6 +365,21 @@ export default function BookCard({
                     </button>
                   ))}
                 </div>
+
+                {/*  Borrow duration selector */}
+                <div>
+                  <p
+                    style={{
+                      fontSize: "0.65rem",
+                      color: "rgba(255,255,255,0.25)",
+                      margin: "0.3rem 0 0.4rem",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.08em",
+                    }}
+                  >
+                    Borrow Duration
+                  </p>
+                </div>
               </div>
 
               <div className="book-owner-actions">
