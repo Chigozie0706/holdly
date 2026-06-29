@@ -278,3 +278,30 @@ holdly/
 - ✅ Borrow history tracking
 - ✅ My Listed Books dashboard
 - ✅ Post-condition handling for STX transfers
+
+### Upcoming
+
+- [ ] Block-to-date countdown timer in My Borrows
+- [ ] Claim overdue UI for book owners
+- [ ] Genre/category tags and filter
+- [ ] Waitlist for borrowed books
+- [ ] NFT integration for rare books
+
+## Use Cases
+
+1. **Community Libraries** — Neighborhoods can create decentralized book sharing
+2. **Academic Institutions** — Students can lend textbooks with deposit protection
+3. **Collectors** — Rare book owners can safely lend valuable items
+4. **Book Clubs** — Members can share books with collateral assurance
+5. **Christian Communities** — Faith-based libraries with trustless accountability
+
+## Security
+
+✅ Deposits held securely in smart contract  
+✅ Only the borrower can return their own book  
+✅ Only the book owner can claim overdue deposits  
+✅ Only users who have returned a book can rate it  
+✅ Post-condition checks on all STX transfers  
+✅ Minimum deposit enforced on-chain (0.1 STX)  
+✅ Borrow duration validated (1–30 days)  
+✅ Immutable contract logic
