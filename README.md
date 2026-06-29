@@ -1,7 +1,6 @@
 # Holdly - Decentralized Book Lending Platform
 
 [![Built on Stacks](https://img.shields.io/badge/Built%20on-Stacks-5546FF?logo=stacks)](https://www.stacks.co/)
-[![Code4STX](https://img.shields.io/badge/Code4STX-Eligible-orange)](https://stacks.org/code4stx)
 [![Clarinet](https://img.shields.io/badge/Clarinet-Passing-brightgreen)](https://github.com/hirosystems/clarinet)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
