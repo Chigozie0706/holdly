@@ -17,6 +17,10 @@ export function formatTimeRemaining(
   urgency: "safe" | "warning" | "danger" | "overdue";
 } {
   const blocksRemaining = dueBlock - currentBlock;
+
+  if (blocksRemaining <= 0) {
+    return { label: "Overdue", isOverdue: true, urgency: "overdue" };
+  }
 }
 
 export function borrowDurationLabel(durationBlocks: number): string {
