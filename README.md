@@ -245,3 +245,36 @@ holdly/
 ├── Clarinet.toml
 
 └── README.md
+
+## 📈 Development Progress
+
+### June 2026 ✅
+
+- ✅ Mainnet deployment (holdlyv19)
+- ✅ sBTC multi-token deposit support
+- ✅ Owner-set borrow duration (1–30 days)
+- ✅ Overdue system — late returns send deposit to owner
+- ✅ `claim-overdue` function for unreturned books
+- ✅ Book rating system (post-return only)
+- ✅ Scalable borrow history with map-based indexing
+- ✅ CORS proxy API route for reliable Hiro API access
+- ✅ Optimistic UI with on-chain confirmation polling
+- ✅ IPFS cover images via Pinata
+- ✅ Page-router navigation (5 dedicated pages)
+- ✅ Mobile-responsive header with hamburger drawer
+- ✅ Sonner toast notifications replacing all alerts
+
+### May 2026 ✅
+
+- ✅ Migrated to mainnet
+- ✅ Multi-page routing (library, borrows, listed books, history)
+- ✅ Inline book editing from browse and dashboard views
+- ✅ Delete book functionality
+- ✅ Session persistence on wallet refresh
+
+### April 2026 ✅
+
+- ✅ Custom deposit amounts
+- ✅ Borrow history tracking
+- ✅ My Listed Books dashboard
+- ✅ Post-condition handling for STX transfers
