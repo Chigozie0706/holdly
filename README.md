@@ -305,3 +305,34 @@ holdly/
 ✅ Minimum deposit enforced on-chain (0.1 STX)  
 ✅ Borrow duration validated (1–30 days)  
 ✅ Immutable contract logic
+
+## Technology Stack
+
+### Smart Contract
+
+- **Language**: Clarity v2
+- **Blockchain**: Stacks (Bitcoin Layer 2)
+- **Tokens**: STX + sBTC
+- **Dev Tool**: Clarinet
+
+### Frontend
+
+- **Framework**: Next.js 16 (React 19)
+- **Language**: TypeScript 5
+- **Styling**: CSS Modules + Tailwind
+- **Wallet**: @stacks/connect v8.2.4
+- **SDK**: @stacks/transactions v7.3.1
+- **Notifications**: Sonner
+- **Images**: Pinata (IPFS)
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Ensure `clarinet check` passes
+4. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+5. Push and open a pull request
+
+## License
+
+MIT License — See [LICENSE](LICENSE) for details
