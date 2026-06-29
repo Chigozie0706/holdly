@@ -181,3 +181,67 @@ NEXT_PUBLIC_PINATA_GATEWAY=gateway.pinata.cloud
 npm run dev
 # Open http://localhost:3000
 ```
+
+## Project Structure
+
+holdly/
+
+├── contracts/
+
+│ └── holdlyv19.clar # Main lending contract
+
+├── frontend/
+
+│ ├── app/
+
+│ │ ├── page.tsx # Root (redirects to /library)
+
+│ │ ├── library/ # Browse all books
+
+│ │ ├── donate_book/ # Add a book
+
+│ │ ├── my_borrows/ # Active borrows
+
+│ │ ├── my_listed_books/ # Books you own
+
+│ │ ├── borrow_history/ # Return history + ratings
+
+│ │ └── api/stacks/ # CORS proxy for Hiro API
+
+│ ├── components/
+
+│ │ ├── BookCard.tsx
+
+│ │ ├── BrowseBooks.tsx
+
+│ │ ├── AddBookForm.tsx
+
+│ │ ├── MyBorrows.tsx
+
+│ │ ├── MyListedBooks.tsx
+
+│ │ ├── Header.tsx
+
+│ │ └── HeaderWrapper.tsx
+
+│ ├── lib/
+
+│ │ ├── readContract.ts # Proxied contract reads
+
+│ │ ├── pollTransaction.ts # On-chain polling
+
+│ │ └── blockTime.ts # Block → time conversions
+
+│ ├── providers/
+
+│ │ └── stacks-provider.tsx
+
+│ ├── config/
+
+│ │ └── contract.ts # Contract address + name
+
+│ └── styles/ # Per-component CSS files
+
+├── Clarinet.toml
+
+└── README.md
