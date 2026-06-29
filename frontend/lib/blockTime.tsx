@@ -8,14 +8,14 @@ export function blocksToDate(currentBlock: number, targetBlock: number): Date {
   return new Date(Date.now() + minutesRemaining * 60 * 1000);
 }
 
-// export function formatTimeRemaining(
-//   currentBlock: number,
-//   dueBlock: number,
-// ): {
-//   label: string;
-//   isOverdue: boolean;
-//   urgency: "safe" | "warning" | "danger" | "overdue";
-// } {}
+export function formatTimeRemaining(
+  currentBlock: number,
+  dueBlock: number,
+): {
+  label: string;
+  isOverdue: boolean;
+  urgency: "safe" | "warning" | "danger" | "overdue";
+} {}
 
 export function borrowDurationLabel(durationBlocks: number): string {
   const days = Math.round(durationBlocks / 144);
