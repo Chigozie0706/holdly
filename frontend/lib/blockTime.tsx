@@ -15,7 +15,9 @@ export function formatTimeRemaining(
   label: string;
   isOverdue: boolean;
   urgency: "safe" | "warning" | "danger" | "overdue";
-} {}
+} {
+  const blocksRemaining = dueBlock - currentBlock;
+}
 
 export function borrowDurationLabel(durationBlocks: number): string {
   const days = Math.round(durationBlocks / 144);
