@@ -336,3 +336,20 @@ holdly/
 ## License
 
 MIT License — See [LICENSE](LICENSE) for details
+
+## Support
+
+- **GitHub Issues**: [Open an issue](https://github.com/Chigozie0706/holdly/issues)
+- **Email**: chigoziejacob@gmail.com
+- **Discord**: [Stacks Discord](https://discord.gg/stacks)
+
+## Acknowledgments
+
+- [Stacks Foundation](https://www.stacks.co/) for Code4STX
+- [Hiro Systems](https://hiro.so/) for Clarinet and developer tools
+- [Pinata](https://pinata.cloud/) for IPFS infrastructure
+- The Stacks community for feedback and support
+
+---
+
+**Disclaimer**: This smart contract handles real financial transactions on mainnet. Always verify the contract address before transacting. The deposit mechanism involves real STX and sBTC.
