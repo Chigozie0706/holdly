@@ -21,6 +21,8 @@ export function formatTimeRemaining(
   if (blocksRemaining <= 0) {
     return { label: "Overdue", isOverdue: true, urgency: "overdue" };
   }
+
+  const minutesRemaining = blocksRemaining * MINUTES_PER_BLOCK;
 }
 
 export function borrowDurationLabel(durationBlocks: number): string {
