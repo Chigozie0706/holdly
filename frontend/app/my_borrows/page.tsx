@@ -126,6 +126,7 @@ export default function MyBorrowsPage() {
     }
   };
   useEffect(() => {
+    fetchCurrentBlock();
     fetchBorrowedBooks();
   }, [connected, address]);
 
