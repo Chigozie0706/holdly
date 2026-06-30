@@ -107,6 +107,7 @@ export default function MyBorrowsPage() {
             "total-borrows": Number(d["total-borrows"].value),
             "deposit-amount": Number(borrowData["deposit-amount"].value),
             borrowedAt: Number(borrowData["borrowed-at"].value),
+            dueDate: Number(borrowData["due-date"].value),
             "deposit-token": borrowData["deposit-token"].value,
           } as Book;
         }),
