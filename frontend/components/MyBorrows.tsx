@@ -29,6 +29,7 @@ interface MyBorrowsProps {
   onReturn: (id: number) => void;
   connected: boolean;
   isLoading?: boolean;
+  dueDate?: number;
 }
 
 export default function MyBorrows({
