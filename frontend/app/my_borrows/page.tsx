@@ -23,6 +23,7 @@ interface Book {
 export default function MyBorrowsPage() {
   const { address, connected } = useStacks();
   const [borrowedBooks, setBorrowedBooks] = useState<Book[]>([]);
+  const [currentBlock, setCurrentBlock] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
 
