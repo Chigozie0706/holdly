@@ -26,6 +26,8 @@ export function formatTimeRemaining(
   const hoursRemaining = minutesRemaining / 60;
 
   const daysRemaining = hoursRemaining / 24;
+
+  let label: string;
 }
 
 export function borrowDurationLabel(durationBlocks: number): string {
