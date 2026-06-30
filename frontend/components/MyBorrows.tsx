@@ -20,6 +20,7 @@ interface BorrowedBook {
   "deposit-amount": number;
   "total-borrows"?: number;
   borrowedAt?: number;
+  dueDate?: number;
   "deposit-token": string;
 }
 
