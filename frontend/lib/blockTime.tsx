@@ -39,6 +39,8 @@ export function formatTimeRemaining(
 
   const urgency =
     daysRemaining > 3 ? "safe" : daysRemaining > 1 ? "warning" : "danger";
+
+  return { label, isOverdue: false, urgency };
 }
 
 export function borrowDurationLabel(durationBlocks: number): string {
