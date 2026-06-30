@@ -36,6 +36,9 @@ export function formatTimeRemaining(
   } else {
     label = `${Math.floor(minutesRemaining)}m remaining`;
   }
+
+  const urgency =
+    daysRemaining > 3 ? "safe" : daysRemaining > 1 ? "warning" : "danger";
 }
 
 export function borrowDurationLabel(durationBlocks: number): string {
