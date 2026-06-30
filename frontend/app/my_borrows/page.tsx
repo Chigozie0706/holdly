@@ -27,6 +27,16 @@ export default function MyBorrowsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
 
+  const fetchCurrentBlock = async () => {
+    try {
+      const res = await fetch("https://api.mainnet.hiro.so/v2/info");
+      const data = await res.json();
+      setCurrentBlock(data.burn_block_height);
+    } catch (e) {
+      console.error("Error fetching current block:", e);
+    }
+  };
+
   const fetchBorrowedBooks = async () => {
     if (!connected || !address) {
       setIsLoading(false);
