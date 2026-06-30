@@ -43,6 +43,15 @@ export function formatTimeRemaining(
   return { label, isOverdue: false, urgency };
 }
 
+export function formatDueDate(currentBlock: number, dueBlock: number): string {
+  const date = blocksToDate(currentBlock, dueBlock);
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
 export function borrowDurationLabel(durationBlocks: number): string {
   const days = Math.round(durationBlocks / 144);
   return `${days}  day${days !== 1 ? "s" : ""}`;

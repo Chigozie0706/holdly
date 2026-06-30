@@ -3,6 +3,12 @@
 import { CONTRACT_ADDRESS, CONTRACT_NAME } from "@/config/contract";
 import "@/styles/MyBorrows.css";
 import { BookOpen, Coins, Hash, ArrowLeft, RotateCcw } from "lucide-react";
+import {
+  formatTimeRemaining,
+  formatDueDate,
+  borrowDurationLabel,
+} from "@/lib/blockTime";
+
 import { useState } from "react";
 import { toast } from "sonner";
 
