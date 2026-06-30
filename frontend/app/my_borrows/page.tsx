@@ -30,10 +30,14 @@ export default function MyBorrowsPage() {
   const fetchCurrentBlock = async () => {
     try {
       const res = await fetch("https://api.mainnet.hiro.so/v2/info");
+      if (!res.ok) throw new Error("bad response");
       const data = await res.json();
-      setCurrentBlock(data.burn_block_height);
+      if (data?.burn_block_height) {
+        setCurrentBlock(data.burn_block_height);
+      }
     } catch (e) {
       console.error("Error fetching current block:", e);
+      // fallback: don't set currentBlock, stays 0, render is guarded below
     }
   };
 

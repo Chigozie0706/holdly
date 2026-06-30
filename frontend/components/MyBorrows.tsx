@@ -134,9 +134,11 @@ export default function MyBorrows({
         <>
           <div className="borrow-list">
             {borrowedBooks.map((book) => {
-              const timeInfo = book.dueDate
-                ? formatTimeRemaining(currentBlock, book.dueDate)
-                : null;
+              //  Only compute timeInfo once currentBlock has loaded
+              const timeInfo =
+                book.dueDate && currentBlock > 0
+                  ? formatTimeRemaining(currentBlock, book.dueDate)
+                  : null;
 
               const urgencyColor = timeInfo
                 ? {
@@ -186,8 +188,8 @@ export default function MyBorrows({
                         </span>
                       </div>
 
-                      {/* ✅ Time remaining / overdue indicator */}
-                      {timeInfo && book.dueDate && (
+                      {/*  Only show when currentBlock is loaded */}
+                      {timeInfo && (
                         <div className="borrow-info-item">
                           <span className="borrow-info-label">
                             <Clock size={11} />{" "}
@@ -203,7 +205,8 @@ export default function MyBorrows({
                       )}
                     </div>
 
-                    {book.dueDate && (
+                    {/*  Guard with currentBlock > 0 */}
+                    {book.dueDate && currentBlock > 0 && (
                       <p
                         style={{
                           fontSize: "0.68rem",
