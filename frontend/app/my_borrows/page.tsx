@@ -238,6 +238,7 @@ export default function MyBorrowsPage() {
         onReturn={handleReturn}
         connected={connected}
         isLoading={isLoading}
+        currentBlock={currentBlock}
       />
     </>
   );
