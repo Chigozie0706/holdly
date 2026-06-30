@@ -23,6 +23,7 @@ export function formatTimeRemaining(
   }
 
   const minutesRemaining = blocksRemaining * MINUTES_PER_BLOCK;
+  const hoursRemaining = minutesRemaining / 60;
 }
 
 export function borrowDurationLabel(durationBlocks: number): string {
