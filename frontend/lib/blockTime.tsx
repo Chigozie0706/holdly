@@ -31,6 +31,8 @@ export function formatTimeRemaining(
 
   if (daysRemaining >= 1) {
     label = `${Math.floor(daysRemaining)}d ${Math.floor(hoursRemaining % 24)}h remaining`;
+  } else if (hoursRemaining >= 1) {
+    label = `${Math.floor(hoursRemaining)}h ${Math.floor(minutesRemaining % 60)}m remaining`;
   }
 }
 
