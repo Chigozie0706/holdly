@@ -28,6 +28,10 @@ export function formatTimeRemaining(
   const daysRemaining = hoursRemaining / 24;
 
   let label: string;
+
+  if (daysRemaining >= 1) {
+    label = `${Math.floor(daysRemaining)}d ${Math.floor(hoursRemaining % 24)}h remaining`;
+  }
 }
 
 export function borrowDurationLabel(durationBlocks: number): string {
