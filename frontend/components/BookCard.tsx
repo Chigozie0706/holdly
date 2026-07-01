@@ -509,6 +509,8 @@ export default function BookCard({
                 </button>
               )}
 
+              {/*  Rate button — shown to non-owners */}
+
               {canManage && (
                 <div className="book-owner-actions">
                   <button
