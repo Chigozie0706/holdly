@@ -39,7 +39,7 @@ export default function MyBorrows({
   isLoading = false,
   currentBlock,
 }: MyBorrowsProps) {
-  const [ratingBookId, setRatingBookId] = useState<number | null>(null);
+  // const [ratingBookId, setRatingBookId] = useState<number | null>(null);
 
   const totalDeposit = borrowedBooks.reduce(
     (sum, b) => sum + b["deposit-amount"],
