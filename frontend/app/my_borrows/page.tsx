@@ -49,7 +49,7 @@ export default function MyBorrowsPage() {
     setIsLoading(true);
 
     try {
-      const { Cl, cvToJSON } = await import("@stacks/transactions");
+      const { Cl } = await import("@stacks/transactions");
       const { STACKS_MAINNET } = await import("@stacks/network");
 
       // 1. Get total book count
