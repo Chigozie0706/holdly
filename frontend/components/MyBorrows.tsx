@@ -46,29 +46,29 @@ export default function MyBorrows({
     0,
   );
 
-  const handleRate = async (bookId: number, score: number) => {
-    if (!connected) return;
+  // const handleRate = async (bookId: number, score: number) => {
+  //   if (!connected) return;
 
-    try {
-      const { request } = await import("@stacks/connect");
-      const { Cl } = await import("@stacks/transactions");
+  //   try {
+  //     const { request } = await import("@stacks/connect");
+  //     const { Cl } = await import("@stacks/transactions");
 
-      const response = await request("stx_callContract", {
-        contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
-        functionName: "rate-book",
-        functionArgs: [Cl.uint(bookId), Cl.uint(score)],
-      });
+  //     const response = await request("stx_callContract", {
+  //       contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
+  //       functionName: "rate-book",
+  //       functionArgs: [Cl.uint(bookId), Cl.uint(score)],
+  //     });
 
-      if (response.txid) {
-        toast.success("Rating submitted!");
-        setRatingBookId(null);
-      }
-    } catch (error) {
-      toast.error(
-        `Failed to rate: ${error instanceof Error ? error.message : "Unknown error"}`,
-      );
-    }
-  };
+  //     if (response.txid) {
+  //       toast.success("Rating submitted!");
+  //       setRatingBookId(null);
+  //     }
+  //   } catch (error) {
+  //     toast.error(
+  //       `Failed to rate: ${error instanceof Error ? error.message : "Unknown error"}`,
+  //     );
+  //   }
+  // };
 
   return (
     <div className="my-borrows">
