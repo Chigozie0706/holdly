@@ -2,14 +2,7 @@
 
 import { CONTRACT_ADDRESS, CONTRACT_NAME } from "@/config/contract";
 import "@/styles/MyBorrows.css";
-import {
-  BookOpen,
-  Coins,
-  Hash,
-  ArrowLeft,
-  RotateCcw,
-  Clock,
-} from "lucide-react";
+import { BookOpen, Coins, RotateCcw, Clock } from "lucide-react";
 import {
   formatTimeRemaining,
   formatDueDate,
