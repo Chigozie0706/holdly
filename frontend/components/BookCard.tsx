@@ -100,6 +100,9 @@ export default function BookCard({
   const [editBorrowDays, setEditBorrowDays] = useState(
     String(Math.round((book["borrow-duration"] ?? 1008) / 144)),
   );
+
+  const [showRating, setShowRating] = useState(false);
+
   const isAvailable = book["is-available"];
   const isOwner = connected && address && book.owner && address === book.owner;
   const canManage = isOwner && isAvailable;
@@ -510,14 +513,25 @@ export default function BookCard({
               )}
 
               {/*  Rate button — shown to non-owners */}
-            {connected && !isOwner && onRate && (
-              showRating ? (<div style={{ display: "flex", alignItems: "center", gap: "0.2rem", marginTop: "0.4rem" }}>
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <button                       key={star}
-></button>
+              {connected &&
+                !isOwner &&
+                onRate &&
+                (showRating ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.2rem",
+                      marginTop: "0.4rem",
+                    }}
+                  >
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button key={star}></button>
+                    ))}
+                  </div>
+                ) : (
+                  <div></div>
                 ))}
-              </div>) :
-)}
               {canManage && (
                 <div className="book-owner-actions">
                   <button
