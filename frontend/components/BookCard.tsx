@@ -526,7 +526,10 @@ export default function BookCard({
                     }}
                   >
                     {[1, 2, 3, 4, 5].map((star) => (
-                      <button key={star}></button>
+                      <button
+                        key={star}
+                        onMouseEnter={() => setHoverScore(star)}
+                      ></button>
                     ))}
                   </div>
                 ) : (
