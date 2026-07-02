@@ -103,6 +103,7 @@ export default function BookCard({
 
   const [showRating, setShowRating] = useState(false);
   const [hoverScore, setHoverScore] = useState(0);
+  const [selectedScore, setSelectedScore] = useState(0);
 
   const isAvailable = book["is-available"];
   const isOwner = connected && address && book.owner && address === book.owner;
