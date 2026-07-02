@@ -512,7 +512,9 @@ export default function BookCard({
               {/*  Rate button — shown to non-owners */}
             {connected && !isOwner && onRate && (
               showRating ? (<div style={{ display: "flex", alignItems: "center", gap: "0.2rem", marginTop: "0.4rem" }}>
-                {[1, 2, 3, 4, 5].map()}
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <button></button>
+                ))}
               </div>) :
 )}
               {canManage && (
