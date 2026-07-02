@@ -513,7 +513,8 @@ export default function BookCard({
             {connected && !isOwner && onRate && (
               showRating ? (<div style={{ display: "flex", alignItems: "center", gap: "0.2rem", marginTop: "0.4rem" }}>
                 {[1, 2, 3, 4, 5].map((star) => (
-                  <button></button>
+                  <button                       key={star}
+></button>
                 ))}
               </div>) :
 )}
