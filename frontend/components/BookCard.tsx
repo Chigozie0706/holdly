@@ -511,7 +511,7 @@ export default function BookCard({
 
               {/*  Rate button — shown to non-owners */}
             {connected && !isOwner && onRate && (
-              showRating ? (<div></div>) :
+              showRating ? (<div style={{ display: "flex", alignItems: "center", gap: "0.2rem", marginTop: "0.4rem" }}></div>) :
 )}
               {canManage && (
                 <div className="book-owner-actions">
