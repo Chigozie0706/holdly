@@ -532,7 +532,11 @@ export default function BookCard({
                         key={star}
                         onMouseEnter={() => setHoverScore(star)}
                         onClick={() => setSelectedScore(star)}
-                        style={{ background: "none", border: "none" }}
+                        style={{
+                          background: "none",
+                          border: "none",
+                          cursor: "pointer",
+                        }}
                       ></button>
                     ))}
                   </div>
