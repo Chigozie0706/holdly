@@ -544,7 +544,9 @@ export default function BookCard({
                               : "rgba(255,255,255,0.2)",
                           transition: "color 0.1s",
                         }}
-                      ></button>
+                      >
+                        ★
+                      </button>
                     ))}
                   </div>
                 ) : (
