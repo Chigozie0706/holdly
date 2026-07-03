@@ -538,6 +538,10 @@ export default function BookCard({
                           cursor: "pointer",
                           fontSize: "1.1rem",
                           padding: "0.1rem",
+                          color:
+                            star <= (hoverScore || selectedScore)
+                              ? "#D4A352"
+                              : "rgba(255,255,255,0.2)",
                         }}
                       ></button>
                     ))}
