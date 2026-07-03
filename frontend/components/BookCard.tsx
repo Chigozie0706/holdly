@@ -531,7 +531,7 @@ export default function BookCard({
                       <button
                         key={star}
                         onMouseEnter={() => setHoverScore(star)}
-                        onClick={}
+                        onClick={() => setSelectedScore(star)}
                       ></button>
                     ))}
                   </div>
