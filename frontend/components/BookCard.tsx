@@ -542,6 +542,7 @@ export default function BookCard({
                             star <= (hoverScore || selectedScore)
                               ? "#D4A352"
                               : "rgba(255,255,255,0.2)",
+                          transition: "color 0.1s",
                         }}
                       ></button>
                     ))}
