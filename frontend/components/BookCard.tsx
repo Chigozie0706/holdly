@@ -537,6 +537,7 @@ export default function BookCard({
                           border: "none",
                           cursor: "pointer",
                           fontSize: "1.1rem",
+                          padding: "0.1rem",
                         }}
                       ></button>
                     ))}
