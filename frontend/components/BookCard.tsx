@@ -549,7 +549,7 @@ export default function BookCard({
                       </button>
                     ))}
 
-                    <button></button>
+                    <button disabled></button>
                   </div>
                 ) : (
                   <div></div>
