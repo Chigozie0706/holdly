@@ -549,7 +549,10 @@ export default function BookCard({
                       </button>
                     ))}
 
-                    <button disabled={selectedScore === 0} className></button>
+                    <button
+                      disabled={selectedScore === 0}
+                      className="book-action-btn save"
+                    ></button>
                   </div>
                 ) : (
                   <div></div>
