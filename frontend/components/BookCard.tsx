@@ -577,7 +577,7 @@ export default function BookCard({
                     </button>
                   </div>
                 ) : (
-                  <div></div>
+                  <button></button>
                 ))}
               {canManage && (
                 <div className="book-owner-actions">
