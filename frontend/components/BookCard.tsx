@@ -548,6 +548,8 @@ export default function BookCard({
                         ★
                       </button>
                     ))}
+
+                    <button></button>
                   </div>
                 ) : (
                   <div></div>
