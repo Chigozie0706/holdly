@@ -549,7 +549,7 @@ export default function BookCard({
                       </button>
                     ))}
 
-                    <button disabled></button>
+                    <button disabled={selectedScore === 0}></button>
                   </div>
                 ) : (
                   <div></div>
