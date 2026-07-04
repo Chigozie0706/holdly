@@ -570,6 +570,7 @@ export default function BookCard({
                         setSelectedScore(0);
                       }}
                       className="book-action-btn cancel"
+                      style={{ fontSize: "0.7rem", padding: "0.3rem 0.5rem" }}
                     >
                       {" "}
                       <X size={11} />
