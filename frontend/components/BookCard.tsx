@@ -557,7 +557,10 @@ export default function BookCard({
                       {" "}
                       <Check size={11} />
                     </button>
-                    <button></button>
+                    <button>
+                      {" "}
+                      <X size={11} />
+                    </button>
                   </div>
                 ) : (
                   <div></div>
