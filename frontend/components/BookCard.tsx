@@ -564,7 +564,12 @@ export default function BookCard({
                       {" "}
                       <Check size={11} />
                     </button>
-                    <button>
+                    <button
+                      onClick={() => {
+                        setShowRating(false);
+                        setSelectedScore(0);
+                      }}
+                    >
                       {" "}
                       <X size={11} />
                     </button>
