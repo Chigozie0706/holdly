@@ -550,6 +550,13 @@ export default function BookCard({
                     ))}
 
                     <button
+                      onClick={() => {
+                        if (selectedScore > 0) {
+                          onRate(book.id, selectedScore);
+                          setShowRating(false);
+                          setSelectedScore(0);
+                        }
+                      }}
                       disabled={selectedScore === 0}
                       className="book-action-btn save"
                       style={{ fontSize: "0.7rem", padding: "0.3rem 0.5rem" }}
