@@ -552,6 +552,7 @@ export default function BookCard({
                     <button
                       disabled={selectedScore === 0}
                       className="book-action-btn save"
+                      style={{ fontSize: "0.7rem", padding: "0.3rem 0.5rem" }}
                     ></button>
                   </div>
                 ) : (
