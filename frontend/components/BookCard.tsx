@@ -569,6 +569,7 @@ export default function BookCard({
                         setShowRating(false);
                         setSelectedScore(0);
                       }}
+                      className="book-action-btn cancel"
                     >
                       {" "}
                       <X size={11} />
