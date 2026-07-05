@@ -580,7 +580,11 @@ export default function BookCard({
                   <button
                     className="book-rate-btn"
                     onClick={() => setShowRating(true)}
-                    style={{ width: "100%", padding: "0.45rem" }}
+                    style={{
+                      width: "100%",
+                      padding: "0.45rem",
+                      marginTop: "0.4rem",
+                    }}
                   ></button>
                 ))}
               {canManage && (
