@@ -577,7 +577,10 @@ export default function BookCard({
                     </button>
                   </div>
                 ) : (
-                  <button className="book-rate-btn"></button>
+                  <button
+                    className="book-rate-btn"
+                    onClick={() => setShowRating(true)}
+                  ></button>
                 ))}
               {canManage && (
                 <div className="book-owner-actions">
