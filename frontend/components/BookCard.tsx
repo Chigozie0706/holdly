@@ -585,6 +585,7 @@ export default function BookCard({
                       padding: "0.45rem",
                       marginTop: "0.4rem",
                       background: "rgba(212,163,82,0.05)",
+                      border: "1px dashed rgba(212,163,82,0.2)",
                     }}
                   ></button>
                 ))}
