@@ -591,6 +591,9 @@ export default function BookCard({
                       fontSize: "0.75rem",
                       color: "rgba(212,163,82,0.5)",
                       display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "0.3rem",
                     }}
                   ></button>
                 ))}
