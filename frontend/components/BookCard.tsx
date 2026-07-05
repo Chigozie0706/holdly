@@ -589,6 +589,8 @@ export default function BookCard({
                       borderRadius: "2px",
                       cursor: "pointer",
                       fontSize: "0.75rem",
+                      color: "rgba(212,163,82,0.5)",
+                      display: "flex",
                     }}
                   ></button>
                 ))}
