@@ -15,11 +15,10 @@ import {
   BookMarked,
 } from "lucide-react";
 import { useStacks } from "@/providers/stacks-provider1";
-const { connectWallet } = useStacks();
 
 export default function LandingPage() {
   const router = useRouter();
-  const { connectWallet } = useStacks();
+  const { connectWallet, connected, address } = useStacks();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
