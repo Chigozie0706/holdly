@@ -11,6 +11,7 @@ import {
   X,
   Check,
   Upload,
+  Star,
 } from "lucide-react";
 import { toast } from "sonner";
 import { borrowDurationLabel } from "@/lib/blockTime";
@@ -595,7 +596,10 @@ export default function BookCard({
                       justifyContent: "center",
                       gap: "0.3rem",
                     }}
-                  ></button>
+                  >
+                    {" "}
+                    <Star size={11} />
+                  </button>
                 ))}
               {canManage && (
                 <div className="book-owner-actions">
