@@ -220,7 +220,7 @@ export default function LandingPage() {
                 Browse Library <ArrowRight size={15} />
               </button>
               <button className="cta-ghost" onClick={handleConnect}>
-                Connect Wallet
+                {connected ? "Go to Library" : "Connect Wallet"}
               </button>
             </div>
           </div>
