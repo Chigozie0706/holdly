@@ -17,8 +17,6 @@ export default function MyListedBooksPage() {
     try {
       const { Cl } = await import("@stacks/transactions");
 
-      const { STACKS_MAINNET } = await import("@stacks/network");
-
       const countJson = await readContract({
         contractAddress: CONTRACT_ADDRESS,
         contractName: CONTRACT_NAME,
