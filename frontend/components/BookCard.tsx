@@ -598,7 +598,7 @@ export default function BookCard({
                     }}
                   >
                     {" "}
-                    <Star size={11} />
+                    <Star size={11} /> Rate this book
                   </button>
                 ))}
               {canManage && (
