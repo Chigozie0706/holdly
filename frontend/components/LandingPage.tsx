@@ -28,6 +28,11 @@ export default function LandingPage() {
 
   const goToLibrary = () => router.push("/library");
   const handleConnect = async () => {
+    if (connected) {
+      router.push("/library");
+      return;
+    }
+
     await connectWallet();
     router.push("/library");
   };
