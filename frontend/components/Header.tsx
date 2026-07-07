@@ -30,7 +30,7 @@ const NAV_LINKS = [
   { href: "/borrow_history", label: "Borrow History", icon: History },
 ];
 
-const PUBLIC_LINKS = [];
+const PUBLIC_LINKS = [{ href: "/library" }];
 
 export default function Header({
   connected,
