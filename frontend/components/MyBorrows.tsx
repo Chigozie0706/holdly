@@ -6,7 +6,7 @@ import { BookOpen, Coins, RotateCcw, Clock } from "lucide-react";
 import {
   formatTimeRemaining,
   formatDueDate,
-  borrowDurationLabel,
+  // borrowDurationLabel,
 } from "@/lib/blockTime";
 
 import { useState } from "react";
