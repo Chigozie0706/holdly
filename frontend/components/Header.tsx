@@ -82,7 +82,7 @@ export default function Header({
 
           {/* Desktop nav */}
           <nav className="hdr-nav">
-            {NAV_LINKS.map(({ href, label, icon: Icon }) => (
+            {PUBLIC_LINKS.map(({ href, label, icon: Icon }) => (
               <Link
                 key={href}
                 href={href}
