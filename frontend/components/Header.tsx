@@ -37,6 +37,7 @@ const PUBLIC_LINKS = [
 
 const PRIVATE_LINKS = [
   { href: "/my_borrows", label: "My Borrows", icon: BookOpen },
+  { href: "/my_listed_books", label: "My Listed", icon: BookCopy },
 ];
 
 export default function Header({
