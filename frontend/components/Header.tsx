@@ -35,6 +35,8 @@ const PUBLIC_LINKS = [
   { href: "/donate_book", label: "Donate Book", icon: PlusCircle },
 ];
 
+const PRIVATE_LINKS = [];
+
 export default function Header({
   connected,
   address,
