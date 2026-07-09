@@ -97,7 +97,7 @@ export default function Header({
 
             {connected &&
               PRIVATE_LINKS.map(({ href, label, icon: Icon }) => (
-                <Link key={href}></Link>
+                <Link key={href} href={href}></Link>
               ))}
           </nav>
 
