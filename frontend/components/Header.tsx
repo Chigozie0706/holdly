@@ -96,7 +96,9 @@ export default function Header({
             {/*  Only show personal links when connected */}
 
             {connected &&
-              PRIVATE_LINKS.map(({ href, label, icon: Icon }) => <Link></Link>)}
+              PRIVATE_LINKS.map(({ href, label, icon: Icon }) => (
+                <Link key={href}></Link>
+              ))}
           </nav>
 
           {/* Wallet */}
