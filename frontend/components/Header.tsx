@@ -92,6 +92,8 @@ export default function Header({
                 {label}
               </Link>
             ))}
+
+            {/*  Only show personal links when connected */}
           </nav>
 
           {/* Wallet */}
