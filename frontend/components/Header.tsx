@@ -102,7 +102,7 @@ export default function Header({
                   href={href}
                   className={`hdr-nav-link ${pathname === href ? "active" : ""}`}
                 >
-                  <Icon size={14} />
+                  <Icon size={14} className="hdr-nav-icon" />
                   {label}
                 </Link>
               ))}
