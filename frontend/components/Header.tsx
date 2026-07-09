@@ -101,7 +101,10 @@ export default function Header({
                   key={href}
                   href={href}
                   className={`hdr-nav-link ${pathname === href ? "active" : ""}`}
-                ></Link>
+                >
+                  <Icon />
+                  {label}
+                </Link>
               ))}
           </nav>
 
