@@ -97,7 +97,11 @@ export default function Header({
 
             {connected &&
               PRIVATE_LINKS.map(({ href, label, icon: Icon }) => (
-                <Link key={href} href={href}></Link>
+                <Link
+                  key={href}
+                  href={href}
+                  className={`hdr-nav-link ${pathname === href ? "active" : ""}`}
+                ></Link>
               ))}
           </nav>
 
