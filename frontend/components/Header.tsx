@@ -155,6 +155,8 @@ export default function Header({
           </Link>
         ))}
 
+        {connected && <></>}
+
         <div className="drawer-sep" />
 
         {connected && address ? (
