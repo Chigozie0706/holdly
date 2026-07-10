@@ -158,7 +158,7 @@ export default function Header({
         {connected && (
           <>
             <div className="drawer-sep" />
-            {PRIVATE_LINKS}
+            {PRIVATE_LINKS.map(({ href, label, icon: Icon }) => ()}
           </>
         )}
 
