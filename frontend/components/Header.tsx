@@ -163,7 +163,9 @@ export default function Header({
                 key={href}
                 href={href}
                 className={`drawer-link ${pathname === href ? "active" : ""}`}
-              ></Link>
+              >
+                <Icon />
+              </Link>
             ))}
           </>
         )}
