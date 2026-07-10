@@ -159,7 +159,7 @@ export default function Header({
           <>
             <div className="drawer-sep" />
             {PRIVATE_LINKS.map(({ href, label, icon: Icon }) => (
-              <Link></Link>
+              <Link key={href}></Link>
             ))}
           </>
         )}
