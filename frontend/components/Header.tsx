@@ -165,6 +165,7 @@ export default function Header({
                 className={`drawer-link ${pathname === href ? "active" : ""}`}
               >
                 <Icon size={15} />
+                {label}
               </Link>
             ))}
           </>
