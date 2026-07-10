@@ -144,7 +144,7 @@ export default function Header({
 
       {/*  Mobile drawer  */}
       <div className={`hdr-drawer ${mobileOpen ? "open" : ""}`}>
-  {PUBLIC_LINKS (
+  {PUBLIC_LINKS.map(()) => (
           <Link
             key={href}
             href={href}
