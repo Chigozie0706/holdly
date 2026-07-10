@@ -157,7 +157,7 @@ export default function Header({
 
         {connected && (
           <>
-            <div />
+            <div className="drawer-sep" />
           </>
         )}
 
