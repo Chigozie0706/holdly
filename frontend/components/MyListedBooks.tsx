@@ -69,7 +69,7 @@ function EditRow({
     (book["deposit-token"] as "STX" | "sBTC") || "STX",
   );
   const [borrowDays, setBorrowDays] = useState(
-    Math.round(book["borrow-duration"] ?? 1008),
+    String(Math.round(book["borrow-duration"] ?? 1008)),
   );
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
