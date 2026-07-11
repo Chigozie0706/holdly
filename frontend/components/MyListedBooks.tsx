@@ -26,7 +26,7 @@ interface Book {
   "total-borrows": number;
   "deposit-amount": number;
   "deposit-token": string;
-  "borrow-duration" :
+  "borrow-duration"?: number;
 }
 
 interface MyListedBooksProps {
