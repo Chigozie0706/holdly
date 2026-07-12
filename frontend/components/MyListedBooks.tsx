@@ -136,7 +136,7 @@ function EditRow({
       return;
     }
 
-    const borrowDurationBlocks;
+    const borrowDurationBlocks = borrowDays * 144;
 
     setIsUploading(true);
     try {
