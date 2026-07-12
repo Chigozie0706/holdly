@@ -139,6 +139,7 @@ function EditRow({
     const borrowDurationBlocks = Number(borrowDays) * 144;
 
     if (borrowDurationBlocks < 144 || borrowDurationBlocks > 4320) {
+      toast.error("Duration must be 1–30 days");
     }
 
     setIsUploading(true);
