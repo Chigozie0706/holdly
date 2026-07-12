@@ -138,7 +138,7 @@ function EditRow({
 
     const borrowDurationBlocks = Number(borrowDays) * 144;
 
-    if (borrowDurationBlocks < 144) {
+    if (borrowDurationBlocks < 144 || borrowDurationBlocks > 4320) {
     }
 
     setIsUploading(true);
