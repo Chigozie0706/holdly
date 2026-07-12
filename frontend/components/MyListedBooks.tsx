@@ -136,6 +136,8 @@ function EditRow({
       return;
     }
 
+    const borrowDurationBlocks;
+
     setIsUploading(true);
     try {
       let finalCover = coverPage;
