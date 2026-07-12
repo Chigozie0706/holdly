@@ -138,6 +138,10 @@ function EditRow({
 
     const borrowDurationBlocks = Number(borrowDays) * 144;
 
+    if () {
+      
+    }
+
     setIsUploading(true);
     try {
       let finalCover = coverPage;
