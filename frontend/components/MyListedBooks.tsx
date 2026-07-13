@@ -56,6 +56,7 @@ function EditRow({
     coverPage: string,
     depositAmount: number,
     depositToken: "STX" | "sBTC",
+    borrowDuration,
   ) => void;
   onCancel: () => void;
 }) {
