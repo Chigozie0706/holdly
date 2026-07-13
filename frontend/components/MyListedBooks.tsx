@@ -164,145 +164,147 @@ function EditRow({
   };
 
   return (
-    <tr className="edit-row">
-      <td colSpan={5}>
-        <div className="edit-row-inner">
-          {/* Cover preview / upload */}
-          <div className="edit-cover-wrap">
-            {imagePreview ? (
-              <div style={{ position: "relative" }}>
-                <img
-                  src={imagePreview}
-                  alt="preview"
-                  className="edit-cover-preview"
-                />
-                <button
-                  className="edit-cover-remove"
-                  onClick={() => {
-                    setImageFile(null);
-                    setImagePreview(null);
-                  }}
-                >
-                  <X size={10} />
-                </button>
-              </div>
-            ) : book.coverPage ? (
-              <img
-                src={book.coverPage}
-                alt={book.title}
-                className="edit-cover-preview"
-              />
-            ) : (
-              <div className="edit-cover-placeholder">
-                <BookOpen size={14} color="rgba(212,163,82,0.3)" />
-              </div>
-            )}
-            <label className="edit-upload-label">
-              <Upload size={11} /> Change
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                style={{ display: "none" }}
-              />
-            </label>
-          </div>
 
-          {/* Fields */}
-          <div className="edit-fields">
-            <div className="edit-fields-row">
-              <input
-                className="dash-edit-input"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Title"
-                maxLength={200}
-              />
-              <input
-                className="dash-edit-input"
-                value={author}
-                onChange={(e) => setAuthor(e.target.value)}
-                placeholder="Author"
-                maxLength={100}
-              />
-            </div>
-            <input
-              className="dash-edit-input"
-              value={coverPage}
-              onChange={(e) => {
-                setCoverPage(e.target.value);
-                setImageFile(null);
-                setImagePreview(null);
-              }}
-              placeholder="Or paste image URL"
-              maxLength={200}
-              style={{ display: imageFile ? "none" : "block" }}
-            />
+    // <tr className="edit-row">
+    //   <td colSpan={5}>
+    //     <div className="edit-row-inner">
+    //       {/* Cover preview / upload */}
+    //       <div className="edit-cover-wrap">
+    //         {imagePreview ? (
+    //           <div style={{ position: "relative" }}>
+    //             <img
+    //               src={imagePreview}
+    //               alt="preview"
+    //               className="edit-cover-preview"
+    //             />
+    //             <button
+    //               className="edit-cover-remove"
+    //               onClick={() => {
+    //                 setImageFile(null);
+    //                 setImagePreview(null);
+    //               }}
+    //             >
+    //               <X size={10} />
+    //             </button>
+    //           </div>
+    //         ) : book.coverPage ? (
+    //           <img
+    //             src={book.coverPage}
+    //             alt={book.title}
+    //             className="edit-cover-preview"
+    //           />
+    //         ) : (
+    //           <div className="edit-cover-placeholder">
+    //             <BookOpen size={14} color="rgba(212,163,82,0.3)" />
+    //           </div>
+    //         )}
+    //         <label className="edit-upload-label">
+    //           <Upload size={11} /> Change
+    //           <input
+    //             type="file"
+    //             accept="image/*"
+    //             onChange={handleFileChange}
+    //             style={{ display: "none" }}
+    //           />
+    //         </label>
+    //       </div>
 
-            <div className="edit-fields-row">
-              <div style={{ position: "relative", flex: 1 }}>
-                <input
-                  className="dash-edit-input"
-                  type="number"
-                  value={depositSTX}
-                  onChange={(e) => setDepositSTX(e.target.value)}
-                  placeholder="Deposit amount"
-                  min="0.1"
-                  step="0.1"
-                />
-                <span
-                  style={{
-                    position: "absolute",
-                    right: "0.65rem",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    fontSize: "0.72rem",
-                    color: "rgba(212,163,82,0.6)",
-                    pointerEvents: "none",
-                  }}
-                >
-                  {depositToken}
-                </span>
-              </div>
-              <div className="edit-token-select">
-                {(["STX", "sBTC"] as const).map((t) => (
-                  <button
-                    key={t}
-                    type="button"
-                    onClick={() => setDepositToken(t)}
-                    className={`edit-token-btn ${depositToken === t ? "active" : ""}`}
-                  >
-                    {t}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
+    //       {/* Fields */}
+    //       <div className="edit-fields">
+    //         <div className="edit-fields-row">
+    //           <input
+    //             className="dash-edit-input"
+    //             value={title}
+    //             onChange={(e) => setTitle(e.target.value)}
+    //             placeholder="Title"
+    //             maxLength={200}
+    //           />
+    //           <input
+    //             className="dash-edit-input"
+    //             value={author}
+    //             onChange={(e) => setAuthor(e.target.value)}
+    //             placeholder="Author"
+    //             maxLength={100}
+    //           />
+    //         </div>
+    //         <input
+    //           className="dash-edit-input"
+    //           value={coverPage}
+    //           onChange={(e) => {
+    //             setCoverPage(e.target.value);
+    //             setImageFile(null);
+    //             setImagePreview(null);
+    //           }}
+    //           placeholder="Or paste image URL"
+    //           maxLength={200}
+    //           style={{ display: imageFile ? "none" : "block" }}
+    //         />
 
-          {/* Actions */}
-          <div className="edit-row-actions">
-            <button
-              className="dash-action-btn save"
-              onClick={handleSave}
-              disabled={isUploading}
-            >
-              {isUploading ? (
-                <span className="dash-spinner" />
-              ) : (
-                <Check size={13} />
-              )}
-            </button>
-            <button
-              className="dash-action-btn cancel"
-              onClick={onCancel}
-              disabled={isUploading}
-            >
-              <X size={13} />
-            </button>
-          </div>
-        </div>
-      </td>
-    </tr>
+    //         <div className="edit-fields-row">
+    //           <div style={{ position: "relative", flex: 1 }}>
+    //             <input
+    //               className="dash-edit-input"
+    //               type="number"
+    //               value={depositSTX}
+    //               onChange={(e) => setDepositSTX(e.target.value)}
+    //               placeholder="Deposit amount"
+    //               min="0.1"
+    //               step="0.1"
+    //             />
+    //             <span
+    //               style={{
+    //                 position: "absolute",
+    //                 right: "0.65rem",
+    //                 top: "50%",
+    //                 transform: "translateY(-50%)",
+    //                 fontSize: "0.72rem",
+    //                 color: "rgba(212,163,82,0.6)",
+    //                 pointerEvents: "none",
+    //               }}
+    //             >
+    //               {depositToken}
+    //             </span>
+    //           </div>
+    //           <div className="edit-token-select">
+    //             {(["STX", "sBTC"] as const).map((t) => (
+    //               <button
+    //                 key={t}
+    //                 type="button"
+    //                 onClick={() => setDepositToken(t)}
+    //                 className={`edit-token-btn ${depositToken === t ? "active" : ""}`}
+    //               >
+    //                 {t}
+    //               </button>
+    //             ))}
+    //           </div>
+    //         </div>
+    //       </div>
+
+    //       {/* Actions */}
+    //       <div className="edit-row-actions">
+    //         <button
+    //           className="dash-action-btn save"
+    //           onClick={handleSave}
+    //           disabled={isUploading}
+    //         >
+    //           {isUploading ? (
+    //             <span className="dash-spinner" />
+    //           ) : (
+    //             <Check size={13} />
+    //           )}
+    //         </button>
+    //         <button
+    //           className="dash-action-btn cancel"
+    //           onClick={onCancel}
+    //           disabled={isUploading}
+    //         >
+    //           <X size={13} />
+    //         </button>
+    //       </div>
+    //     </div>
+    //   </td>
+    // </tr>
+    
   );
 }
 
