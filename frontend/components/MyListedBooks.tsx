@@ -182,6 +182,9 @@ function EditRow({
           maxLength={100}
         />
       </div>
+
+      {/* Cover */}
+      <div className="flex items-center gap-3"></div>
     </div>
   );
 }
