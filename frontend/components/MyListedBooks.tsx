@@ -165,7 +165,9 @@ function EditRow({
 
   return (
     <div className="mt-3 p-4 rounded-lg border border-amber-500/20 bg-amber-500/5 space-y-3">
-      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2"></div>
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+        <input />
+      </div>
     </div>
   );
 }
