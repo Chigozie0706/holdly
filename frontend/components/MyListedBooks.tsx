@@ -173,6 +173,8 @@ function EditRow({
           placeholder="Title"
           maxLength={200}
         />
+
+        <input />
       </div>
     </div>
   );
