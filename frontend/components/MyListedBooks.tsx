@@ -178,6 +178,8 @@ function EditRow({
           className="w-full px-3 py-2 rounded bg-white/5 border border-amber-500/20 text-white/85 text-sm outline-none focus:border-amber-500/50"
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
+          placeholder="Author"
+          maxLength={100}
         />
       </div>
     </div>
