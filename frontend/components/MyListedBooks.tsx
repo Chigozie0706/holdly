@@ -166,7 +166,7 @@ function EditRow({
   return (
     <div className="mt-3 p-4 rounded-lg border border-amber-500/20 bg-amber-500/5 space-y-3">
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-        <input />
+        <input className="w-full px-3 py-2 rounded bg-white/5 border border-amber-500/20 text-white/85 text-sm outline-none focus:border-amber-500/50" />
       </div>
     </div>
   );
