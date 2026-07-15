@@ -185,7 +185,13 @@ function EditRow({
 
       {/* Cover */}
       <div className="flex items-center gap-3">
-        {imagePreview ? <div className="relative"></div> : <></>}
+        {imagePreview ? (
+          <div className="relative">
+            <img />
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
