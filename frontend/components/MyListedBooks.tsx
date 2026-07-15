@@ -193,7 +193,12 @@ function EditRow({
               className="w-10 h-14 object-cover rounded"
             />
 
-            <button></button>
+            <button
+              onClick={() => {
+                setImageFile(null);
+                setImagePreview(null);
+              }}
+            ></button>
           </div>
         ) : (
           <></>
