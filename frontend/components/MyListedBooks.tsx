@@ -198,6 +198,7 @@ function EditRow({
                 setImageFile(null);
                 setImagePreview(null);
               }}
+              className="absolute -top-1 -right-1 bg-black/70 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs"
             ></button>
           </div>
         ) : (
