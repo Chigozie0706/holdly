@@ -212,6 +212,7 @@ function EditRow({
         ) : null}
 
         <label className="flex items-center gap-2 px-3 py-2 rounded border border-dashed border-amber-500/25 text-amber-500/60 text-xs cursor-pointer hover:border-amber-500/50 hover:text-amber-500 transition-colors"></label>
+        <Upload />
       </div>
     </div>
   );
