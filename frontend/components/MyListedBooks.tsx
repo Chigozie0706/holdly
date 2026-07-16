@@ -203,8 +203,9 @@ function EditRow({
               ✕
             </button>
           </div>
-        ) :book.coverPage ? () : null }
-        
+        ) : book.coverPage ? (
+          <img />
+        ) : null}
       </div>
     </div>
   );
