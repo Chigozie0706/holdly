@@ -210,8 +210,15 @@ function EditRow({
             className="w-10 h-14 object-cover rounded opacity-50"
           />
         ) : null}
-        <label className="flex items-center gap-2 px-3 py-2 rounded border border-dashed border-amber-500/25 text-amber-500/60 text-xs cursor-pointer hover:border-amber-500/50 hover:text-amber-500 transition-colors"></label>
-        <Upload size={12} /> {imageFile ? "Change image" : "Upload cover"}
+        <label className="flex items-center gap-2 px-3 py-2 rounded border border-dashed border-amber-500/25 text-amber-500/60 text-xs cursor-pointer hover:border-amber-500/50 hover:text-amber-500 transition-colors">
+          <Upload size={12} /> {imageFile ? "Change image" : "Upload cover"}
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="hidden"
+          />
+        </label>
       </div>
     </div>
   );
