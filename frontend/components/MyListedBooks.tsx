@@ -210,6 +210,8 @@ function EditRow({
             className="w-10 h-14 object-cover rounded opacity-50"
           />
         ) : null}
+
+        <label></label>
       </div>
     </div>
   );
