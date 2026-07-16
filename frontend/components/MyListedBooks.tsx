@@ -204,7 +204,7 @@ function EditRow({
             </button>
           </div>
         ) : book.coverPage ? (
-          <img src={book.coverPage} />
+          <img src={book.coverPage} alt={book.title} />
         ) : null}
       </div>
     </div>
