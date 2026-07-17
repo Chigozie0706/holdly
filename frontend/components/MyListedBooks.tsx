@@ -224,6 +224,11 @@ function EditRow({
           <input
             className="flex-1 px-3 py-2 rounded bg-white/5 border border-amber-500/20 text-white/85 text-xs outline-none focus:border-amber-500/50"
             value={coverPage}
+            onChange={(e) => {
+              setCoverPage(e.target.value);
+              setImageFile(null);
+              setImagePreview(null);
+            }}
             placeholder="Or paste image URL"
           />
         )}
