@@ -219,6 +219,9 @@ function EditRow({
             className="hidden"
           />
         </label>
+
+                {!imageFile && (
+                )}
       </div>
     </div>
   );
