@@ -233,6 +233,8 @@ function EditRow({
           />
         )}
       </div>
+
+      {/* Deposit + Token */}
     </div>
   );
 }
