@@ -235,7 +235,9 @@ function EditRow({
       </div>
 
       {/* Deposit + Token */}
-      <div className="flex gap-2"></div>
+      <div className="flex gap-2">
+        <div className="relative flex-1"></div>
+      </div>
     </div>
   );
 }
