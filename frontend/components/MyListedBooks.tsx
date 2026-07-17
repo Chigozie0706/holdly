@@ -220,8 +220,7 @@ function EditRow({
           />
         </label>
 
-                {!imageFile && (
-                )}
+        {!imageFile && <input />}
       </div>
     </div>
   );
