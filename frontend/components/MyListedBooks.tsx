@@ -246,6 +246,7 @@ function EditRow({
             step="0.1"
             placeholder="Deposit"
           />
+          <span></span>
         </div>
       </div>
     </div>
