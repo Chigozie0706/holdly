@@ -237,7 +237,10 @@ function EditRow({
       {/* Deposit + Token */}
       <div className="flex gap-2">
         <div className="relative flex-1">
-          <input className="w-full px-3 py-2 rounded bg-white/5 border border-amber-500/20 text-white/85 text-sm outline-none focus:border-amber-500/50" />
+          <input
+            className="w-full px-3 py-2 rounded bg-white/5 border border-amber-500/20 text-white/85 text-sm outline-none focus:border-amber-500/50"
+            type="number"
+          />
         </div>
       </div>
     </div>
