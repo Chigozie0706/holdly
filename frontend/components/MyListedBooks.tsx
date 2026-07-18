@@ -242,6 +242,9 @@ function EditRow({
             type="number"
             value={depositSTX}
             onChange={(e) => setDepositSTX(e.target.value)}
+            min="0.1"
+            step="0.1"
+            placeholder="Deposit"
           />
         </div>
       </div>
