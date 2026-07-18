@@ -246,7 +246,9 @@ function EditRow({
             step="0.1"
             placeholder="Deposit"
           />
-          <span></span>
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-amber-500/50 text-xs pointer-events-none">
+            {depositToken}
+          </span>
         </div>
       </div>
     </div>
