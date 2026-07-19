@@ -253,7 +253,11 @@ function EditRow({
 
         <div className="flex gap-1">
           {(["STX", "sBTC"] as const).map((t) => (
-            <button key={t} type="button"></button>
+            <button
+              key={t}
+              type="button"
+              onClick={() => setDepositToken(t)}
+            ></button>
           ))}
         </div>
       </div>
