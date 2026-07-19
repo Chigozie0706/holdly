@@ -253,7 +253,7 @@ function EditRow({
 
         <div className="flex gap-1">
           {(["STX", "sBTC"] as const).map((t) => (
-            <button key={t}></button>
+            <button key={t} type="button"></button>
           ))}
         </div>
       </div>
