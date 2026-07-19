@@ -251,7 +251,7 @@ function EditRow({
           </span>
         </div>
 
-        <div className="flex gap-1"></div>
+        <div className="flex gap-1">{["STX", "sBTC"] as const}</div>
       </div>
     </div>
   );
