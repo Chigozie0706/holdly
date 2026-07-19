@@ -250,6 +250,8 @@ function EditRow({
             {depositToken}
           </span>
         </div>
+
+        <div className="flex gap-1"></div>
       </div>
     </div>
   );
