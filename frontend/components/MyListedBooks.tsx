@@ -257,6 +257,7 @@ function EditRow({
               key={t}
               type="button"
               onClick={() => setDepositToken(t)}
+              className={`px-3 py-2 rounded text-xs transition-all ${depositToken === t ? "bg-amber-500/15 border border-amber-500/40 text-amber-400" : "bg-white/4 border border-white/8 text-white/35 hover:text-white/60"}`}
             ></button>
           ))}
         </div>
