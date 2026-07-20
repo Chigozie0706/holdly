@@ -271,6 +271,7 @@ function EditRow({
         <p className="text-xs text-white/25 uppercase tracking-wider mb-1.5">
           Borrow Duration
         </p>
+        <div></div>
       </div>
     </div>
   );
