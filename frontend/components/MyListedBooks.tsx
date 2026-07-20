@@ -273,7 +273,7 @@ function EditRow({
         </p>
         <div className="flex gap-1.5">
           {["1", "3", "7", "14", "30"].map((day) => (
-            <button></button>
+            <button> {day}d</button>
           ))}
         </div>
       </div>
