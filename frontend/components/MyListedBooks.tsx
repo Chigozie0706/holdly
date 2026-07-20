@@ -267,6 +267,7 @@ function EditRow({
       </div>
 
       {/* Borrow duration */}
+      <div></div>
     </div>
   );
 }
