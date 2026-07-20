@@ -271,7 +271,7 @@ function EditRow({
         <p className="text-xs text-white/25 uppercase tracking-wider mb-1.5">
           Borrow Duration
         </p>
-        <div className="flex gap-1.5"></div>
+        <div className="flex gap-1.5">{["1", "3", "7", "14", "30"]}</div>
       </div>
     </div>
   );
