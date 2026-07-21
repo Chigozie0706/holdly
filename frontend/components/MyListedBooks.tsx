@@ -279,6 +279,7 @@ function EditRow({
       </div>
 
       {/* Actions */}
+      <div className="flex gap-2 pt-1"></div>
     </div>
   );
 }
