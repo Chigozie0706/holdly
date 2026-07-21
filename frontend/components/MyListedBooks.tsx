@@ -277,6 +277,8 @@ function EditRow({
           ))}
         </div>
       </div>
+
+      {/* Actions */}
     </div>
   );
 }
