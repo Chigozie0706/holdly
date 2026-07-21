@@ -280,7 +280,7 @@ function EditRow({
 
       {/* Actions */}
       <div className="flex gap-2 pt-1">
-        <button onClick={handleSave}></button>
+        <button onClick={handleSave} disabled={isUploading}></button>
       </div>
     </div>
   );
