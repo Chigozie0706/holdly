@@ -288,7 +288,7 @@ function EditRow({
           {isUploading ? (
             <span className="inline-block w-3 h-3 border-2 border-green-400 border-t-transparent rounded-full animate-spin" />
           ) : (
-            <Check />
+            <Check size={13} />
           )}
         </button>
       </div>
