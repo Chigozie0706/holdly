@@ -290,6 +290,7 @@ function EditRow({
           ) : (
             <Check size={13} />
           )}
+          Save
         </button>
       </div>
     </div>
