@@ -321,7 +321,7 @@ export default function MyListedBooks({
           <Library size={28} color="rgba(212,163,82,0.3)" />
         </div>
         <p className="text-white/45 font-serif text-lg">Connect your wallet</p>
-        <p className="dash-empty-sub">Connect to view your dashboard</p>
+        <p className="text-white/20 text-sm">Connect to view your dashboard</p>
       </div>
     );
   }
