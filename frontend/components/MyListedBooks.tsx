@@ -333,7 +333,7 @@ export default function MyListedBooks({
           <BookOpen size={28} color="rgba(212,163,82,0.3)" />
         </div>
         <p className="text-white/45 font-serif text-lg">No books listed yet</p>
-        <p className="dash-empty-sub">
+        <p className="text-white/20 text-sm">
           Books you add to the library will appear here
         </p>
       </div>
