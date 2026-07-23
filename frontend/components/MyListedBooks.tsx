@@ -329,7 +329,7 @@ export default function MyListedBooks({
   if (myBooks.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 gap-3 border border-dashed border-white/7 rounded-lg">
-        <div className="dash-empty-icon">
+        <div className="w-14 h-14 rounded-full bg-white/3 flex items-center justify-center">
           <BookOpen size={28} color="rgba(212,163,82,0.3)" />
         </div>
         <p className="dash-empty-title">No books listed yet</p>
