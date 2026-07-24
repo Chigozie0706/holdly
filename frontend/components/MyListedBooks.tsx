@@ -354,7 +354,17 @@ export default function MyListedBooks({
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4"></div>
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        {[
+          {
+            icon: <Library size={16} color="#D4A352" />,
+            num: myBooks.length,
+            label: "Total Listed",
+          },
+        ].map(() => (
+          <></>
+        ))}
+      </div>
 
       {totalDepositsLocked > 0 && (
         <div className="dash-deposits-notice">
