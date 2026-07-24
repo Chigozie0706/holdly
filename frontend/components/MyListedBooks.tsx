@@ -354,7 +354,7 @@ export default function MyListedBooks({
       </div>
 
       {/* Stats */}
-      <div className="dash-stats">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <div className="dash-stat-card">
           <Library size={18} color="#D4A352" />
           <span className="dash-stat-num">{myBooks.length}</span>
