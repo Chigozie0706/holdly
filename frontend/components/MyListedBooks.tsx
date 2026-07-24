@@ -343,11 +343,12 @@ export default function MyListedBooks({
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="dash-header">
-        <div>
-          <h2 className="dash-title">My Listed Books</h2>
-          <p className="dash-sub">Books you've added to the library</p>
-        </div>
+
+      <div>
+        <h2 className="font-serif text-3xl font-bold text-white/90">
+          My Listed Books
+        </h2>
+        <p className="dash-sub">Books you've added to the library</p>
       </div>
 
       {/* Stats */}
