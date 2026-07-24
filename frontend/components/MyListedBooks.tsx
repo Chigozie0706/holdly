@@ -348,7 +348,9 @@ export default function MyListedBooks({
         <h2 className="font-serif text-3xl font-bold text-white/90">
           My Listed Books
         </h2>
-        <p className="dash-sub">Books you've added to the library</p>
+        <p className="text-sm text-white/30 mt-1">
+          Books you've added to the library
+        </p>
       </div>
 
       {/* Stats */}
