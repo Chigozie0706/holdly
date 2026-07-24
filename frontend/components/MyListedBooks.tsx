@@ -341,7 +341,7 @@ export default function MyListedBooks({
   }
 
   return (
-    <div className="dash-wrap">
+    <div className="space-y-6">
       {/* Header */}
       <div className="dash-header">
         <div>
