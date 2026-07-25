@@ -361,7 +361,7 @@ export default function MyListedBooks({
             num: myBooks.length,
             label: "Total Listed",
           },
-          { icon: <BookOpen size={16} color="#4ade80" /> },
+          { icon: <BookOpen size={16} color="#4ade80" />, num: availableCount },
         ].map(() => (
           <></>
         ))}
