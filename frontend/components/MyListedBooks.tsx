@@ -366,7 +366,7 @@ export default function MyListedBooks({
             num: availableCount,
             label: "Available",
           },
-          { icon: <Users size={16} color="#f87171" /> },
+          { icon: <Users size={16} color="#f87171" />, num: onLoanCount },
         ].map(() => (
           <></>
         ))}
