@@ -366,6 +366,7 @@ export default function MyListedBooks({
             num: availableCount,
             label: "Available",
           },
+          {icon:}
         ].map(() => (
           <></>
         ))}
