@@ -375,6 +375,7 @@ export default function MyListedBooks({
           {
             icon: <TrendingUp size={16} color="#a78bfa" />,
             num: totalBorrows,
+            label: "Total Borrows",
           },
         ].map(() => (
           <></>
