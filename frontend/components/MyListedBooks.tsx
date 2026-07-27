@@ -373,7 +373,7 @@ export default function MyListedBooks({
           },
 
           {
-            icon: <TrendingUp />,
+            icon: <TrendingUp size={16} />,
           },
         ].map(() => (
           <></>
