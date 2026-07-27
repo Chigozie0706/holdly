@@ -371,6 +371,10 @@ export default function MyListedBooks({
             num: onLoanCount,
             label: "On Loan",
           },
+
+          {
+            icon:
+          }
         ].map(() => (
           <></>
         ))}
