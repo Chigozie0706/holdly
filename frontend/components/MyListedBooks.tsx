@@ -378,7 +378,7 @@ export default function MyListedBooks({
             label: "Total Borrows",
           },
         ].map(({ icon, num, label }) => (
-          <div></div>
+          <div key={label}></div>
         ))}
       </div>
 
