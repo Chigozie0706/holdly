@@ -381,7 +381,10 @@ export default function MyListedBooks({
           <div
             key={label}
             className="bg-white/3 border border-white/7 rounded-lg p-4 flex flex-col gap-2"
-          ></div>
+          >
+            {" "}
+            {icon}
+          </div>
         ))}
       </div>
 
