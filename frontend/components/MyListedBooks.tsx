@@ -384,6 +384,7 @@ export default function MyListedBooks({
           >
             {" "}
             {icon}
+            <span></span>
           </div>
         ))}
       </div>
