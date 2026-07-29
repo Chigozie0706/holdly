@@ -389,6 +389,8 @@ export default function MyListedBooks({
         ))}
       </div>
 
+      {/* Deposits locked notice */}
+
       {totalDepositsLocked > 0 && (
         <div className="dash-deposits-notice">
           <span className="dash-deposits-label">
