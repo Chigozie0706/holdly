@@ -387,6 +387,7 @@ export default function MyListedBooks({
             <span className="font-serif text-3xl font-bold text-white/90 leading-none">
               {num}
             </span>
+            <span></span>
           </div>
         ))}
       </div>
