@@ -384,7 +384,7 @@ export default function MyListedBooks({
           >
             {" "}
             {icon}
-            <span className="font-serif text-3xl font-bold"></span>
+            <span className="font-serif text-3xl font-bold text-white/90 leading-none"></span>
           </div>
         ))}
       </div>
