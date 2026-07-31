@@ -406,7 +406,7 @@ export default function MyListedBooks({
       )}
 
       {/* Book list */}
-      <div className="dash-table-wrap">
+      <div className="space-y-3">
         <table className="dash-table">
           <thead>
             <tr>
