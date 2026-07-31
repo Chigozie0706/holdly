@@ -398,9 +398,7 @@ export default function MyListedBooks({
 
       {totalDepositsLocked > 0 && (
         <div className="flex items-center justify-between px-4 py-3 rounded bg-purple-500/5 border-l-2 border-purple-400/40 border border-purple-500/15">
-          <span className="text-sm text-purple-300/75">
-            STX currently locked in deposits
-          </span>
+          <span className="text-sm text-purple-300/75">Locked in deposits</span>
           <span className="dash-deposits-value">
             {totalDepositsLocked.toFixed(2)} STX
           </span>
