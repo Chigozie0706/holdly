@@ -406,7 +406,8 @@ export default function MyListedBooks({
       )}
 
       {/* Book list */}
-      <div className="space-y-3"></div>
+      <div className="space-y-3">        {myBooks.map((book) => (
+      ))}</div>
     </div>
   );
 }
