@@ -406,8 +406,12 @@ export default function MyListedBooks({
       )}
 
       {/* Book list */}
-      <div className="space-y-3">        {myBooks.map((book) => (
-      ))}</div>
+      <div className="space-y-3">
+        {" "}
+        {myBooks.map((book) => (
+          <React.Fragment></React.Fragment>
+        ))}
+      </div>
     </div>
   );
 }
