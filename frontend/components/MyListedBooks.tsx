@@ -410,7 +410,7 @@ export default function MyListedBooks({
         {" "}
         {myBooks.map((book) => (
           <React.Fragment key={book.id}>
-            <div className="bg-white/2 border border-white/7"></div>
+            <div className="bg-white/2 border border-white/7 rounded-lg p-4 hover:bg-white/3 transition-colors"></div>
           </React.Fragment>
         ))}
       </div>
