@@ -409,7 +409,9 @@ export default function MyListedBooks({
       <div className="space-y-3">
         {" "}
         {myBooks.map((book) => (
-          <React.Fragment key={book.id}></React.Fragment>
+          <React.Fragment key={book.id}>
+            <div></div>
+          </React.Fragment>
         ))}
       </div>
     </div>
